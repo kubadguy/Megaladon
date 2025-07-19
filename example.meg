@@ -1,0 +1,35 @@
+=*func calculate_discount ~ item_price ~ discount_rate:0.10 -
+- *helpword "Calculates the discounted price of an item."
+    if item_price <= 0
+        +say ~ "Error: Item price must be positive."
+        !endfunc
+    
+    =discount_amount ~ item_price - (item_price * discount_rate) // Example of MINUS_OP
+    =final_price ~ item_price - discount_amount
+    +say ~ "Original Price: {item_price}"
+    +say ~ "Discount Rate: {discount_rate * 100}%"
+    +say ~ "Discount Amount: {discount_amount}"
+    +say ~ "Final Price: {final_price}"
+    
+    // Check if discount was applied
+    +say ~ "{"Discount Applied" !if discount_amount > 0 "No Discount"}"
+
+=*func main -
+- *helpword "Main entry point of the program."
+    +say ~ "Welcome to Megaladon Discount Calculator!"
+    =product_cost ~ (+input ~ "Enter product cost:")
+    
+    // Convert input to a number, assumes input provides numeric conversion eventually
+    // For now, lexer will just see it as a string
+    // In a full interpreter, this line would involve type conversion.
+    =cost_as_num ~ 100.0 // Placeholder for real conversion
+    
+    +calculate_discount ~ cost_as_num ~ 0.15
+    +calculate_discount ~ 500 // Uses default discount_rate (0.10)
+    +calculate_discount ~ 0 // Test error handling
+    
+    =user_input_name ~ (+input ~ "What is your name?")
+    +say ~ "Hello, {user_input_name}! Your name has {'vowels' !if user_input_name.to_char_vector().count_vowels() > 0 'no vowels'}." // Hypothetical .count_vowels()
+!endfunc
+
++main // Call the main function to start
