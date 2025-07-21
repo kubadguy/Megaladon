@@ -11,6 +11,7 @@ This repository currently focuses on the initial development of the **Megaladon 
 
 ## Project Structure
 
+```bash
 megaladon/
 ├── src/
 │   ├── include/
@@ -30,7 +31,7 @@ megaladon/
 │
 ├── example.meg                   // Sample Megaladon source code for testing.
 └── README.md                     // This documentation file.
-
+```
 
 ## Getting Started
 
