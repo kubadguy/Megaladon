@@ -1,8 +1,14 @@
 #include "parser.h"
-#include "../util/error.h" // Assuming MegaladonError is defined here
+#include "../lexer/token.h"
+#include "../lexer/token_type.h"
+#include "../ast/ast.h"
+#include "../util/error.h" // For MegaladonError
 
-Parser::Parser(const std::vector<Token>& tokens) : tokens(tokens), current(0) {}
+// Constructor
+Parser::Parser(const std::vector<Token>& tokens)
+    : tokens(tokens), current(0) {}
 
+// Parse method - entry point
 std::vector<std::shared_ptr<Stmt>> Parser::parse() {
     std::vector<std::shared_ptr<Stmt>> statements;
     while (!isAtEnd()) {
@@ -11,28 +17,19 @@ std::vector<std::shared_ptr<Stmt>> Parser::parse() {
     return statements;
 }
 
-bool Parser::isAtEnd() const {
-    return peek().type == TokenType::EOF_TOKEN;
-}
-
+// Helper to advance and return current token
 Token Parser::advance() {
     if (!isAtEnd()) current++;
     return previous();
 }
 
-Token Parser::peek() const {
-    return tokens[current];
-}
-
-Token Parser::previous() const {
-    return tokens[current - 1];
-}
-
+// Helper to check if current token matches any of the types
 bool Parser::check(TokenType type) const {
     if (isAtEnd()) return false;
     return peek().type == type;
 }
 
+// Helper to check if current token matches any of the types and consume it
 bool Parser::match(const std::vector<TokenType>& types) {
     for (TokenType type : types) {
         if (check(type)) {
@@ -43,11 +40,28 @@ bool Parser::match(const std::vector<TokenType>& types) {
     return false;
 }
 
+// Helper to consume a token or report error
 Token Parser::consume(TokenType type, const std::string& message) {
     if (check(type)) return advance();
-    throw MegaladonError(peek(), message);
+    throw ParseError(peek(), message); // Use ParseError for syntax errors
 }
 
+// Helper to check if end of file is reached
+bool Parser::isAtEnd() const {
+    return peek().type == TokenType::EOF_TOKEN;
+}
+
+// Helper to get current token
+Token Parser::peek() const {
+    return tokens[current];
+}
+
+// Helper to get previous token
+Token Parser::previous() const {
+    return tokens[current - 1];
+}
+
+// Error recovery
 void Parser::synchronize() {
     advance();
 
@@ -64,86 +78,76 @@ void Parser::synchronize() {
             case TokenType::PRINT:
             case TokenType::RETURN:
                 return;
-            default: break;
+            default:
+                break; // Continue to next token
         }
         advance();
     }
 }
 
-// --- Declarations ---
-
+// --- Declaration Parsing ---
 std::shared_ptr<Stmt> Parser::declaration() {
     try {
-        if (match({TokenType::FUN})) return function("function");
-        if (match({TokenType::VAR})) return varDeclaration();
-        return statement();
-    } catch (const MegaladonError& error) {
-        synchronize();
-        return nullptr; // Or return an error statement
+        if (match({TokenType::VAR})) {
+            return varDeclaration(); // Correctly calls specific var declaration parser
+        }
+        // Add other declaration types here (e.g., functions, classes)
+        if (match({TokenType::FUN})) {
+             // Example: return functionDeclaration();
+             // For now, if FUN is not fully implemented, maybe just skip or error
+             throw ParseError(peek(), "Function declarations not fully supported yet.");
+        }
+        return statement(); // If not a declaration, assume it's a regular statement
+    } catch (const ParseError& e) {
+        MegaladonError::report(e.token, e.what()); // Report syntax error
+        synchronize(); // Attempt error recovery
+        return nullptr; // Return nullptr to indicate parsing failure for this statement
     }
 }
 
-std::shared_ptr<VarStmt> Parser::varDeclaration() {
-    Token name = consume(TokenType::IDENTIFIER, "Expect variable name.");
+// --- Specific Declaration Parsers ---
+std::shared_ptr<Stmt> Parser::varDeclaration() {
+    Token name = consume(TokenType::IDENTIFIER, "Expect variable name."); // Get variable name
 
     std::shared_ptr<Expr> initializer = nullptr;
-    if (match({TokenType::EQUAL})) {
-        initializer = expression();
+    if (match({TokenType::EQUAL})) { // Check if there's an initializer
+        initializer = expression(); // Parse the initializer expression
     }
 
-    consume(TokenType::SEMICOLON, "Expect ';' after variable declaration.");
-    return std::make_shared<VarStmt>(name, initializer);
+    consume(TokenType::SEMICOLON, "Expect ';' after variable declaration."); // Require semicolon
+    return std::make_shared<VarStmt>(name, initializer); // Create and return VarStmt
 }
 
-std::shared_ptr<FunctionStmt> Parser::function(const std::string& kind) {
-    Token name = consume(TokenType::IDENTIFIER, "Expect " + kind + " name.");
-    consume(TokenType::LEFT_PAREN, "Expect '(' after " + kind + " name.");
-    std::vector<Token> parameters;
-    if (!check(TokenType::RIGHT_PAREN)) {
-        do {
-            if (parameters.size() >= 255) { // Arbitrary limit for parameters
-                MegaladonError::report(peek(), "Cannot have more than 255 parameters.");
-            }
-            parameters.push_back(consume(TokenType::IDENTIFIER, "Expect parameter name."));
-        } while (match({TokenType::COMMA}));
-    }
-    consume(TokenType::RIGHT_PAREN, "Expect ')' after parameters.");
-
-    consume(TokenType::LEFT_BRACE, "Expect '{' before " + kind + " body.");
-    std::shared_ptr<BlockStmt> body = std::static_pointer_cast<BlockStmt>(block());
-    return std::make_shared<FunctionStmt>(name, parameters, body);
-}
-
-
-// --- Statements ---
-
+// --- Statement Parsing ---
 std::shared_ptr<Stmt> Parser::statement() {
     if (match({TokenType::PRINT})) return printStatement();
-    if (match({TokenType::LEFT_BRACE})) return block();
+    if (match({TokenType::LEFT_BRACE})) return std::make_shared<BlockStmt>(block());
     if (match({TokenType::IF})) return ifStatement();
     if (match({TokenType::WHILE})) return whileStatement();
-    if (match({TokenType::FOR})) return forStatement(); // Will need to implement for loop parsing
+    if (match({TokenType::FOR})) return forStatement(); // For statement
     if (match({TokenType::RETURN})) return returnStatement();
 
     return expressionStatement();
 }
 
-std::shared_ptr<PrintStmt> Parser::printStatement() {
+std::shared_ptr<Stmt> Parser::printStatement() {
     std::shared_ptr<Expr> value = expression();
     consume(TokenType::SEMICOLON, "Expect ';' after value.");
     return std::make_shared<PrintStmt>(value);
 }
 
-std::shared_ptr<Stmt> Parser::block() {
+std::vector<std::shared_ptr<Stmt>> Parser::block() {
     std::vector<std::shared_ptr<Stmt>> statements;
+
     while (!check(TokenType::RIGHT_BRACE) && !isAtEnd()) {
-        statements.push_back(declaration());
+        statements.push_back(declaration()); // A block can contain declarations
     }
+
     consume(TokenType::RIGHT_BRACE, "Expect '}' after block.");
-    return std::make_shared<BlockStmt>(statements);
+    return statements;
 }
 
-std::shared_ptr<IfStmt> Parser::ifStatement() {
+std::shared_ptr<Stmt> Parser::ifStatement() {
     consume(TokenType::LEFT_PAREN, "Expect '(' after 'if'.");
     std::shared_ptr<Expr> condition = expression();
     consume(TokenType::RIGHT_PAREN, "Expect ')' after if condition.");
@@ -153,28 +157,29 @@ std::shared_ptr<IfStmt> Parser::ifStatement() {
     if (match({TokenType::ELSE})) {
         elseBranch = statement();
     }
+
     return std::make_shared<IfStmt>(condition, thenBranch, elseBranch);
 }
 
-std::shared_ptr<WhileStmt> Parser::whileStatement() {
+std::shared_ptr<Stmt> Parser::whileStatement() {
     consume(TokenType::LEFT_PAREN, "Expect '(' after 'while'.");
     std::shared_ptr<Expr> condition = expression();
     consume(TokenType::RIGHT_PAREN, "Expect ')' after while condition.");
-    std::shared_ptr<Stmt> body = statement();
 
+    std::shared_ptr<Stmt> body = statement();
     return std::make_shared<WhileStmt>(condition, body);
 }
 
 std::shared_ptr<Stmt> Parser::forStatement() {
     consume(TokenType::LEFT_PAREN, "Expect '(' after 'for'.");
 
-    std::shared_ptr<VarStmt> initializer = nullptr;
-    if (match({TokenType::VAR})) {
-        initializer = varDeclaration();
-    } else if (match({TokenType::SEMICOLON})) {
-        // No initializer
+    std::shared_ptr<Stmt> initializer;
+    if (match({TokenType::SEMICOLON})) {
+        initializer = nullptr;
+    } else if (match({TokenType::VAR})) {
+        initializer = varDeclaration(); // Initialize with var declaration
     } else {
-        initializer = std::static_pointer_cast<VarStmt>(expressionStatement());
+        initializer = expressionStatement(); // Initialize with expression statement
     }
 
     std::shared_ptr<Expr> condition = nullptr;
@@ -191,6 +196,7 @@ std::shared_ptr<Stmt> Parser::forStatement() {
 
     std::shared_ptr<Stmt> body = statement();
 
+    // Desugar 'for' loop into a 'while' loop with block
     if (increment != nullptr) {
         body = std::make_shared<BlockStmt>(std::vector<std::shared_ptr<Stmt>>{
             body,
@@ -213,7 +219,7 @@ std::shared_ptr<Stmt> Parser::forStatement() {
     return body;
 }
 
-std::shared_ptr<ReturnStmt> Parser::returnStatement() {
+std::shared_ptr<Stmt> Parser::returnStatement() {
     Token keyword = previous();
     std::shared_ptr<Expr> value = nullptr;
     if (!check(TokenType::SEMICOLON)) {
@@ -223,36 +229,44 @@ std::shared_ptr<ReturnStmt> Parser::returnStatement() {
     return std::make_shared<ReturnStmt>(keyword, value);
 }
 
-std::shared_ptr<ExpressionStmt> Parser::expressionStatement() {
+std::shared_ptr<Stmt> Parser::expressionStatement() {
     std::shared_ptr<Expr> expr = expression();
     consume(TokenType::SEMICOLON, "Expect ';' after expression.");
     return std::make_shared<ExpressionStmt>(expr);
 }
 
-
-// --- Expressions ---
+// --- Expression Parsing (recursive descent) ---
 
 std::shared_ptr<Expr> Parser::expression() {
     return assignment();
 }
 
 std::shared_ptr<Expr> Parser::assignment() {
-    std::shared_ptr<Expr> expr = orLogic(); // Changed from `equality()` to `orLogic()`
+    std::shared_ptr<Expr> expr = orLogic(); // Changed from `logicOr` to `orLogic` for consistency
 
     if (match({TokenType::EQUAL})) {
         Token equals = previous();
-        std::shared_ptr<Expr> value = assignment(); // Allow for right-associativity
+        std::shared_ptr<Expr> value = assignment(); // Right-associative assignment
 
+        // If the left-hand side is a VariableExpr, create an AssignExpr
         if (std::shared_ptr<VariableExpr> var_expr = std::dynamic_pointer_cast<VariableExpr>(expr)) {
-            Token name = var_expr->name;
-            return std::make_shared<AssignExpr>(name, value);
+            return std::make_shared<AssignExpr>(var_expr->name, value);
         }
-        // Handle list element assignment: list[index] = value
+        // If the left-hand side is a GetExpr (for property/indexed assignment)
         if (std::shared_ptr<GetExpr> get_expr = std::dynamic_pointer_cast<GetExpr>(expr)) {
-            return std::make_shared<SetExpr>(get_expr->object, get_expr->index, value);
+            // Check if it's property access (using name) or indexed access (using index)
+            if (get_expr->index != nullptr) { // Indexed access (e.g., list[0] = value)
+                 return std::make_shared<SetExpr>(get_expr->object, get_expr->index, value);
+            } else { // Property access (e.g., obj.prop = value)
+                // This assumes GetExpr can represent property access via 'name'
+                // If GetExpr is solely for indexed access, you'll need another Expr type for property access
+                // For now, assuming GetExpr is only used for indexed access.
+                throw ParseError(equals, "Invalid assignment target. Property assignment is not yet fully implemented via GetExpr's name token.");
+            }
         }
 
-        MegaladonError::report(equals, "Invalid assignment target.");
+        // If assignment target is not a variable or valid property/indexed access
+        throw ParseError(equals, "Invalid assignment target.");
     }
 
     return expr;
@@ -279,7 +293,6 @@ std::shared_ptr<Expr> Parser::andLogic() {
     }
     return expr;
 }
-
 
 std::shared_ptr<Expr> Parser::equality() {
     std::shared_ptr<Expr> expr = comparison();
@@ -334,6 +347,7 @@ std::shared_ptr<Expr> Parser::unary() {
     return call();
 }
 
+// Call expression parsing for function calls and property access
 std::shared_ptr<Expr> Parser::call() {
     std::shared_ptr<Expr> expr = primary();
 
@@ -341,13 +355,16 @@ std::shared_ptr<Expr> Parser::call() {
         if (match({TokenType::LEFT_PAREN})) {
             expr = finishCall(expr);
         } else if (match({TokenType::DOT})) {
-            // For properties or methods like list.add()
             Token name = consume(TokenType::IDENTIFIER, "Expect property name after '.'.");
-            expr = std::make_shared<GetExpr>(expr, name); // GetExpr for dot access
+            // This is where GetExpr (for property access) or other structures would be used.
+            // For now, assuming GetExpr is only for indexed access as per constructor.
+            // If you want property access, you might need a different AST node or an overloaded GetExpr constructor.
+            // The current GetExpr(object, index) implies indexed access.
+            // If .name is for properties, this part needs a specific GetExpr for properties.
+            throw ParseError(name, "Property access via '.' is not fully implemented with current GetExpr structure. Only indexed access (list[idx]) is.");
         } else if (match({TokenType::LEFT_BRACKET})) { // For list indexing
             std::shared_ptr<Expr> index = expression();
-            consume(TokenType::RIGHT_BRACKET, "Expect ']' after list index.");
-            // Re-use GetExpr for list access
+            consume(TokenType::RIGHT_BRACKET, "Expect ']' after index.");
             expr = std::make_shared<GetExpr>(expr, index);
         }
         else {
@@ -361,13 +378,12 @@ std::shared_ptr<Expr> Parser::finishCall(std::shared_ptr<Expr> callee) {
     std::vector<std::shared_ptr<Expr>> arguments;
     if (!check(TokenType::RIGHT_PAREN)) {
         do {
-            if (arguments.size() >= 255) { // Arbitrary limit for arguments
-                MegaladonError::report(peek(), "Cannot have more than 255 arguments.");
+            if (arguments.size() >= 255) {
+                error(peek(), "Cannot have more than 255 arguments.");
             }
             arguments.push_back(expression());
         } while (match({TokenType::COMMA}));
     }
-
     Token paren = consume(TokenType::RIGHT_PAREN, "Expect ')' after arguments.");
     return std::make_shared<CallExpr>(callee, paren, arguments);
 }
@@ -376,10 +392,19 @@ std::shared_ptr<Expr> Parser::finishCall(std::shared_ptr<Expr> callee) {
 std::shared_ptr<Expr> Parser::primary() {
     if (match({TokenType::FALSE})) return std::make_shared<LiteralExpr>(MegaladonValue(false));
     if (match({TokenType::TRUE})) return std::make_shared<LiteralExpr>(MegaladonValue(true));
-    if (match({TokenType::NIL})) return std::make_shared<LiteralExpr>(MegaladonValue(ValueType::VOID)); // Using VOID for NIL
+    if (match({TokenType::NIL})) return std::make_shared<LiteralExpr>(MegaladonValue(ValueType::NIL)); // Use ValueType::NIL for Nil
+    if (match({TokenType::NUMBER})) return std::make_shared<LiteralExpr>(MegaladonValue(std::stod(previous().lexeme)));
+    if (match({TokenType::STRING})) return std::make_shared<LiteralExpr>(MegaladonValue(previous().lexeme));
 
-    if (match({TokenType::NUMBER, TokenType::STRING})) {
-        return std::make_shared<LiteralExpr>(previous().literal);
+    if (match({TokenType::LEFT_BRACKET})) { // For list literals e.g., [1, 2, "hello"]
+        std::vector<std::shared_ptr<Expr>> elements;
+        if (!check(TokenType::RIGHT_BRACKET)) {
+            do {
+                elements.push_back(expression());
+            } while (match({TokenType::COMMA}));
+        }
+        consume(TokenType::RIGHT_BRACKET, "Expect ']' after list literal.");
+        return std::make_shared<ListExpr>(elements);
     }
 
     if (match({TokenType::IDENTIFIER})) {
@@ -392,17 +417,9 @@ std::shared_ptr<Expr> Parser::primary() {
         return std::make_shared<GroupingExpr>(expr);
     }
 
-    if (match({TokenType::LEFT_BRACKET})) { // For list literals like [1, 2, "hello"]
-        std::vector<std::shared_ptr<Expr>> elements;
-        if (!check(TokenType::RIGHT_BRACKET)) {
-            do {
-                elements.push_back(expression());
-            } while (match({TokenType::COMMA}));
-        }
-        consume(TokenType::RIGHT_BRACKET, "Expect ']' after list elements.");
-        return std::make_shared<ListExpr>(elements);
-    }
-
-
-    throw MegaladonError(peek(), "Expect expression.");
+    throw ParseError(peek(), "Expect expression.");
 }
+
+// Private ParseError class implementation
+Parser::ParseError::ParseError(Token token, const std::string& message)
+    : std::runtime_error(message), token(token) {}
