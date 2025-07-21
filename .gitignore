@@ -1,0 +1,30 @@
+
+#vscode and idea
+.vscode/
+.idea/
+
+# mostly not useful just for completeness
+.env
+
+# excutable(compile using g++)
+*.exe
+*.out
+
+# compiled object files
+#*.o
+
+# compiled dynamic libraries
+#*.so
+
+# compiled static libraries
+#*.a
+
+# megaladon files(configurations for tests and benchmarks)
+#*.megconfig
+#ntt.meghelper
+#.megconfighelper\
+#.megconfig\
+
+#megaladon packables
+#.mgpackableconfig\
+#*.mgpackable

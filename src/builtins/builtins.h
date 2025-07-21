@@ -1,29 +1,26 @@
-// src/builtins/builtins.h
 #pragma once
 
-#include "../types/value.h"
-#include "../environment/environment.h"
-#include <memory>
+#include "../types/value.h" // Ensures MegaladonCallable is fully defined
 #include <string>
 #include <vector>
+#include <memory> // For std::shared_ptr
 
-// Forward declaration of Interpreter and MegaladonCallable (defined in interpreter.h)
-// This is critical to avoid circular dependencies.
+// Forward declarations to avoid circular dependencies if needed
 class Interpreter;
-class MegaladonCallable;
 
-// Base class for all built-in functions
 class MegaladonBuiltin : public MegaladonCallable {
+public:
+    MegaladonBuiltin(const std::string& name, int arity) : name(name), _arity(arity) {}
+
+    int arity() const override { return _arity; }
+    std::string toString() const override { return "[Built-in Function " + name + "]"; }
+
 protected:
     std::string name;
     int _arity;
-public:
-    MegaladonBuiltin(std::string name, int arity) : name(std::move(name)), _arity(arity) {}
-    int arity() const override { return _arity; }
-    std::string toString() const override { return "[Built-in Function " + name + "]"; }
 };
 
-// Declarations of individual built-in functions (implementation in core_functions.cpp)
+// Specific built-in functions
 class PrintBuiltin : public MegaladonBuiltin {
 public:
     PrintBuiltin() : MegaladonBuiltin("print", 1) {}
@@ -32,7 +29,7 @@ public:
 
 class InputBuiltin : public MegaladonBuiltin {
 public:
-    InputBuiltin() : MegaladonBuiltin("input", 0) {}
+    InputBuiltin() : MegaladonBuiltin("input", 0) {} // Assuming input takes no args directly, or one prompt arg
     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
 };
 
@@ -42,5 +39,5 @@ public:
     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
 };
 
-// Global function to register all built-ins
+// Forward declaration for the registration function
 void registerBuiltins(std::shared_ptr<Environment>& env);

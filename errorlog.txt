@@ -1,0 +1,732 @@
+
+bandi@BS12 MINGW64 ~
+
+$ cd c:
+
+
+
+bandi@BS12 MINGW64 /c
+
+$ cd megaladon
+
+
+
+bandi@BS12 MINGW64 /c/megaladon
+
+$ g++ -std=c++17 -Wall -Wextra -Isrc/ast -Isrc/builtins -Isrc/environment -Isrc/interpreter -Isrc/lexer -Isrc/parser -Isrc/types -Isrc/util src/ast/ast.cpp src/builtins/builtins.h src/builtins/core_function.cpp src/builtins/list_methods.cpp src/builtins/string_methods.cpp src/environment/environment.cpp src/interpreter/interpreter.cpp src/lexer/lexer.cpp src/parser/parser.cpp src/types/value.cpp src/util/error.cpp src/main.cpp -o megaladon.exe
+
+In file included from src/ast/../interpreter/interpreter.h:10,
+
+                 from src/ast/ast.cpp:3:
+
+C:/megaladon/src/builtins/builtins.h:16:33: error: invalid use of incomplete type 'class MegaladonCallable'
+
+   16 | class MegaladonBuiltin : public MegaladonCallable {
+
+      |                                 ^~~~~~~~~~~~~~~~~
+
+In file included from src/ast/../lexer/lexer.h:7,
+
+                 from src/ast/ast.h:7,
+
+                 from src/ast/ast.cpp:2:
+
+C:/megaladon/src/types/value.h:10:7: note: forward declaration of 'class MegaladonCallable'
+
+   10 | class MegaladonCallable;
+
+      |       ^~~~~~~~~~~~~~~~~
+
+C:/megaladon/src/builtins/builtins.h:22:9: error: 'int MegaladonBuiltin::arity() const' marked 'override', but does not override
+
+   22 |     int arity() const override { return _arity; }
+
+      |         ^~~~~
+
+C:/megaladon/src/builtins/builtins.h:23:17: error: 'std::string MegaladonBuiltin::toString() const' marked 'override', but does not override
+
+   23 |     std::string toString() const override { return "[Built-in Function " + name + "]"; }
+
+      |                 ^~~~~~~~
+
+C:/megaladon/src/builtins/builtins.h:30:20: error: 'MegaladonValue PrintBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+
+   30 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+
+      |                    ^~~~
+
+C:/megaladon/src/builtins/builtins.h:36:20: error: 'MegaladonValue InputBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+
+   36 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+
+      |                    ^~~~
+
+C:/megaladon/src/builtins/builtins.h:42:20: error: 'MegaladonValue LenBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+
+   42 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+
+      |                    ^~~~
+
+src/ast/../interpreter/interpreter.h:86:52: error: expected class-name before '{' token
+
+   86 |     struct ReturnValue : public std::runtime_error {
+
+      |                                                    ^
+
+src/ast/../interpreter/interpreter.h: In constructor 'Interpreter::ReturnValue::ReturnValue(MegaladonValue)':
+
+src/ast/../interpreter/interpreter.h:88:61: error: expected class-name before '(' token
+
+   88 |         ReturnValue(MegaladonValue val) : std::runtime_error(""), value(std::move(val)) {}
+
+      |                                                             ^
+
+src/ast/../interpreter/interpreter.h:88:61: error: expected '{' before '(' token
+
+src/ast/../interpreter/interpreter.h:88:36: warning: unused parameter 'val' [-Wunused-parameter]
+
+   88 |         ReturnValue(MegaladonValue val) : std::runtime_error(""), value(std::move(val)) {}
+
+      |                     ~~~~~~~~~~~~~~~^~~
+
+src/builtins/builtins.h:16:33: error: invalid use of incomplete type 'class MegaladonCallable'
+
+   16 | class MegaladonBuiltin : public MegaladonCallable {
+
+      |                                 ^~~~~~~~~~~~~~~~~
+
+In file included from src/builtins/builtins.h:4:
+
+src/builtins/../types/value.h:10:7: note: forward declaration of 'class MegaladonCallable'
+
+   10 | class MegaladonCallable;
+
+      |       ^~~~~~~~~~~~~~~~~
+
+src/builtins/builtins.h:22:9: error: 'int MegaladonBuiltin::arity() const' marked 'override', but does not override
+
+   22 |     int arity() const override { return _arity; }
+
+      |         ^~~~~
+
+src/builtins/builtins.h:23:17: error: 'std::string MegaladonBuiltin::toString() const' marked 'override', but does not override
+
+   23 |     std::string toString() const override { return "[Built-in Function " + name + "]"; }
+
+      |                 ^~~~~~~~
+
+src/builtins/builtins.h:30:20: error: 'MegaladonValue PrintBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+
+   30 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+
+      |                    ^~~~
+
+src/builtins/builtins.h:36:20: error: 'MegaladonValue InputBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+
+   36 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+
+      |                    ^~~~
+
+src/builtins/builtins.h:42:20: error: 'MegaladonValue LenBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+
+   42 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+
+      |                    ^~~~
+
+In file included from src/builtins/core_function.cpp:2:
+
+src/builtins/builtins.h:16:33: error: invalid use of incomplete type 'class MegaladonCallable'
+
+   16 | class MegaladonBuiltin : public MegaladonCallable {
+
+      |                                 ^~~~~~~~~~~~~~~~~
+
+In file included from src/builtins/builtins.h:4:
+
+src/builtins/../types/value.h:10:7: note: forward declaration of 'class MegaladonCallable'
+
+   10 | class MegaladonCallable;
+
+      |       ^~~~~~~~~~~~~~~~~
+
+src/builtins/builtins.h:22:9: error: 'int MegaladonBuiltin::arity() const' marked 'override', but does not override
+
+   22 |     int arity() const override { return _arity; }
+
+      |         ^~~~~
+
+src/builtins/builtins.h:23:17: error: 'std::string MegaladonBuiltin::toString() const' marked 'override', but does not override
+
+   23 |     std::string toString() const override { return "[Built-in Function " + name + "]"; }
+
+      |                 ^~~~~~~~
+
+src/builtins/builtins.h:30:20: error: 'MegaladonValue PrintBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+
+   30 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+
+      |                    ^~~~
+
+src/builtins/builtins.h:36:20: error: 'MegaladonValue InputBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+
+   36 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+
+      |                    ^~~~
+
+src/builtins/builtins.h:42:20: error: 'MegaladonValue LenBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+
+   42 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+
+      |                    ^~~~
+
+In file included from src/builtins/core_function.cpp:3:
+
+src/builtins/../interpreter/interpreter.h:86:52: error: expected class-name before '{' token
+
+   86 |     struct ReturnValue : public std::runtime_error {
+
+      |                                                    ^
+
+src/builtins/../interpreter/interpreter.h: In constructor 'Interpreter::ReturnValue::ReturnValue(MegaladonValue)':
+
+src/builtins/../interpreter/interpreter.h:88:61: error: expected class-name before '(' token
+
+   88 |         ReturnValue(MegaladonValue val) : std::runtime_error(""), value(std::move(val)) {}
+
+      |                                                             ^
+
+src/builtins/../interpreter/interpreter.h:88:61: error: expected '{' before '(' token
+
+src/builtins/../interpreter/interpreter.h:88:36: warning: unused parameter 'val' [-Wunused-paramete]
+
+   88 |         ReturnValue(MegaladonValue val) : std::runtime_error(""), value(std::move(val)) {}
+
+      |                     ~~~~~~~~~~~~~~~^~~
+
+src/builtins/core_function.cpp: In member function 'MegaladonValue PrintBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)':
+
+src/builtins/core_function.cpp:13:48: warning: unused parameter 'interpreter' [-Wunused-parameter]
+
+   13 | MegaladonValue PrintBuiltin::call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) {
+
+      |                                   ~~~~~~~~~~~~~^~~~~~~~~~~
+
+src/builtins/core_function.cpp: In member function 'MegaladonValue InputBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)':
+
+src/builtins/core_function.cpp:18:48: warning: unused parameter 'interpreter' [-Wunused-parameter]
+
+   18 | MegaladonValue InputBuiltin::call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) {
+
+      |                                   ~~~~~~~~~~~~~^~~~~~~~~~~
+
+src/builtins/core_function.cpp:18:96: warning: unused parameter 'arguments' [-Wunused-parameter]
+
+   18 | MegaladonValue InputBuiltin::call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) {
+
+      |                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+
+src/builtins/core_function.cpp: In member function 'MegaladonValue LenBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)':
+
+src/builtins/core_function.cpp:24:46: warning: unused parameter 'interpreter' [-Wunused-parameter]
+
+   24 | MegaladonValue LenBuiltin::call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) {
+
+      |                                 ~~~~~~~~~~~~~^~~~~~~~~~~
+
+src/builtins/core_function.cpp: In function 'void registerBuiltins(std::shared_ptr<Environment>&)':
+
+src/builtins/core_function.cpp:44:73: error: no matching function for call to 'MegaladonValue::MegaladonValue(std::shared_ptr<PrintBuiltin>)'
+
+   44 |     env->define("print", MegaladonValue(std::make_shared<PrintBuiltin>()));
+
+      |                                                                         ^
+
+src/builtins/core_function.cpp:44:73: note: there are 9 candidates
+
+src/builtins/../types/value.h:41:5: note: candidate 1: 'MegaladonValue::MegaladonValue(ValueType)'
+
+   41 |     MegaladonValue(ValueType type) : type(type) { // For specific VOID or INVALID initialization
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:41:30: note: no known conversion for argument 1 from 'std::shared_ptr<PrintBuiltin>' to 'MegaladonValue::ValueType'
+
+   41 |     MegaladonValue(ValueType type) : type(type) { // For specific VOID or INVALID initialization
+
+      |                    ~~~~~~~~~~^~~~
+
+src/builtins/../types/value.h:40:5: note: candidate 2: 'MegaladonValue::MegaladonValue(std::shared_ptr<MegaladonCallable>)'
+
+   40 |     MegaladonValue(std::shared_ptr<MegaladonCallable> val) : data(std::move(val)), type(FUNCTION) {}
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:40:55: note: no known conversion for argument 1 from 'shared_ptr<PrintBuiltin>' to 'shared_ptr<MegaladonCallable>'
+
+   40 |     MegaladonValue(std::shared_ptr<MegaladonCallable> val) : data(std::move(val)), type(FUNCTION) {}
+
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+
+src/builtins/../types/value.h:39:5: note: candidate 3: 'MegaladonValue::MegaladonValue(std::vector<MegaladonValue>)'
+
+   39 |     MegaladonValue(std::vector<MegaladonValue> val) : data(std::move(val)), type(LIST) {}
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:39:48: note: no known conversion for argument 1 from 'std::shared_ptr<PrintBuiltin>' to 'std::vector<MegaladonValue>'
+
+   39 |     MegaladonValue(std::vector<MegaladonValue> val) : data(std::move(val)), type(LIST) {}
+
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+
+src/builtins/../types/value.h:38:5: note: candidate 4: 'MegaladonValue::MegaladonValue(std::string)'
+
+   38 |     MegaladonValue(std::string val) : data(std::move(val)), type(STRING) {}
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:38:32: note: no known conversion for argument 1 from 'std::shared_ptr<PrintBuiltin>' to 'std::string' {aka 'std::__cxx11::basic_string<char>'}
+
+   38 |     MegaladonValue(std::string val) : data(std::move(val)), type(STRING) {}
+
+      |                    ~~~~~~~~~~~~^~~
+
+src/builtins/../types/value.h:37:5: note: candidate 5: 'MegaladonValue::MegaladonValue(bool)'
+
+   37 |     MegaladonValue(bool val) : data(val), type(BOOLEAN) {}
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:37:25: note: no known conversion for argument 1 from 'std::shared_ptr<PrintBuiltin>' to 'bool'
+
+   37 |     MegaladonValue(bool val) : data(val), type(BOOLEAN) {}
+
+      |                    ~~~~~^~~
+
+src/builtins/../types/value.h:36:5: note: candidate 6: 'MegaladonValue::MegaladonValue(double)'
+
+   36 |     MegaladonValue(double val) : data(val), type(NUMBER) {}
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:36:27: note: no known conversion for argument 1 from 'std::shared_ptr<PrintBuiltin>' to 'double'
+
+   36 |     MegaladonValue(double val) : data(val), type(NUMBER) {}
+
+      |                    ~~~~~~~^~~
+
+src/builtins/../types/value.h:35:5: note: candidate 7: 'MegaladonValue::MegaladonValue()'
+
+   35 |     MegaladonValue() : data(std::monostate{}), type(VOID) {} // Default constructor for VOID
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:35:5: note: candidate expects 0 arguments, 1 provided
+
+src/builtins/../types/value.h:14:7: note: candidate 8: 'MegaladonValue::MegaladonValue(const MegaladonValue&)'
+
+   14 | class MegaladonValue {
+
+      |       ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:14:7: note: no known conversion for argument 1 from 'std::shared_ptr<PrintBuiltin>' to 'const MegaladonValue&'
+
+src/builtins/../types/value.h:14:7: note: candidate 9: 'MegaladonValue::MegaladonValue(MegaladonValue&&)'
+
+src/builtins/../types/value.h:14:7: note: no known conversion for argument 1 from 'std::shared_ptr<PrintBuiltin>' to 'MegaladonValue&&'
+
+src/builtins/core_function.cpp:45:73: error: no matching function for call to 'MegaladonValue::MegaladonValue(std::shared_ptr<InputBuiltin>)'
+
+   45 |     env->define("input", MegaladonValue(std::make_shared<InputBuiltin>()));
+
+      |                                                                         ^
+
+src/builtins/core_function.cpp:45:73: note: there are 9 candidates
+
+src/builtins/../types/value.h:41:5: note: candidate 1: 'MegaladonValue::MegaladonValue(ValueType)'
+
+   41 |     MegaladonValue(ValueType type) : type(type) { // For specific VOID or INVALID initialization
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:41:30: note: no known conversion for argument 1 from 'std::shared_ptr<InputBuiltin>' to 'MegaladonValue::ValueType'
+
+   41 |     MegaladonValue(ValueType type) : type(type) { // For specific VOID or INVALID initialization
+
+      |                    ~~~~~~~~~~^~~~
+
+src/builtins/../types/value.h:40:5: note: candidate 2: 'MegaladonValue::MegaladonValue(std::shared_ptr<MegaladonCallable>)'
+
+   40 |     MegaladonValue(std::shared_ptr<MegaladonCallable> val) : data(std::move(val)), type(FUNCTION) {}
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:40:55: note: no known conversion for argument 1 from 'shared_ptr<InputBuiltin>' to 'shared_ptr<MegaladonCallable>'
+
+   40 |     MegaladonValue(std::shared_ptr<MegaladonCallable> val) : data(std::move(val)), type(FUNCTION) {}
+
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+
+src/builtins/../types/value.h:39:5: note: candidate 3: 'MegaladonValue::MegaladonValue(std::vector<MegaladonValue>)'
+
+   39 |     MegaladonValue(std::vector<MegaladonValue> val) : data(std::move(val)), type(LIST) {}
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:39:48: note: no known conversion for argument 1 from 'std::shared_ptr<InputBuiltin>' to 'std::vector<MegaladonValue>'
+
+   39 |     MegaladonValue(std::vector<MegaladonValue> val) : data(std::move(val)), type(LIST) {}
+
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+
+src/builtins/../types/value.h:38:5: note: candidate 4: 'MegaladonValue::MegaladonValue(std::string)'
+
+   38 |     MegaladonValue(std::string val) : data(std::move(val)), type(STRING) {}
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:38:32: note: no known conversion for argument 1 from 'std::shared_ptr<InputBuiltin>' to 'std::string' {aka 'std::__cxx11::basic_string<char>'}
+
+   38 |     MegaladonValue(std::string val) : data(std::move(val)), type(STRING) {}
+
+      |                    ~~~~~~~~~~~~^~~
+
+src/builtins/../types/value.h:37:5: note: candidate 5: 'MegaladonValue::MegaladonValue(bool)'
+
+   37 |     MegaladonValue(bool val) : data(val), type(BOOLEAN) {}
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:37:25: note: no known conversion for argument 1 from 'std::shared_ptr<InputBuiltin>' to 'bool'
+
+   37 |     MegaladonValue(bool val) : data(val), type(BOOLEAN) {}
+
+      |                    ~~~~~^~~
+
+src/builtins/../types/value.h:36:5: note: candidate 6: 'MegaladonValue::MegaladonValue(double)'
+
+   36 |     MegaladonValue(double val) : data(val), type(NUMBER) {}
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:36:27: note: no known conversion for argument 1 from 'std::shared_ptr<InputBuiltin>' to 'double'
+
+   36 |     MegaladonValue(double val) : data(val), type(NUMBER) {}
+
+      |                    ~~~~~~~^~~
+
+src/builtins/../types/value.h:35:5: note: candidate 7: 'MegaladonValue::MegaladonValue()'
+
+   35 |     MegaladonValue() : data(std::monostate{}), type(VOID) {} // Default constructor for VOID
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:35:5: note: candidate expects 0 arguments, 1 provided
+
+src/builtins/../types/value.h:14:7: note: candidate 8: 'MegaladonValue::MegaladonValue(const MegaladonValue&)'
+
+   14 | class MegaladonValue {
+
+      |       ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:14:7: note: no known conversion for argument 1 from 'std::shared_ptr<InputBuiltin>' to 'const MegaladonValue&'
+
+src/builtins/../types/value.h:14:7: note: candidate 9: 'MegaladonValue::MegaladonValue(MegaladonValue&&)'
+
+src/builtins/../types/value.h:14:7: note: no known conversion for argument 1 from 'std::shared_ptr<InputBuiltin>' to 'MegaladonValue&&'
+
+src/builtins/core_function.cpp:46:69: error: no matching function for call to 'MegaladonValue::MegaladonValue(std::shared_ptr<LenBuiltin>)'
+
+   46 |     env->define("len", MegaladonValue(std::make_shared<LenBuiltin>()));
+
+      |                                                                     ^
+
+src/builtins/core_function.cpp:46:69: note: there are 9 candidates
+
+src/builtins/../types/value.h:41:5: note: candidate 1: 'MegaladonValue::MegaladonValue(ValueType)'
+
+   41 |     MegaladonValue(ValueType type) : type(type) { // For specific VOID or INVALID initialization
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:41:30: note: no known conversion for argument 1 from 'std::shared_ptr<LenBuiltin>' to 'MegaladonValue::ValueType'
+
+   41 |     MegaladonValue(ValueType type) : type(type) { // For specific VOID or INVALID initialization
+
+      |                    ~~~~~~~~~~^~~~
+
+src/builtins/../types/value.h:40:5: note: candidate 2: 'MegaladonValue::MegaladonValue(std::shared_ptr<MegaladonCallable>)'
+
+   40 |     MegaladonValue(std::shared_ptr<MegaladonCallable> val) : data(std::move(val)), type(FUNCTION) {}
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:40:55: note: no known conversion for argument 1 from 'shared_ptr<LenBuiltin>' to 'shared_ptr<MegaladonCallable>'
+
+   40 |     MegaladonValue(std::shared_ptr<MegaladonCallable> val) : data(std::move(val)), type(FUNCTION) {}
+
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+
+src/builtins/../types/value.h:39:5: note: candidate 3: 'MegaladonValue::MegaladonValue(std::vector<MegaladonValue>)'
+
+   39 |     MegaladonValue(std::vector<MegaladonValue> val) : data(std::move(val)), type(LIST) {}
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:39:48: note: no known conversion for argument 1 from 'std::shared_ptr<LenBuiltin>' to 'std::vector<MegaladonValue>'
+
+   39 |     MegaladonValue(std::vector<MegaladonValue> val) : data(std::move(val)), type(LIST) {}
+
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+
+src/builtins/../types/value.h:38:5: note: candidate 4: 'MegaladonValue::MegaladonValue(std::string)'
+
+   38 |     MegaladonValue(std::string val) : data(std::move(val)), type(STRING) {}
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:38:32: note: no known conversion for argument 1 from 'std::shared_ptr<LenBuiltin>' to 'std::string' {aka 'std::__cxx11::basic_string<char>'}
+
+   38 |     MegaladonValue(std::string val) : data(std::move(val)), type(STRING) {}
+
+      |                    ~~~~~~~~~~~~^~~
+
+src/builtins/../types/value.h:37:5: note: candidate 5: 'MegaladonValue::MegaladonValue(bool)'
+
+   37 |     MegaladonValue(bool val) : data(val), type(BOOLEAN) {}
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:37:25: note: no known conversion for argument 1 from 'std::shared_ptr<LenBuiltin>' to 'bool'
+
+   37 |     MegaladonValue(bool val) : data(val), type(BOOLEAN) {}
+
+      |                    ~~~~~^~~
+
+src/builtins/../types/value.h:36:5: note: candidate 6: 'MegaladonValue::MegaladonValue(double)'
+
+   36 |     MegaladonValue(double val) : data(val), type(NUMBER) {}
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:36:27: note: no known conversion for argument 1 from 'std::shared_ptr<LenBuiltin>' to 'double'
+
+   36 |     MegaladonValue(double val) : data(val), type(NUMBER) {}
+
+      |                    ~~~~~~~^~~
+
+src/builtins/../types/value.h:35:5: note: candidate 7: 'MegaladonValue::MegaladonValue()'
+
+   35 |     MegaladonValue() : data(std::monostate{}), type(VOID) {} // Default constructor for VOID
+
+      |     ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:35:5: note: candidate expects 0 arguments, 1 provided
+
+src/builtins/../types/value.h:14:7: note: candidate 8: 'MegaladonValue::MegaladonValue(const MegaladonValue&)'
+
+   14 | class MegaladonValue {
+
+      |       ^~~~~~~~~~~~~~
+
+src/builtins/../types/value.h:14:7: note: no known conversion for argument 1 from 'std::shared_ptr<LenBuiltin>' to 'const MegaladonValue&'
+
+src/builtins/../types/value.h:14:7: note: candidate 9: 'MegaladonValue::MegaladonValue(MegaladonValue&&)'
+
+src/builtins/../types/value.h:14:7: note: no known conversion for argument 1 from 'std::shared_ptr<LenBuiltin>' to 'MegaladonValue&&'
+
+In file included from src/builtins/../interpreter/interpreter.h:10,
+
+                 from src/builtins/list_methods.cpp:4:
+
+C:/megaladon/src/builtins/builtins.h:16:33: error: invalid use of incomplete type 'class MegaladonCallable'
+
+   16 | class MegaladonBuiltin : public MegaladonCallable {
+
+      |                                 ^~~~~~~~~~~~~~~~~
+
+In file included from src/builtins/list_methods.cpp:2:
+
+src/builtins/../types/value.h:10:7: note: forward declaration of 'class MegaladonCallable'
+
+   10 | class MegaladonCallable;
+
+      |       ^~~~~~~~~~~~~~~~~
+
+C:/megaladon/src/builtins/builtins.h:22:9: error: 'int MegaladonBuiltin::arity() const' marked 'override', but does not override
+
+   22 |     int arity() const override { return _arity; }
+
+      |         ^~~~~
+
+C:/megaladon/src/builtins/builtins.h:23:17: error: 'std::string MegaladonBuiltin::toString() const' marked 'override', but does not override
+
+   23 |     std::string toString() const override { return "[Built-in Function " + name + "]"; }
+
+      |                 ^~~~~~~~
+
+C:/megaladon/src/builtins/builtins.h:30:20: error: 'MegaladonValue PrintBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+
+   30 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+
+      |                    ^~~~
+
+C:/megaladon/src/builtins/builtins.h:36:20: error: 'MegaladonValue InputBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+
+   36 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+
+      |                    ^~~~
+
+C:/megaladon/src/builtins/builtins.h:42:20: error: 'MegaladonValue LenBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+
+   42 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+
+      |                    ^~~~
+
+src/builtins/list_methods.cpp: In function 'MegaladonValue list_add(const std::vector<MegaladonValue>&)':
+
+src/builtins/list_methods.cpp:40:26: error: passing 'const __gnu_cxx::__alloc_traits<std::allocator<MegaladonValue>, MegaladonValue>::value_type' {aka 'const MegaladonValue'} as 'this' argument discards qualifiers [-fpermissive]
+
+   40 |     args[0].asListMutable().push_back(args[1]);
+
+      |     ~~~~~~~~~~~~~~~~~~~~~^~
+
+src/builtins/../types/value.h:63:34: note:   in call to 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
+
+   63 |     std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
+
+      |                                  ^~~~~~~~~~~~~
+
+src/builtins/list_methods.cpp: In function 'MegaladonValue list_remove_at(const std::vector<MegaladonValue>&)':
+
+src/builtins/list_methods.cpp:50:39: error: passing 'const __gnu_cxx::__alloc_traits<std::allocator<MegaladonValue>, MegaladonValue>::value_type' {aka 'const MegaladonValue'} as 'this' argument discards qualifiers [-fpermissive]
+
+   50 |     auto& list = args[0].asListMutable();
+
+      |                  ~~~~~~~~~~~~~~~~~~~~~^~
+
+src/builtins/../types/value.h:63:34: note:   in call to 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
+
+   63 |     std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
+
+      |                                  ^~~~~~~~~~~~~
+
+src/builtins/list_methods.cpp:52:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<MegaladonValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+
+   52 |     if (index < 0 || index >= list.size()) {
+
+      |                      ~~~~~~^~~~~~~~~~~~~~
+
+src/builtins/list_methods.cpp: In function 'MegaladonValue list_get(const std::vector<MegaladonValue>&)':
+
+src/builtins/list_methods.cpp:69:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<MegaladonValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+
+   69 |     if (index < 0 || index >= list.size()) {
+
+      |                      ~~~~~~^~~~~~~~~~~~~~
+
+src/builtins/list_methods.cpp: In function 'MegaladonValue list_set(const std::vector<MegaladonValue>&)':
+
+src/builtins/list_methods.cpp:82:39: error: passing 'const __gnu_cxx::__alloc_traits<std::allocator<MegaladonValue>, MegaladonValue>::value_type' {aka 'const MegaladonValue'} as 'this' argument discards qualifiers [-fpermissive]
+
+   82 |     auto& list = args[0].asListMutable();
+
+      |                  ~~~~~~~~~~~~~~~~~~~~~^~
+
+src/builtins/../types/value.h:63:34: note:   in call to 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
+
+   63 |     std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
+
+      |                                  ^~~~~~~~~~~~~
+
+src/builtins/list_methods.cpp:84:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<MegaladonValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+
+   84 |     if (index < 0 || index >= list.size()) {
+
+      |                      ~~~~~~^~~~~~~~~~~~~~
+
+src/builtins/list_methods.cpp: In function 'MegaladonValue list_insert_at(const std::vector<MegaladonValue>&)':
+
+src/builtins/list_methods.cpp:112:39: error: passing 'const __gnu_cxx::__alloc_traits<std::allocator<MegaladonValue>, MegaladonValue>::value_type' {aka 'const MegaladonValue'} as 'this' argument discards qualifiers [-fpermissive]
+
+  112 |     auto& list = args[0].asListMutable();
+
+      |                  ~~~~~~~~~~~~~~~~~~~~~^~
+
+src/builtins/../types/value.h:63:34: note:   in call to 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
+
+   63 |     std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
+
+      |                                  ^~~~~~~~~~~~~
+
+src/builtins/list_methods.cpp:114:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<MegaladonValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+
+  114 |     if (index < 0 || index > list.size()) { // Allow inserting at list.size() for append
+
+      |                      ~~~~~~^~~~~~~~~~~~~
+
+src/builtins/list_methods.cpp: In function 'MegaladonValue list_pop(const std::vector<MegaladonValue>&)':
+
+src/builtins/list_methods.cpp:128:39: error: passing 'const __gnu_cxx::__alloc_traits<std::allocator<MegaladonValue>, MegaladonValue>::value_type' {aka 'const MegaladonValue'} as 'this' argument discards qualifiers [-fpermissive]
+
+  128 |     auto& list = args[0].asListMutable();
+
+      |                  ~~~~~~~~~~~~~~~~~~~~~^~
+
+src/builtins/../types/value.h:63:34: note:   in call to 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
+
+   63 |     std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
+
+      |                                  ^~~~~~~~~~~~~
+
+src/builtins/list_methods.cpp:145:42: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<MegaladonValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+
+  145 |     if (index_to_pop < 0 || index_to_pop >= list.size()) {
+
+      |                             ~~~~~~~~~~~~~^~~~~~~~~~~~~~
+
+src/builtins/list_methods.cpp: In function 'MegaladonValue list_clear(const std::vector<MegaladonValue>&)':
+
+src/builtins/list_methods.cpp:161:26: error: passing 'const __gnu_cxx::__alloc_traits<std::allocator<MegaladonValue>, MegaladonValue>::value_type' {aka 'const MegaladonValue'} as 'this' argument discards qualifiers [-fpermissive]
+
+  161 |     args[0].asListMutable().clear();
+
+      |     ~~~~~~~~~~~~~~~~~~~~~^~
+
+src/builtins/../types/value.h:63:34: note:   in call to 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
+
+   63 |     std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
+
+      |                                  ^~~~~~~~~~~~~
+
+src/builtins/list_methods.cpp: In function 'MegaladonValue list_remove(const std::vector<MegaladonValue>&)':
+
+src/builtins/list_methods.cpp:230:39: error: passing 'const __gnu_cxx::__alloc_traits<std::allocator<MegaladonValue>, MegaladonValue>::value_type' {aka 'const MegaladonValue'} as 'this' argument discards qualifiers [-fpermissive]
+
+  230 |     auto& list = args[0].asListMutable();
+
+      |                  ~~~~~~~~~~~~~~~~~~~~~^~
+
+src/builtins/../types/value.h:63:34: note:   in call to 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
+
+   63 |     std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
+
+      |                                  ^~~~~~~~~~~~~
+
+src/builtins/list_methods.cpp: In function 'MegaladonValue list_sort(const std::vector<MegaladonValue>&)':
+
+src/builtins/list_methods.cpp:260:39: error: passing 'const __gnu_cxx::__alloc_traits<std::allocator<MegaladonValue>, MegaladonValue>::value_type' {aka 'const MegaladonValue'} as 'this' argument discards qualifiers [-fpermissive]
+
+  260 |     auto& list = args[0].asListMutable(); // Modify in place
+
+      |                  ~~~~~~~~~~~~~~~~~~~~~^~
+
+src/builtins/../types/value.h:63:34: note:   in call to 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
+
+   63 |     std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
+
+      |                                  ^~~~~~~~~~~~~
+
+In file included from src/interpreter/interpreter.h:10,
+
+               

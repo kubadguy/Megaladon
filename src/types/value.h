@@ -1,51 +1,62 @@
-// src/types/value.h
 #pragma once
 
 #include <string>
 #include <vector>
-#include <variant> // C++17 for std::variant
-#include <memory>  // For std::shared_ptr
+#include <variant>
+#include <memory>    // For std::shared_ptr
+#include <stdexcept> // For std::runtime_error (though it might be needed more in interpreter.h)
 
-// Forward declare MegaladonCallable (defined in interpreter.h)
-class MegaladonCallable;
-class Interpreter; // Forward declare Interpreter for callMethod
+// Forward declarations
+class Interpreter; // Required for MegaladonCallable::call signature
 
-// Represents any value in the Megaladon language
+// --- MegaladonCallable Definition (moved here for completeness) ---
+class MegaladonCallable {
+public:
+    // Pure virtual functions that derived classes must implement
+    virtual int arity() const = 0;
+    virtual std::string toString() const = 0;
+    virtual MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) = 0;
+
+    // A virtual destructor is crucial for proper polymorphism with shared_ptr
+    virtual ~MegaladonCallable() = default;
+};
+// --- End MegaladonCallable Definition ---
+
+
+// Define a variant to hold different types of values
+enum ValueType {
+    VOID,
+    NUMBER,
+    BOOLEAN,
+    STRING,
+    LIST,
+    FUNCTION, // For user-defined functions and built-in callables
+    INVALID   // For error states or uninitialized values
+};
+
 class MegaladonValue {
 public:
-    enum ValueType {
-        VOID,    // For statements that return nothing, or uninitialized variables
-        NUMBER,
-        BOOLEAN,
-        STRING,
-        LIST,
-        FUNCTION, // User-defined functions and built-in callables
-        INVALID  // For error states or uninitialized values if not using VOID for that
-    };
-
-private:
-    // Use std::variant to hold one of several types safely and efficiently.
-    // For lists and strings, use std::vector and std::string directly.
-    // For functions, use a smart pointer to the callable object.
+    // Use std::variant to hold different types of data
     std::variant<std::monostate, double, bool, std::string, std::vector<MegaladonValue>, std::shared_ptr<MegaladonCallable>> data;
     ValueType type;
 
-public:
     // Constructors
     MegaladonValue() : data(std::monostate{}), type(VOID) {} // Default constructor for VOID
+    MegaladonValue(ValueType type) : type(type) { // For specific VOID or INVALID initialization
+        if (type == NUMBER) data = 0.0;
+        else if (type == BOOLEAN) data = false;
+        else if (type == STRING) data = "";
+        else if (type == LIST) data = std::vector<MegaladonValue>();
+        else if (type == FUNCTION) data = std::shared_ptr<MegaladonCallable>();
+    }
+
     MegaladonValue(double val) : data(val), type(NUMBER) {}
     MegaladonValue(bool val) : data(val), type(BOOLEAN) {}
     MegaladonValue(std::string val) : data(std::move(val)), type(STRING) {}
     MegaladonValue(std::vector<MegaladonValue> val) : data(std::move(val)), type(LIST) {}
     MegaladonValue(std::shared_ptr<MegaladonCallable> val) : data(std::move(val)), type(FUNCTION) {}
-    MegaladonValue(ValueType type) : type(type) { // For specific VOID or INVALID initialization
-        if (type != VOID && type != INVALID) {
-            // Error: Constructor used incorrectly for non-monostate types
-        }
-    }
 
-
-    // Type checkers
+    // Type checking methods
     bool isVoid() const { return type == VOID; }
     bool isNumber() const { return type == NUMBER; }
     bool isBoolean() const { return type == BOOLEAN; }
@@ -54,40 +65,44 @@ public:
     bool isFunction() const { return type == FUNCTION; }
     bool isInvalid() const { return type == INVALID; }
 
-    // Accessors (with safety checks or exceptions)
-    double asNumber() const;
-    bool asBoolean() const;
-    const std::string& asString() const;
-    std::string& asStringMutable(); // For modifying string in place for methods
-    const std::vector<MegaladonValue>& asList() const;
-    std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
-    MegaladonCallable* asFunction() const; // Returns raw pointer, ownership managed by shared_ptr in data
+    // Value conversion methods (with checks for safety)
+    double asNumber() const {
+        if (type == NUMBER) return std::get<double>(data);
+        // Handle error or conversion failure appropriately
+        throw std::runtime_error("MegaladonError: Value is not a number.");
+    }
 
-    // Operators
-    MegaladonValue operator+(const MegaladonValue& other) const;
-    MegaladonValue operator-(const MegaladonValue& other) const;
-    MegaladonValue operator*(const MegaladonValue& other) const;
-    MegaladonValue operator/(const MegaladonValue& other) const;
-    MegaladonValue operator%(const MegaladonValue& other) const;
+    bool asBoolean() const {
+        if (type == BOOLEAN) return std::get<bool>(data);
+        throw std::runtime_error("MegaladonError: Value is not a boolean.");
+    }
 
-    bool operator==(const MegaladonValue& other) const;
-    bool operator!=(const MegaladonValue& other) const;
-    bool operator<(const MegaladonValue& other) const;
-    bool operator<=(const MegaladonValue& other) const;
-    bool operator>(const MegaladonValue& other) const;
-    bool operator>=(const MegaladonValue& other) const;
+    const std::string& asString() const {
+        if (type == STRING) return std::get<std::string>(data);
+        throw std::runtime_error("MegaladonError: Value is not a string.");
+    }
 
-    // Truthiness concept for control flow
-    bool isTruthy() const;
+    const std::vector<MegaladonValue>& asList() const {
+        if (type == LIST) return std::get<std::vector<MegaladonValue>>(data);
+        throw std::runtime_error("MegaladonError: Value is not a list.");
+    }
 
-    // Convert to string for printing/debugging
-    std::string toString() const;
+    // For modifying list in place for methods
+    // NOTE: This should only be called on a non-const MegaladonValue
+    std::vector<MegaladonValue>& asListMutable() {
+        if (type == LIST) return std::get<std::vector<MegaladonValue>>(data);
+        throw std::runtime_error("MegaladonError: Value is not a list or cannot be modified.");
+    }
 
-    // Method calling mechanism for objects (strings, lists)
-    MegaladonValue callMethod(Interpreter& interpreter, const std::string& methodName, const std::vector<MegaladonValue>& args);
+    std::shared_ptr<MegaladonCallable> asCallable() const {
+        if (type == FUNCTION) return std::get<std::shared_ptr<MegaladonCallable>>(data);
+        throw std::runtime_error("MegaladonError: Value is not a callable function.");
+    }
 
-private:
-    // Helper for operator overloading to report type errors
-    void checkNumericOperand(const MegaladonValue& operand) const;
-    void checkNumericOperands(const MegaladonValue& other) const;
+    // String representation for debugging and 'print' function
+    std::string toString() const; // Implemented in value.cpp
 };
+
+// Equality operator (for comparing MegaladonValues)
+bool operator==(const MegaladonValue& lhs, const MegaladonValue& rhs);
+bool operator!=(const MegaladonValue& lhs, const MegaladonValue& rhs);

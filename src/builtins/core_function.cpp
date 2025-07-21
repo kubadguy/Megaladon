@@ -1,52 +1,56 @@
-// src/builtins/core_functions.cpp
 #include "builtins.h"
-#include "../interpreter/interpreter.h" // For Interpreter context
-#include "../util/error.h" // For runtime error reporting
-
+#include "../types/value.h"
+#include "../interpreter/interpreter.h" // For Interpreter access in call methods
 #include <iostream>
 #include <string>
-#include <chrono> // For future time functions
-#include <random> // For future random functions
 
-// --- Built-in Function Implementations ---
-
+// --- PrintBuiltin ---
 MegaladonValue PrintBuiltin::call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) {
-    std::cout << arguments[0].toString() << std::endl;
-    return MegaladonValue(); // Void
+    // Suppress unused parameter warning for 'interpreter'
+    (void)interpreter;
+
+    if (arguments.empty()) {
+        std::cout << "VOID\n";
+    } else {
+        std::cout << arguments[0].toString() << "\n";
+    }
+    return MegaladonValue(); // VOID
 }
 
+// --- InputBuiltin ---
 MegaladonValue InputBuiltin::call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) {
+    // Suppress unused parameter warnings
+    (void)interpreter;
+    (void)arguments;
+
     std::string line;
     std::getline(std::cin, line);
     return MegaladonValue(line);
 }
 
+// --- LenBuiltin ---
 MegaladonValue LenBuiltin::call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) {
+    // Suppress unused parameter warning for 'interpreter'
+    (void)interpreter;
+
     if (arguments.size() != 1) {
-        ReportRuntimeError("Built-in 'len' expects 1 argument.");
-        return MegaladonValue(MegaladonValue::INVALID);
+        throw std::runtime_error("MegaladonError: len() expects 1 argument.");
     }
+
     const MegaladonValue& arg = arguments[0];
     if (arg.isString()) {
         return MegaladonValue(static_cast<double>(arg.asString().length()));
     } else if (arg.isList()) {
         return MegaladonValue(static_cast<double>(arg.asList().size()));
     } else {
-        ReportRuntimeError("Built-in 'len' argument must be a string or a list.");
-        return MegaladonValue(MegaladonValue::INVALID);
+        throw std::runtime_error("MegaladonError: len() argument must be a string or a list.");
     }
 }
 
-
-// --- Register All Built-ins ---
+// --- Register Built-ins ---
 void registerBuiltins(std::shared_ptr<Environment>& env) {
-    // Use std::shared_ptr for MegaladonBuiltin instances
     env->define("print", MegaladonValue(std::make_shared<PrintBuiltin>()));
     env->define("input", MegaladonValue(std::make_shared<InputBuiltin>()));
     env->define("len", MegaladonValue(std::make_shared<LenBuiltin>()));
-
-    // string_methods.cpp and list_methods.cpp contain implementations
-    // that are called via MegaladonValue::callMethod.
-    // They are not directly registered in the global environment, but associated
-    // with the MegaladonValue types themselves.
+    // Add other built-in functions here
 }
