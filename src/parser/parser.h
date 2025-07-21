@@ -1,59 +1,57 @@
-// src/parser/parser.h
 #pragma once
 
 #include <vector>
-#include <memory>
-#include <stdexcept>
-#include "../lexer/lexer.h" // For Token
-#include "../ast/ast.h"     // For Expr and Stmt nodes
+#include <memory> // For std::shared_ptr
+#include <stdexcept> // For std::runtime_error
+
+#include "../lexer/token.h" // For Token and TokenType
+#include "../ast/ast.h"     // For all Expr and Stmt classes
+#include "../util/error.h"  // For MegaladonError
 
 class Parser {
 public:
-    Parser(std::vector<Token> tokens);
-    std::vector<std::unique_ptr<Stmt>> parse();
+    Parser(const std::vector<Token>& tokens);
+    std::vector<std::shared_ptr<Stmt>> parse();
 
 private:
     const std::vector<Token>& tokens;
-    int current = 0;
+    int current;
 
-    std::unique_ptr<Stmt> declaration();
-    std::unique_ptr<Stmt> varDeclaration();
-    std::unique_ptr<Stmt> functionDeclaration(const std::string& kind);
-    std::unique_ptr<Stmt> statement();
-    std::unique_ptr<Stmt> expressionStatement();
-    std::unique_ptr<Stmt> printStatement();
-    std::unique_ptr<Stmt> ifStatement();
-    std::unique_ptr<Stmt> whileStatement();
-    std::unique_ptr<Stmt> returnStatement();
-    std::unique_ptr<BlockStmt> block();
-
-    std::unique_ptr<Expr> expression();
-    std::unique_ptr<Expr> assignment();
-    std::unique_ptr<Expr> logicOr();
-    std::unique_ptr<Expr> logicAnd();
-    std::unique_ptr<Expr> equality();
-    std::unique_ptr<Expr> comparison();
-    std::unique_ptr<Expr> term();
-    std::unique_ptr<Expr> factor();
-    std::unique_ptr<Expr> unary();
-    std::unique_ptr<Expr> call();
-    std::unique_ptr<Expr> primary();
-    std::unique_ptr<Expr> finishCall(std::unique_ptr<Expr> callee);
-
-    // Helper functions
-    bool match(const std::vector<TokenType>& types);
-    bool check(TokenType type);
+    bool isAtEnd() const;
     Token advance();
-    bool isAtEnd();
-    Token peek();
-    Token previous();
+    Token peek() const;
+    Token previous() const;
+    bool check(TokenType type) const;
+    bool match(const std::vector<TokenType>& types);
     Token consume(TokenType type, const std::string& message);
     void synchronize();
 
-    // Error handling
-    void error(const Token& token, const std::string& message);
-    class ParseError : public std::runtime_error {
-    public:
-        ParseError(const std::string& msg) : std::runtime_error(msg) {}
-    };
+    // Declarations
+    std::shared_ptr<Stmt> declaration();
+    std::shared_ptr<VarStmt> varDeclaration();
+    std::shared_ptr<FunctionStmt> function(const std::string& kind);
+
+    // Statements
+    std::shared_ptr<Stmt> statement();
+    std::shared_ptr<PrintStmt> printStatement();
+    std::shared_ptr<Stmt> block(); // Returns a BlockStmt
+    std::shared_ptr<IfStmt> ifStatement();
+    std::shared_ptr<WhileStmt> whileStatement();
+    std::shared_ptr<Stmt> forStatement();
+    std::shared_ptr<ReturnStmt> returnStatement();
+    std::shared_ptr<ExpressionStmt> expressionStatement();
+
+    // Expressions
+    std::shared_ptr<Expr> expression();
+    std::shared_ptr<Expr> assignment();
+    std::shared_ptr<Expr> orLogic();
+    std::shared_ptr<Expr> andLogic();
+    std::shared_ptr<Expr> equality();
+    std::shared_ptr<Expr> comparison();
+    std::shared_ptr<Expr> term();
+    std::shared_ptr<Expr> factor(); // Includes MODULO
+    std::shared_ptr<Expr> unary();
+    std::shared_ptr<Expr> call();
+    std::shared_ptr<Expr> finishCall(std::shared_ptr<Expr> callee);
+    std::shared_ptr<Expr> primary();
 };

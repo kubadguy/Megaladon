@@ -1,12 +1,13 @@
 #pragma once
 
-#include "../types/value.h" // Ensures MegaladonCallable is fully defined
+#include "../types/value.h" // Ensures MegaladonCallable is fully defined BEFORE MegaladonBuiltin
 #include <string>
 #include <vector>
 #include <memory> // For std::shared_ptr
 
 // Forward declarations to avoid circular dependencies if needed
 class Interpreter;
+class Environment; // For registerBuiltins
 
 class MegaladonBuiltin : public MegaladonCallable {
 public:

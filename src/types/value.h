@@ -4,25 +4,16 @@
 #include <vector>
 #include <variant>
 #include <memory>    // For std::shared_ptr
-#include <stdexcept> // For std::runtime_error (though it might be needed more in interpreter.h)
+#include <stdexcept> // For std::runtime_error
+#include <sstream>   // For std::stringstream
+#include <cmath>     // For std::fmod
+#include <iomanip>   // For std::fixed, std::setprecision
 
-// Forward declarations
-class Interpreter; // Required for MegaladonCallable::call signature
+// Forward declarations for circular dependencies
+class Interpreter;
+class MegaladonCallable; // Forward declare MegaladonCallable because MegaladonValue uses it
 
-// --- MegaladonCallable Definition (moved here for completeness) ---
-class MegaladonCallable {
-public:
-    // Pure virtual functions that derived classes must implement
-    virtual int arity() const = 0;
-    virtual std::string toString() const = 0;
-    virtual MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) = 0;
-
-    // A virtual destructor is crucial for proper polymorphism with shared_ptr
-    virtual ~MegaladonCallable() = default;
-};
-// --- End MegaladonCallable Definition ---
-
-
+// --- MegaladonValue Definition ---
 // Define a variant to hold different types of values
 enum ValueType {
     VOID,
@@ -37,6 +28,7 @@ enum ValueType {
 class MegaladonValue {
 public:
     // Use std::variant to hold different types of data
+    // std::monostate is for VOID type
     std::variant<std::monostate, double, bool, std::string, std::vector<MegaladonValue>, std::shared_ptr<MegaladonCallable>> data;
     ValueType type;
 
@@ -106,3 +98,17 @@ public:
 // Equality operator (for comparing MegaladonValues)
 bool operator==(const MegaladonValue& lhs, const MegaladonValue& rhs);
 bool operator!=(const MegaladonValue& lhs, const MegaladonValue& rhs);
+
+// --- MegaladonCallable Definition ---
+// Define MegaladonCallable AFTER MegaladonValue, as it uses MegaladonValue directly
+class MegaladonCallable {
+public:
+    // Pure virtual functions that derived classes must implement
+    virtual int arity() const = 0;
+    virtual std::string toString() const = 0;
+    virtual MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) = 0;
+
+    // A virtual destructor is crucial for proper polymorphism with shared_ptr
+    virtual ~MegaladonCallable() = default;
+};
+// --- End MegaladonCallable Definition ---

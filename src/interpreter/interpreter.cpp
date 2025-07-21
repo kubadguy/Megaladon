@@ -1,320 +1,363 @@
-// src/interpreter/interpreter.cpp
 #include "interpreter.h"
-#include "../util/error.h" // For runtime error reporting
+#include "../builtins/builtins.h" // For registerBuiltins
+#include "../util/error.h"
 #include <iostream>
-#include <algorithm> // For std::transform for string methods (if not in value.cpp)
-#include <utility>   // For std::move
+#include <string> // For std::stod
 
-// --- MegaladonFunction Implementation ---
-MegaladonValue MegaladonFunction::call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) {
-    // Create a new environment for the function call
-    // This environment's enclosing scope is the *closure* (where the function was defined)
-    std::shared_ptr<Environment> functionEnvironment = std::make_shared<Environment>(closure);
-
-    for (size_t i = 0; i < declaration.params.size(); ++i) {
-        functionEnvironment->define(declaration.params[i].lexeme, arguments[i]);
-    }
-
-    try {
-        interpreter.executeBlock(declaration.body->statements, functionEnvironment);
-    } catch (const Interpreter::ReturnValue& return_value) {
-        return return_value.value;
-    }
-
-    return MegaladonValue(); // Implicit void return
-}
-
-// --- Interpreter Class Implementation ---
+// Constructor
 Interpreter::Interpreter() {
-    globalEnvironment = std::make_shared<Environment>();
-    currentEnvironment = globalEnvironment;
+    globals = std::make_shared<Environment>();
+    environment = globals; // Current environment starts as global
 
     // Register built-in functions
-    registerBuiltins(globalEnvironment);
+    registerBuiltins(globals);
 }
 
-void Interpreter::interpret(const std::vector<std::unique_ptr<Stmt>>& statements) {
+// Main interpretation loop
+void Interpreter::interpret(const std::vector<std::shared_ptr<Stmt>>& statements) {
     try {
-        for (const auto& stmt : statements) {
-            execute(*stmt);
+        for (const auto& statement : statements) {
+            execute(statement);
         }
+    } catch (const MegaladonError& e) {
+        // You would typically report this error to the user
+        std::cerr << "Runtime Error: " << e.what() << "\n";
+        // Optionally, reset state or exit
     } catch (const std::runtime_error& e) {
-        ReportRuntimeError(e.what());
+        std::cerr << "Internal Runtime Error: " << e.what() << "\n";
     }
 }
 
-MegaladonValue Interpreter::evaluate(Expr& expr) {
-    return expr.accept(*this);
+// Execute a statement
+void Interpreter::execute(std::shared_ptr<Stmt> stmt) {
+    stmt->accept(*this);
 }
 
-void Interpreter::execute(Stmt& stmt) {
-    stmt.accept(*this);
+// Evaluate an expression
+MegaladonValue Interpreter::evaluate(std::shared_ptr<Expr> expr) {
+    return expr->accept(*this);
 }
 
-bool Interpreter::isTruthy(const MegaladonValue& value) {
-    return value.isTruthy();
+void Interpreter::executeBlock(const std::vector<std::shared_ptr<Stmt>>& statements, std::shared_ptr<Environment> new_environment) {
+    std::shared_ptr<Environment> previous = this->environment;
+    try {
+        this->environment = new_environment;
+        for (const auto& statement : statements) {
+            execute(statement);
+        }
+    } catch (const ReturnValue& r) {
+        this->environment = previous; // Restore previous environment on return
+        throw; // Re-throw the return value
+    }
+    this->environment = previous; // Restore previous environment
 }
 
+// Helper for number operand checks
 void Interpreter::checkNumberOperand(const Token& op, const MegaladonValue& operand) {
     if (!operand.isNumber()) {
-        throw std::runtime_error("Operand of '" + op.lexeme + "' must be a number.");
+        throw MegaladonError(op, "Operand must be a number.");
     }
 }
 
 void Interpreter::checkNumberOperands(const Token& op, const MegaladonValue& left, const MegaladonValue& right) {
     if (!left.isNumber() || !right.isNumber()) {
-        throw std::runtime_error("Operands of '" + op.lexeme + "' must be numbers.");
+        throw MegaladonError(op, "Operands must be numbers.");
     }
 }
 
+bool Interpreter::isTruthy(const MegaladonValue& value) {
+    if (value.isVoid()) return false;
+    if (value.isBoolean()) return value.asBoolean();
+    return true; // Any other value (numbers, strings, lists) is true
+}
+
+bool Interpreter::isEqual(const MegaladonValue& a, const MegaladonValue& b) {
+    // Rely on MegaladonValue's overloaded operator==
+    return a == b;
+}
 
 // --- Expression Visitors ---
 
-MegaladonValue Interpreter::visit(BinaryExpr& expr) {
-    MegaladonValue left = evaluate(*expr.left);
-    MegaladonValue right = evaluate(*expr.right);
+MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr> expr) {
+    MegaladonValue value = evaluate(expr->value);
 
-    switch (expr.op.type) {
-        case PLUS: return left + right;
-        case MINUS: return left - right;
-        case ASTERISK: return left * right;
-        case SLASH: return left / right;
-        case PERCENT: return left % right;
+    // If a resolution distance is set, use it
+    if (expr->distance != -1) {
+        environment->assignAt(expr->distance, expr->name, value);
+    } else {
+        // Otherwise, assume global or dynamically resolved (if no resolver)
+        globals->assign(expr->name, value);
+    }
+    return value;
+}
 
-        case GREATER: return MegaladonValue(left > right);
-        case GREATER_EQUAL: return MegaladonValue(left >= right);
-        case LESS: return MegaladonValue(left < right);
-        case LESS_EQUAL: return MegaladonValue(left <= right);
-        case BANG_EQUAL: return MegaladonValue(left != right);
-        case EQUAL_EQUAL: return MegaladonValue(left == right);
+
+MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr> expr) {
+    MegaladonValue left = evaluate(expr->left);
+    MegaladonValue right = evaluate(expr->right);
+
+    switch (expr->op.type) {
+        case TokenType::GREATER:
+            checkNumberOperands(expr->op, left, right);
+            return MegaladonValue(left.asNumber() > right.asNumber());
+        case TokenType::GREATER_EQUAL:
+            checkNumberOperands(expr->op, left, right);
+            return MegaladonValue(left.asNumber() >= right.asNumber());
+        case TokenType::LESS:
+            checkNumberOperands(expr->op, left, right);
+            return MegaladonValue(left.asNumber() < right.asNumber());
+        case TokenType::LESS_EQUAL:
+            checkNumberOperands(expr->op, left, right);
+            return MegaladonValue(left.asNumber() <= right.asNumber());
+        case TokenType::MINUS:
+            checkNumberOperands(expr->op, left, right);
+            return MegaladonValue(left.asNumber() - right.asNumber());
+        case TokenType::PLUS:
+            if (left.isNumber() && right.isNumber()) {
+                return MegaladonValue(left.asNumber() + right.asNumber());
+            }
+            if (left.isString() && right.isString()) {
+                return MegaladonValue(left.asString() + right.asString());
+            }
+            if (left.isList() && right.isList()) {
+                std::vector<MegaladonValue> newList = left.asList();
+                const auto& rightList = right.asList();
+                newList.insert(newList.end(), rightList.begin(), rightList.end());
+                return MegaladonValue(newList);
+            }
+            throw MegaladonError(expr->op, "Operands must be two numbers, two strings, or two lists.");
+        case TokenType::SLASH:
+            checkNumberOperands(expr->op, left, right);
+            if (right.asNumber() == 0) {
+                throw MegaladonError(expr->op, "Division by zero.");
+            }
+            return MegaladonValue(left.asNumber() / right.asNumber());
+        case TokenType::STAR:
+            checkNumberOperands(expr->op, left, right);
+            return MegaladonValue(left.asNumber() * right.asNumber());
+        case TokenType::BANG_EQUAL:
+            return MegaladonValue(!isEqual(left, right));
+        case TokenType::EQUAL_EQUAL:
+            return MegaladonValue(isEqual(left, right));
         default:
-            break; // Should not happen
+            // Should not happen if parser is correct
+            return MegaladonValue(ValueType::INVALID);
     }
-    return MegaladonValue(MegaladonValue::INVALID); // Unreachable
 }
 
-MegaladonValue Interpreter::visit(GroupingExpr& expr) {
-    return evaluate(*expr.expression);
-}
-
-MegaladonValue Interpreter::visit(LiteralExpr& expr) {
-    return expr.value;
-}
-
-MegaladonValue Interpreter::visit(UnaryExpr& expr) {
-    MegaladonValue right = evaluate(*expr.right);
-
-    switch (expr.op.type) {
-        case MINUS:
-            checkNumberOperand(expr.op, right);
-            return MegaladonValue(-right.asNumber());
-        case BANG:
-            return MegaladonValue(!isTruthy(right));
-        default:
-            break; // Should not happen
-    }
-    return MegaladonValue(MegaladonValue::INVALID); // Unreachable
-}
-
-MegaladonValue Interpreter::visit(VariableExpr& expr) {
-    return currentEnvironment->get(expr.name.lexeme);
-}
-
-MegaladonValue Interpreter::visit(AssignExpr& expr) {
-    MegaladonValue value = evaluate(*expr.value);
-    currentEnvironment->assign(expr.name.lexeme, value);
-    return value; // Assignment expressions evaluate to the assigned value
-}
-
-MegaladonValue Interpreter::visit(LogicalExpr& expr) {
-    MegaladonValue left = evaluate(*expr.left);
-
-    if (expr.op.type == OR) {
-        if (isTruthy(left)) return left;
-    } else { // AND
-        if (!isTruthy(left)) return left;
-    }
-
-    return evaluate(*expr.right);
-}
-
-MegaladonValue Interpreter::visit(CallExpr& expr) {
-    MegaladonValue callee = evaluate(*expr.callee);
+MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr> expr) {
+    MegaladonValue callee = evaluate(expr->callee);
 
     std::vector<MegaladonValue> arguments;
-    for (const auto& arg_expr : expr.arguments) {
-        arguments.push_back(evaluate(*arg_expr));
+    for (const auto& arg : expr->arguments) {
+        arguments.push_back(evaluate(arg));
     }
 
     if (!callee.isFunction()) {
-        throw std::runtime_error("Can only call functions and built-ins.");
+        throw MegaladonError(expr->paren, "Can only call functions.");
     }
 
-    MegaladonCallable* function = callee.asFunction();
-    if (arguments.size() != function->arity()) {
-        throw std::runtime_error("Expected " + std::to_string(function->arity()) +
-                                 " arguments but got " + std::to_string(arguments.size()) + ".");
+    std::shared_ptr<MegaladonCallable> function = callee.asCallable();
+
+    if (function->arity() != arguments.size() && function->arity() != -1) { // -1 for variable arity
+        throw MegaladonError(expr->paren, "Expected " + std::to_string(function->arity()) +
+                                       " arguments but got " + std::to_string(arguments.size()) + ".");
     }
 
     return function->call(*this, arguments);
 }
 
-MegaladonValue Interpreter::visit(GetExpr& expr) {
-    MegaladonValue object = evaluate(*expr.object);
 
-    // This is where object.method() calls are handled.
-    // Megaladon currently has methods for primitive types (string, list).
-    // Future: add support for user-defined objects.
-    if (object.isString() || object.isList()) {
-        // Dispatch to the MegaladonValue's callMethod for built-in methods
-        return object.callMethod(*this, expr.name.lexeme, {}); // Pass interpreter for higher-order functions
+MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr> expr) {
+    return evaluate(expr->expression);
+}
+
+MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr> expr) {
+    // LiteralExpr already holds MegaladonValue
+    return expr->value;
+}
+
+MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr> expr) {
+    MegaladonValue left = evaluate(expr->left);
+
+    if (expr->op.type == TokenType::OR) {
+        if (isTruthy(left)) return left;
+    } else { // AND
+        if (!isTruthy(left)) return left;
     }
 
-    // For now, if it's not a string or list, it doesn't have properties/methods.
-    throw std::runtime_error("Cannot get property '" + expr.name.lexeme + "' on value of type '" + object.toString() + "'.");
+    return evaluate(expr->right);
 }
 
-MegaladonValue Interpreter::visit(SetExpr& expr) {
-    // This assumes object.property = value syntax which is not yet fully supported
-    // for user-defined objects. For now, it will only apply if `GetExpr` can somehow
-    // be a direct assignable reference, which it isn't currently for primitives.
-    // This will require more complex object model.
-    // For now, only list[index] = value is handled via IndexAssignExpr.
-    throw std::runtime_error("Property assignment ('object.property = value') is not directly supported yet for this type. Use list[index] = value for lists.");
-    // Example: (If objects were implemented)
-    // MegaladonValue object = evaluate(*expr.object);
-    // if (object.isObject()) { // Assuming an 'isObject' method and a map inside
-    //     object.asObjectMutable().set(expr.name.lexeme, evaluate(*expr.value));
-    //     return evaluate(*expr.value);
-    // }
-    // throw std::runtime_error("Cannot set property on non-object type.");
+MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr> expr) {
+    MegaladonValue right = evaluate(expr->right);
+
+    switch (expr->op.type) {
+        case TokenType::BANG:
+            return MegaladonValue(!isTruthy(right));
+        case TokenType::MINUS:
+            checkNumberOperand(expr->op, right);
+            return MegaladonValue(-right.asNumber());
+        default:
+            // Should not happen
+            return MegaladonValue(ValueType::INVALID);
+    }
 }
 
-MegaladonValue Interpreter::visit(ListExpr& expr) {
+MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr> expr) {
+    if (expr->distance != -1) {
+        return environment->getAt(expr->distance, expr->name.lexeme);
+    } else {
+        // Fallback to global if not resolved (e.g., built-ins)
+        return globals->get(expr->name);
+    }
+}
+
+MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr> expr) {
     std::vector<MegaladonValue> elements;
-    for (const auto& element_expr : expr.elements) {
-        elements.push_back(evaluate(*element_expr));
+    for (const auto& item_expr : expr->elements) {
+        elements.push_back(evaluate(item_expr));
     }
     return MegaladonValue(elements);
 }
 
-MegaladonValue Interpreter::visit(IndexExpr& expr) {
-    MegaladonValue object = evaluate(*expr.object);
-    MegaladonValue index_val = evaluate(*expr.index);
-
-    if (!index_val.isNumber()) {
-        throw std::runtime_error("List/String index must be a number.");
-    }
-
-    int index = static_cast<int>(index_val.asNumber());
+MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr> expr) {
+    MegaladonValue object = evaluate(expr->object);
 
     if (object.isList()) {
+        // This is for list indexing, e.g., myList[0]
+        if (!expr->index || !expr->index->isLiteral()) { // Assuming index is a literal for now
+             throw MegaladonError(expr->name, "List index must be a literal number.");
+        }
+        MegaladonValue index_value = evaluate(expr->index);
+        if (!index_value.isNumber() || std::fmod(index_value.asNumber(), 1.0) != 0.0) {
+            throw MegaladonError(expr->name, "List index must be an integer.");
+        }
+
+        int index = static_cast<int>(index_value.asNumber());
         const auto& list = object.asList();
-        if (index < 0 || index >= list.size()) {
-            throw std::runtime_error("List index out of bounds: " + std::to_string(index));
+
+        if (index < 0 || static_cast<size_t>(index) >= list.size()) {
+            throw MegaladonError(expr->name, "List index out of bounds.");
         }
         return list[index];
-    } else if (object.isString()) {
-        const auto& str = object.asString();
-        if (index < 0 || index >= str.length()) {
-            throw std::runtime_error("String index out of bounds: " + std::to_string(index));
-        }
-        return MegaladonValue(std::string(1, str[index]));
     }
-    throw std::runtime_error("Cannot index non-list or non-string type.");
+    // Handle other object properties if Megaladon supports them (e.g., object.property)
+    throw MegaladonError(expr->name, "Only lists support indexed access.");
 }
 
-MegaladonValue Interpreter::visit(IndexAssignExpr& expr) {
-    MegaladonValue object = evaluate(*expr.object);
-    MegaladonValue index_val = evaluate(*expr.index);
-    MegaladonValue value_to_assign = evaluate(*expr.value);
-
-    if (!index_val.isNumber()) {
-        throw std::runtime_error("List index must be a number for assignment.");
-    }
-
-    int index = static_cast<int>(index_val.asNumber());
+MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr> expr) {
+    MegaladonValue object = evaluate(expr->object);
+    MegaladonValue value_to_set = evaluate(expr->value);
 
     if (object.isList()) {
-        auto& list = object.asListMutable(); // Get mutable reference to modify in place
-        if (index < 0 || index >= list.size()) {
-            throw std::runtime_error("List index out of bounds for assignment: " + std::to_string(index));
+        if (!expr->index || !expr->index->isLiteral()) { // Assuming index is a literal for now
+            throw MegaladonError(expr->name, "List index must be a literal number for assignment.");
         }
-        list[index] = value_to_assign;
-        return value_to_assign;
+        MegaladonValue index_value = evaluate(expr->index);
+        if (!index_value.isNumber() || std::fmod(index_value.asNumber(), 1.0) != 0.0) {
+            throw MegaladonError(expr->name, "List index for assignment must be an integer.");
+        }
+
+        int index = static_cast<int>(index_value.asNumber());
+        auto& list = object.asListMutable(); // Need mutable access
+
+        if (index < 0 || static_cast<size_t>(index) >= list.size()) {
+            throw MegaladonError(expr->name, "List index out of bounds for assignment.");
+        }
+        list[index] = value_to_set;
+        return value_to_set;
     }
-    // String indexing assignment is not standard (strings are immutable in many languages).
-    // If you need string modification, provide a .replace() method.
-    throw std::runtime_error("Cannot assign to index of non-list type (strings are immutable).");
+    throw MegaladonError(expr->name, "Only lists support indexed assignment.");
 }
 
 
 // --- Statement Visitors ---
 
-void Interpreter::visit(ExpressionStmt& stmt) {
-    evaluate(*stmt.expression);
+void Interpreter::visit(std::shared_ptr<ExpressionStmt> stmt) {
+    evaluate(stmt->expression);
 }
 
-void Interpreter::visit(PrintStmt& stmt) {
-    MegaladonValue value = evaluate(*stmt.expression);
-    std::cout << value.toString() << std::endl;
+void Interpreter::visit(std::shared_ptr<PrintStmt> stmt) {
+    MegaladonValue value = evaluate(stmt->expression);
+    std::cout << value.toString() << "\n";
 }
 
-void Interpreter::visit(VarDeclStmt& stmt) {
+void Interpreter::visit(std::shared_ptr<VarStmt> stmt) {
     MegaladonValue value;
-    if (stmt.initializer) {
-        value = evaluate(*stmt.initializer);
+    if (stmt->initializer) {
+        value = evaluate(stmt->initializer);
     } else {
-        value = MegaladonValue(); // Default to void if no initializer
+        value = MegaladonValue(); // Default to VOID
     }
-    currentEnvironment->define(stmt.name.lexeme, value);
+    environment->define(stmt->name.lexeme, value);
 }
 
-void Interpreter::visit(BlockStmt& stmt) {
-    // Create a new scope for the block and execute its statements within it.
-    executeBlock(stmt.statements, std::make_shared<Environment>(currentEnvironment));
+void Interpreter::visit(std::shared_ptr<BlockStmt> stmt) {
+    // Create a new environment for the block
+    executeBlock(stmt->statements, std::make_shared<Environment>(this->environment));
 }
 
-void Interpreter::executeBlock(const std::vector<std::unique_ptr<Stmt>>& statements, std::shared_ptr<Environment> environment) {
-    std::shared_ptr<Environment> previous = currentEnvironment;
-    try {
-        currentEnvironment = environment;
-        for (const auto& stmt : statements) {
-            execute(*stmt);
+void Interpreter::visit(std::shared_ptr<IfStmt> stmt) {
+    if (isTruthy(evaluate(stmt->condition))) {
+        execute(stmt->thenBranch);
+    } else if (stmt->elseBranch) {
+        execute(stmt->elseBranch);
+    }
+}
+
+void Interpreter::visit(std::shared_ptr<WhileStmt> stmt) {
+    while (isTruthy(evaluate(stmt->condition))) {
+        execute(stmt->body);
+    }
+}
+
+// Represents a user-defined function as a MegaladonCallable
+class MegaladonFunction : public MegaladonCallable {
+public:
+    MegaladonFunction(std::shared_ptr<FunctionStmt> declaration, std::shared_ptr<Environment> closure)
+        : declaration(std::move(declaration)), closure(std::move(closure)) {}
+
+    int arity() const override { return static_cast<int>(declaration->params.size()); }
+    std::string toString() const override { return "<fn " + declaration->name.lexeme + ">"; }
+
+    MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override {
+        // Create a new environment for the function's body
+        std::shared_ptr<Environment> function_environment = std::make_shared<Environment>(closure);
+
+        // Bind arguments to parameters in the new environment
+        for (size_t i = 0; i < declaration->params.size(); ++i) {
+            function_environment->define(declaration->params[i].lexeme, arguments[i]);
         }
-    } catch (...) {
-        // Ensure environment is restored even if an error/return occurs
-        currentEnvironment = previous;
-        throw; // Re-throw the exception
+
+        try {
+            interpreter.executeBlock(declaration->body->statements, function_environment);
+        } catch (const ReturnValue& returnValue) {
+            return returnValue.value;
+        }
+
+        return MegaladonValue(); // Implicit return VOID
     }
-    currentEnvironment = previous;
+
+private:
+    std::shared_ptr<FunctionStmt> declaration;
+    std::shared_ptr<Environment> closure; // Environment where the function was defined
+};
+
+
+void Interpreter::visit(std::shared_ptr<FunctionStmt> stmt) {
+    // When a function declaration is evaluated, it becomes a Callable object.
+    // The current environment becomes the function's closure.
+    std::shared_ptr<MegaladonFunction> function = std::make_shared<MegaladonFunction>(stmt, environment);
+    environment->define(stmt->name.lexeme, MegaladonValue(function));
 }
 
-void Interpreter::visit(IfStmt& stmt) {
-    if (isTruthy(evaluate(*stmt.condition))) {
-        execute(*stmt.thenBranch);
-    } else if (stmt.elseBranch) {
-        execute(*stmt.elseBranch);
-    }
-}
-
-void Interpreter::visit(WhileStmt& stmt) {
-    while (isTruthy(evaluate(*stmt.condition))) {
-        execute(*stmt.body);
-    }
-}
-
-void Interpreter::visit(FunctionStmt& stmt) {
-    // Wrap the AST function declaration in our callable object
-    // Using std::shared_ptr for MegaladonCallable to manage lifetime
-    std::shared_ptr<MegaladonCallable> function_ptr = std::make_shared<MegaladonFunction>(stmt, currentEnvironment);
-    currentEnvironment->define(stmt.name.lexeme, MegaladonValue(function_ptr));
-}
-
-void Interpreter::visit(ReturnStmt& stmt) {
+void Interpreter::visit(std::shared_ptr<ReturnStmt> stmt) {
     MegaladonValue value;
-    if (stmt.value) {
-        value = evaluate(*stmt.value);
+    if (stmt->value) {
+        value = evaluate(stmt->value);
+    } else {
+        value = MegaladonValue(); // Return VOID by default
     }
-    throw ReturnValue(value); // Throw an exception to unwind stack for return
+    throw ReturnValue(value);
 }

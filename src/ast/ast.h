@@ -1,260 +1,264 @@
-// src/ast/ast.h
 #pragma once
 
 #include <vector>
-#include <memory>
-#include <string>
-#include "../lexer/lexer.h" // For Token
+#include <memory> // For std::shared_ptr
+#include "../lexer/token.h" // For Token
 #include "../types/value.h" // For MegaladonValue
 
-// Forward declare Visitor
-class Visitor;
-
-// Base class for all AST nodes
-struct Expr {
-    virtual ~Expr() = default;
-    virtual MegaladonValue accept(Visitor& visitor) = 0; // Expressions return a value
-};
-
-struct Stmt {
-    virtual ~Stmt() = default;
-    virtual void accept(Visitor& visitor) = 0; // Statements perform actions, return void
-};
+// Forward declarations for visitors
+template <typename T> class ExprVisitor;
+template <typename T> class StmtVisitor;
 
 // --- Expressions ---
-struct BinaryExpr : public Expr {
-    std::unique_ptr<Expr> left;
+class Expr {
+public:
+    virtual MegaladonValue accept(ExprVisitor<MegaladonValue>& visitor) = 0;
+    virtual bool isLiteral() const { return false; } // Helper for type checking
+    virtual ~Expr() = default;
+};
+
+class AssignExpr : public Expr, public std::enable_shared_from_this<AssignExpr> {
+public:
+    AssignExpr(Token name, std::shared_ptr<Expr> value)
+        : name(std::move(name)), value(std::move(value)), distance(-1) {}
+    MegaladonValue accept(ExprVisitor<MegaladonValue>& visitor) override;
+
+    Token name;
+    std::shared_ptr<Expr> value;
+    int distance; // For resolution
+};
+
+class BinaryExpr : public Expr, public std::enable_shared_from_this<BinaryExpr> {
+public:
+    BinaryExpr(std::shared_ptr<Expr> left, Token op, std::shared_ptr<Expr> right)
+        : left(std::move(left)), op(std::move(op)), right(std::move(right)) {}
+    MegaladonValue accept(ExprVisitor<MegaladonValue>& visitor) override;
+
+    std::shared_ptr<Expr> left;
     Token op;
-    std::unique_ptr<Expr> right;
-
-    BinaryExpr(std::unique_ptr<Expr> l, Token o, std::unique_ptr<Expr> r)
-        : left(std::move(l)), op(std::move(o)), right(std::move(r)) {}
-
-    MegaladonValue accept(Visitor& visitor) override;
+    std::shared_ptr<Expr> right;
 };
 
-struct GroupingExpr : public Expr {
-    std::unique_ptr<Expr> expression;
+class CallExpr : public Expr, public std::enable_shared_from_this<CallExpr> {
+public:
+    CallExpr(std::shared_ptr<Expr> callee, Token paren, std::vector<std::shared_ptr<Expr>> arguments)
+        : callee(std::move(callee)), paren(std::move(paren)), arguments(std::move(arguments)) {}
+    MegaladonValue accept(ExprVisitor<MegaladonValue>& visitor) override;
 
-    GroupingExpr(std::unique_ptr<Expr> expr)
-        : expression(std::move(expr)) {}
-
-    MegaladonValue accept(Visitor& visitor) override;
+    std::shared_ptr<Expr> callee;
+    Token paren; // The closing parenthesis token, for error reporting
+    std::vector<std::shared_ptr<Expr>> arguments;
 };
 
-struct LiteralExpr : public Expr {
-    MegaladonValue value; // Use MegaladonValue to store literals directly
+class GetExpr : public Expr, public std::enable_shared_from_this<GetExpr> {
+public:
+    // For properties like object.property
+    GetExpr(std::shared_ptr<Expr> object, Token name)
+        : object(std::move(object)), name(std::move(name)), index(nullptr) {}
+    // For indexed access like list[index]
+    GetExpr(std::shared_ptr<Expr> object, std::shared_ptr<Expr> index)
+        : object(std::move(object)), index(std::move(index)), name(Token(TokenType::EOF_TOKEN, "", 0)) {} // Dummy token for list access
+    MegaladonValue accept(ExprVisitor<MegaladonValue>& visitor) override;
 
-    LiteralExpr(MegaladonValue val) : value(std::move(val)) {}
-
-    MegaladonValue accept(Visitor& visitor) override;
+    std::shared_ptr<Expr> object;
+    Token name; // For property access (e.g., obj.prop)
+    std::shared_ptr<Expr> index; // For indexed access (e.g., list[idx])
 };
 
-struct UnaryExpr : public Expr {
+
+class GroupingExpr : public Expr, public std::enable_shared_from_this<GroupingExpr> {
+public:
+    GroupingExpr(std::shared_ptr<Expr> expression)
+        : expression(std::move(expression)) {}
+    MegaladonValue accept(ExprVisitor<MegaladonValue>& visitor) override;
+
+    std::shared_ptr<Expr> expression;
+};
+
+class LiteralExpr : public Expr, public std::enable_shared_from_this<LiteralExpr> {
+public:
+    LiteralExpr(MegaladonValue value)
+        : value(std::move(value)) {}
+    MegaladonValue accept(ExprVisitor<MegaladonValue>& visitor) override;
+    bool isLiteral() const override { return true; }
+
+    MegaladonValue value;
+};
+
+class LogicalExpr : public Expr, public std::enable_shared_from_this<LogicalExpr> {
+public:
+    LogicalExpr(std::shared_ptr<Expr> left, Token op, std::shared_ptr<Expr> right)
+        : left(std::move(left)), op(std::move(op)), right(std::move(right)) {}
+    MegaladonValue accept(ExprVisitor<MegaladonValue>& visitor) override;
+
+    std::shared_ptr<Expr> left;
     Token op;
-    std::unique_ptr<Expr> right;
-
-    UnaryExpr(Token o, std::unique_ptr<Expr> r)
-        : op(std::move(o)), right(std::move(r)) {}
-
-    MegaladonValue accept(Visitor& visitor) override;
+    std::shared_ptr<Expr> right;
 };
 
-struct VariableExpr : public Expr {
+class SetExpr : public Expr, public std::enable_shared_from_this<SetExpr> {
+public:
+    // For property assignment: object.property = value
+    SetExpr(std::shared_ptr<Expr> object, Token name, std::shared_ptr<Expr> value)
+        : object(std::move(object)), name(std::move(name)), index(nullptr), value(std::move(value)) {}
+    // For indexed assignment: list[index] = value
+    SetExpr(std::shared_ptr<Expr> object, std::shared_ptr<Expr> index, std::shared_ptr<Expr> value)
+        : object(std::move(object)), index(std::move(index)), value(std::move(value)), name(Token(TokenType::EOF_TOKEN, "", 0)) {} // Dummy token
+    MegaladonValue accept(ExprVisitor<MegaladonValue>& visitor) override;
+
+    std::shared_ptr<Expr> object;
+    Token name; // For property assignment
+    std::shared_ptr<Expr> index; // For indexed assignment
+    std::shared_ptr<Expr> value;
+};
+
+class UnaryExpr : public Expr, public std::enable_shared_from_this<UnaryExpr> {
+public:
+    UnaryExpr(Token op, std::shared_ptr<Expr> right)
+        : op(std::move(op)), right(std::move(right)) {}
+    MegaladonValue accept(ExprVisitor<MegaladonValue>& visitor) override;
+
+    Token op;
+    std::shared_ptr<Expr> right;
+};
+
+class VariableExpr : public Expr, public std::enable_shared_from_this<VariableExpr> {
+public:
+    VariableExpr(Token name)
+        : name(std::move(name)), distance(-1) {}
+    MegaladonValue accept(ExprVisitor<MegaladonValue>& visitor) override;
+
     Token name;
-
-    VariableExpr(Token n) : name(std::move(n)) {}
-
-    MegaladonValue accept(Visitor& visitor) override;
+    int distance; // For resolution
 };
 
-struct AssignExpr : public Expr {
-    Token name;
-    std::unique_ptr<Expr> value;
+class ListExpr : public Expr, public std::enable_shared_from_this<ListExpr> {
+public:
+    ListExpr(std::vector<std::shared_ptr<Expr>> elements)
+        : elements(std::move(elements)) {}
+    MegaladonValue accept(ExprVisitor<MegaladonValue>& visitor) override;
 
-    AssignExpr(Token n, std::unique_ptr<Expr> v)
-        : name(std::move(n)), value(std::move(v)) {}
-
-    MegaladonValue accept(Visitor& visitor) override;
+    std::vector<std::shared_ptr<Expr>> elements;
 };
 
-struct LogicalExpr : public Expr {
-    std::unique_ptr<Expr> left;
-    Token op; // AND or OR
-    std::unique_ptr<Expr> right;
 
-    LogicalExpr(std::unique_ptr<Expr> l, Token o, std::unique_ptr<Expr> r)
-        : left(std::move(l)), op(std::move(o)), right(std::move(r)) {}
-
-    MegaladonValue accept(Visitor& visitor) override;
+// --- Expression Visitor ---
+template <typename T>
+class ExprVisitor {
+public:
+    virtual T visit(std::shared_ptr<AssignExpr> expr) = 0;
+    virtual T visit(std::shared_ptr<BinaryExpr> expr) = 0;
+    virtual T visit(std::shared_ptr<CallExpr> expr) = 0;
+    virtual T visit(std::shared_ptr<GetExpr> expr) = 0;
+    virtual T visit(std::shared_ptr<GroupingExpr> expr) = 0;
+    virtual T visit(std::shared_ptr<LiteralExpr> expr) = 0;
+    virtual T visit(std::shared_ptr<LogicalExpr> expr) = 0;
+    virtual T visit(std::shared_ptr<SetExpr> expr) = 0;
+    virtual T visit(std::shared_ptr<UnaryExpr> expr) = 0;
+    virtual T visit(std::shared_ptr<VariableExpr> expr) = 0;
+    virtual T visit(std::shared_ptr<ListExpr> expr) = 0; // New list expression
+    virtual ~ExprVisitor() = default;
 };
-
-struct CallExpr : public Expr {
-    std::unique_ptr<Expr> callee;
-    Token paren; // The '(' token
-    std::vector<std::unique_ptr<Expr>> arguments;
-
-    CallExpr(std::unique_ptr<Expr> c, Token p, std::vector<std::unique_ptr<Expr>> args)
-        : callee(std::move(c)), paren(std::move(p)), arguments(std::move(args)) {}
-
-    MegaladonValue accept(Visitor& visitor) override;
-};
-
-struct GetExpr : public Expr {
-    std::unique_ptr<Expr> object;
-    Token name; // The method/property name
-
-    GetExpr(std::unique_ptr<Expr> obj, Token n) : object(std::move(obj)), name(std::move(n)) {}
-
-    MegaladonValue accept(Visitor& visitor) override;
-};
-
-struct SetExpr : public Expr {
-    std::unique_ptr<Expr> object;
-    Token name;
-    std::unique_ptr<Expr> value;
-
-    SetExpr(std::unique_ptr<Expr> obj, Token n, std::unique_ptr<Expr> v)
-        : object(std::move(obj)), name(std::move(n)), value(std::move(v)) {}
-
-    MegaladonValue accept(Visitor& visitor) override;
-};
-
-struct ListExpr : public Expr {
-    std::vector<std::unique_ptr<Expr>> elements;
-
-    ListExpr(std::vector<std::unique_ptr<Expr>> elems) : elements(std::move(elems)) {}
-
-    MegaladonValue accept(Visitor& visitor) override;
-};
-
-struct IndexExpr : public Expr {
-    std::unique_ptr<Expr> object; // The list/string being indexed
-    std::unique_ptr<Expr> index;  // The index expression
-
-    IndexExpr(std::unique_ptr<Expr> obj, std::unique_ptr<Expr> idx)
-        : object(std::move(obj)), index(std::move(idx)) {}
-
-    MegaladonValue accept(Visitor& visitor) override;
-};
-
-struct IndexAssignExpr : public Expr {
-    std::unique_ptr<Expr> object; // The list/string being indexed
-    std::unique_ptr<Expr> index;  // The index expression
-    std::unique_ptr<Expr> value;  // The value to assign
-
-    IndexAssignExpr(std::unique_ptr<Expr> obj, std::unique_ptr<Expr> idx, std::unique_ptr<Expr> val)
-        : object(std::move(obj)), index(std::move(idx)), value(std::move(val)) {}
-
-    MegaladonValue accept(Visitor& visitor) override;
-};
-
 
 // --- Statements ---
-struct ExpressionStmt : public Stmt {
-    std::unique_ptr<Expr> expression;
-
-    ExpressionStmt(std::unique_ptr<Expr> expr)
-        : expression(std::move(expr)) {}
-
-    void accept(Visitor& visitor) override;
+class Stmt {
+public:
+    virtual void accept(StmtVisitor<void>& visitor) = 0;
+    virtual ~Stmt() = default;
 };
 
-struct PrintStmt : public Stmt {
-    std::unique_ptr<Expr> expression;
+class BlockStmt : public Stmt, public std::enable_shared_from_this<BlockStmt> {
+public:
+    BlockStmt(std::vector<std::shared_ptr<Stmt>> statements)
+        : statements(std::move(statements)) {}
+    void accept(StmtVisitor<void>& visitor) override;
 
-    PrintStmt(std::unique_ptr<Expr> expr)
-        : expression(std::move(expr)) {}
-
-    void accept(Visitor& visitor) override;
+    std::vector<std::shared_ptr<Stmt>> statements;
 };
 
-struct VarDeclStmt : public Stmt {
-    Token name;
-    std::unique_ptr<Expr> initializer; // Can be nullptr for uninitialized vars
+class ExpressionStmt : public Stmt, public std::enable_shared_from_this<ExpressionStmt> {
+public:
+    ExpressionStmt(std::shared_ptr<Expr> expression)
+        : expression(std::move(expression)) {}
+    void accept(StmtVisitor<void>& visitor) override;
 
-    VarDeclStmt(Token n, std::unique_ptr<Expr> init)
-        : name(std::move(n)), initializer(std::move(init)) {}
-
-    void accept(Visitor& visitor) override;
+    std::shared_ptr<Expr> expression;
 };
 
-struct BlockStmt : public Stmt {
-    std::vector<std::unique_ptr<Stmt>> statements;
+class FunctionStmt : public Stmt, public std::enable_shared_from_this<FunctionStmt> {
+public:
+    FunctionStmt(Token name, std::vector<Token> params, std::shared_ptr<BlockStmt> body)
+        : name(std::move(name)), params(std::move(params)), body(std::move(body)) {}
+    void accept(StmtVisitor<void>& visitor) override;
 
-    BlockStmt(std::vector<std::unique_ptr<Stmt>> stmts)
-        : statements(std::move(stmts)) {}
-
-    void accept(Visitor& visitor) override;
-};
-
-struct IfStmt : public Stmt {
-    std::unique_ptr<Expr> condition;
-    std::unique_ptr<Stmt> thenBranch;
-    std::unique_ptr<Stmt> elseBranch; // Can be nullptr
-
-    IfStmt(std::unique_ptr<Expr> cond, std::unique_ptr<Stmt> thenB, std::unique_ptr<Stmt> elseB)
-        : condition(std::move(cond)), thenBranch(std::move(thenB)), elseBranch(std::move(elseB)) {}
-
-    void accept(Visitor& visitor) override;
-};
-
-struct WhileStmt : public Stmt {
-    std::unique_ptr<Expr> condition;
-    std::unique_ptr<Stmt> body;
-
-    WhileStmt(std::unique_ptr<Expr> cond, std::unique_ptr<Stmt> b)
-        : condition(std::move(cond)), body(std::move(b)) {}
-
-    void accept(Visitor& visitor) override;
-};
-
-struct FunctionStmt : public Stmt {
     Token name;
     std::vector<Token> params;
-    std::unique_ptr<BlockStmt> body;
-
-    FunctionStmt(Token n, std::vector<Token> p, std::unique_ptr<BlockStmt> b)
-        : name(std::move(n)), params(std::move(p)), body(std::move(b)) {}
-
-    void accept(Visitor& visitor) override;
+    std::shared_ptr<BlockStmt> body;
 };
 
-struct ReturnStmt : public Stmt {
-    Token keyword;
-    std::unique_ptr<Expr> value; // Can be nullptr for void return
 
-    ReturnStmt(Token k, std::unique_ptr<Expr> val)
-        : keyword(std::move(k)), value(std::move(val)) {}
-
-    void accept(Visitor& visitor) override;
-};
-
-// --- Visitor Base Class ---
-// This uses the Visitor pattern to traverse the AST.
-// The Interpreter will implement this interface.
-class Visitor {
+class IfStmt : public Stmt, public std::enable_shared_from_this<IfStmt> {
 public:
-    virtual MegaladonValue visit(BinaryExpr& expr) = 0;
-    virtual MegaladonValue visit(GroupingExpr& expr) = 0;
-    virtual MegaladonValue visit(LiteralExpr& expr) = 0;
-    virtual MegaladonValue visit(UnaryExpr& expr) = 0;
-    virtual MegaladonValue visit(VariableExpr& expr) = 0;
-    virtual MegaladonValue visit(AssignExpr& expr) = 0;
-    virtual MegaladonValue visit(LogicalExpr& expr) = 0;
-    virtual MegaladonValue visit(CallExpr& expr) = 0;
-    virtual MegaladonValue visit(GetExpr& expr) = 0;
-    virtual MegaladonValue visit(SetExpr& expr) = 0;
-    virtual MegaladonValue visit(ListExpr& expr) = 0;
-    virtual MegaladonValue visit(IndexExpr& expr) = 0;
-    virtual MegaladonValue visit(IndexAssignExpr& expr) = 0;
+    IfStmt(std::shared_ptr<Expr> condition, std::shared_ptr<Stmt> thenBranch, std::shared_ptr<Stmt> elseBranch)
+        : condition(std::move(condition)), thenBranch(std::move(thenBranch)), elseBranch(std::move(elseBranch)) {}
+    void accept(StmtVisitor<void>& visitor) override;
 
-    virtual void visit(ExpressionStmt& stmt) = 0;
-    virtual void visit(PrintStmt& stmt) = 0;
-    virtual void visit(VarDeclStmt& stmt) = 0;
-    virtual void visit(BlockStmt& stmt) = 0;
-    virtual void visit(IfStmt& stmt) = 0;
-    virtual void visit(WhileStmt& stmt) = 0;
-    virtual void visit(FunctionStmt& stmt) = 0;
-    virtual void visit(ReturnStmt& stmt) = 0;
+    std::shared_ptr<Expr> condition;
+    std::shared_ptr<Stmt> thenBranch;
+    std::shared_ptr<Stmt> elseBranch; // Can be nullptr
+};
+
+class PrintStmt : public Stmt, public std::enable_shared_from_this<PrintStmt> {
+public:
+    PrintStmt(std::shared_ptr<Expr> expression)
+        : expression(std::move(expression)) {}
+    void accept(StmtVisitor<void>& visitor) override;
+
+    std::shared_ptr<Expr> expression;
+};
+
+class ReturnStmt : public Stmt, public std::enable_shared_from_this<ReturnStmt> {
+public:
+    ReturnStmt(Token keyword, std::shared_ptr<Expr> value)
+        : keyword(std::move(keyword)), value(std::move(value)) {}
+    void accept(StmtVisitor<void>& visitor) override;
+
+    Token keyword;
+    std::shared_ptr<Expr> value; // Can be nullptr for implicit return
+};
+
+class VarStmt : public Stmt, public std::enable_shared_from_this<VarStmt> {
+public:
+    VarStmt(Token name, std::shared_ptr<Expr> initializer)
+        : name(std::move(name)), initializer(std::move(initializer)) {}
+    void accept(StmtVisitor<void>& visitor) override;
+
+    Token name;
+    std::shared_ptr<Expr> initializer; // Can be nullptr
+};
+
+class WhileStmt : public Stmt, public std::enable_shared_from_this<WhileStmt> {
+public:
+    WhileStmt(std::shared_ptr<Expr> condition, std::shared_ptr<Stmt> body)
+        : condition(std::move(condition)), body(std::move(body)) {}
+    void accept(StmtVisitor<void>& visitor) override;
+
+    std::shared_ptr<Expr> condition;
+    std::shared_ptr<Stmt> body;
+};
+
+
+// --- Statement Visitor ---
+template <typename T>
+class StmtVisitor {
+public:
+    virtual T visit(std::shared_ptr<BlockStmt> stmt) = 0;
+    virtual T visit(std::shared_ptr<ExpressionStmt> stmt) = 0;
+    virtual T visit(std::shared_ptr<FunctionStmt> stmt) = 0;
+    virtual T visit(std::shared_ptr<IfStmt> stmt) = 0;
+    virtual T visit(std::shared_ptr<PrintStmt> stmt) = 0;
+    virtual T visit(std::shared_ptr<ReturnStmt> stmt) = 0;
+    virtual T visit(std::shared_ptr<VarStmt> stmt) = 0;
+    virtual T visit(std::shared_ptr<WhileStmt> stmt) = 0;
+    virtual ~StmtVisitor() = default;
 };

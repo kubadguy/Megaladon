@@ -2,6 +2,7 @@
 #include "../types/value.h"
 #include "../util/error.h"
 #include <algorithm> // For std::sort
+#include <cmath>    // For std::fmod
 
 // Helper to check if a value is an integer number
 bool isInteger(const MegaladonValue& val) {

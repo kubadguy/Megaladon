@@ -1,106 +1,93 @@
-// src/main.cpp
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include <memory>
+#include <string>
 
 #include "lexer/lexer.h"
 #include "parser/parser.h"
 #include "interpreter/interpreter.h"
-#include "util/error.h" // Global error flags
+#include "util/error.h"
 
 // Function to run Megaladon code from a string
 void run(const std::string& source) {
-    ResetErrors(); // Clear previous errors
-
     Lexer lexer(source);
     std::vector<Token> tokens = lexer.scanTokens();
 
-    if (hadError) return; // Stop if lexical errors occurred
+    if (MegaladonError::hadError) {
+        return; // Exit if lexical errors occurred
+    }
 
     Parser parser(tokens);
-    std::vector<std::unique_ptr<Stmt>> statements = parser.parse();
+    std::vector<std::shared_ptr<Stmt>> statements = parser.parse();
 
-    if (hadError) return; // Stop if parsing errors occurred
+    if (MegaladonError::hadError) {
+        return; // Exit if parsing errors occurred
+    }
 
     Interpreter interpreter;
     interpreter.interpret(statements);
 
-    if (hadRuntimeError) return; // Stop if runtime errors occurred
+    if (MegaladonError::hadRuntimeError) {
+        return; // Exit if runtime errors occurred
+    }
 }
 
 // Function to run Megaladon code from a file
 void runFile(const std::string& path) {
     std::ifstream file(path);
     if (!file.is_open()) {
-        std::cerr << "Error: Could not open file '" << path << "'." << std::endl;
-        return;
+        std::cerr << "MegaladonError: Could not open file '" << path << "'.\n";
+        exit(74); // Exit code for I/O error
     }
 
     std::stringstream buffer;
     buffer << file.rdbuf();
     run(buffer.str());
+
+    if (MegaladonError::hadError) exit(65); // Exit code for data format error
+    if (MegaladonError::hadRuntimeError) exit(70); // Exit code for internal software error
 }
 
-// Function for interactive REPL (Read-Eval-Print Loop)
+// Function for interactive prompt
 void runPrompt() {
-    std::cout << "Megaladon REPL (Type 'exit()' to quit or 'helpword' for help.)" << std::endl;
+    std::cout << "Megaladon REPL\n";
+    std::cout << "Type 'exit()' to quit.\n";
     std::string line;
-    Interpreter interpreter; // Single interpreter instance for REPL
+    for (;;) {
+        std::cout << ">>> "; // Megaladon prompt
+        if (!std::getline(std::cin, line)) break;
+        if (line == "exit()") break;
 
-    while (true) {
-        std::cout << ">>> ";
-        if (!std::getline(std::cin, line)) { // Ctrl+D or EOF
-            break;
-        }
-        if (line == "exit()") {
-            break;
-        }
-
-        ResetErrors(); // Reset errors for each new line
-
-        Lexer lexer(line);
-        std::vector<Token> tokens = lexer.scanTokens();
-
-        if (hadError) continue;
-
-        Parser parser(tokens);
-        // In REPL, allow single expressions or statements.
-        // If the line is an expression, evaluate and print.
-        // If it's a statement, execute it.
-        // This is a simplified approach. A full REPL parser is more complex.
-        try {
-            std::vector<std::unique_ptr<Stmt>> statements = parser.parse();
-            if (hadError) continue;
-
-            for (const auto& stmt : statements) {
-                // If it's just an expression statement, print its value
-                if (ExpressionStmt* expr_stmt = dynamic_cast<ExpressionStmt*>(stmt.get())) {
-                    MegaladonValue result = interpreter.evaluate(*expr_stmt->expression);
-                    // Only print if it's not VOID (e.g., assignment doesn't print)
-                    if (!result.isVoid()) {
-                        std::cout << result.toString() << std::endl;
-                    }
-                } else {
-                    interpreter.execute(*stmt);
-                }
-            }
-        } catch (const Parser::ParseError& e) {
-            // Error already reported by parser, just continue
-        } catch (const std::runtime_error& e) {
-            ReportRuntimeError(e.what());
+        // For single-line input in REPL, add a semicolon if it's an expression
+        // This is a common REPL hack: if it's an expression, print its value.
+        bool is_expression = true; // Heuristic: assume expression unless it looks like a statement
+        if (line.find("var ") == 0 || line.find("fun ") == 0 || line.find("if ") == 0 ||
+            line.find("while ") == 0 || line.find("for ") == 0 || line.find("print ") == 0) {
+            is_expression = false;
         }
 
-        // Reset runtime error flag for next line
-        hadRuntimeError = false;
+        std::string source_to_run = line;
+        if (is_expression && line.find_last_of(';') == std::string::npos) {
+            source_to_run = "print (" + line + ");"; // Wrap as print statement
+        } else if (line.find_last_of(';') == std::string::npos) {
+            source_to_run += ";"; // Ensure statements end with semicolon
+        }
+
+        MegaladonError::hadError = false;
+        MegaladonError::hadRuntimeError = false;
+        run(source_to_run);
+
+        // Reset error flags for next prompt
+        MegaladonError::hadError = false;
+        MegaladonError::hadRuntimeError = false;
     }
 }
 
 int main(int argc, char* argv[]) {
     if (argc > 2) {
-        std::cout << "Usage: " << argv[0] << " [script_file]" << std::endl;
-        return 64; // Incorrect usage
+        std::cout << "Usage: megaladon [script]\n";
+        return 64; // Incorrect usage exit code
     } else if (argc == 2) {
         runFile(argv[1]);
     } else {

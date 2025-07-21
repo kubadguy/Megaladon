@@ -1,732 +1,2048 @@
 
-bandi@BS12 MINGW64 ~
-
-$ cd c:
-
-
-
-bandi@BS12 MINGW64 /c
-
-$ cd megaladon
-
-
+bandi@BS12 MINGW64 /c/megaladon
+$ g++ -std=c++17 -Wall -Wextra -Isrc/ast -Isrc/builtins -Isrc/environment -Isrc/interpreter -Isrc/lexer -Isrc/parser -Isrc/types -Isrc/util src/ast/ast.cpp src/builtins/builtins.h src/builtins/core_function.cpp src/builtins/list_methods.cpp src/builtins/string_methods.cpp src/environment/environment.cpp src/interpreter/interpreter.cpp src/lexer/lexer.cpp src/parser/parser.cpp src/types/value.cpp src/util/error.cpp src/main.cpp -o megaladon.exe
+In file included from src/ast/../lexer/lexer.h:7,
+                 from src/ast/ast.h:7,
+                 from src/ast/ast.cpp:2:
+C:/megaladon/src/types/value.h:18:13: error: 'MegaladonValue' does not name a type; did you mean 'MegaladonCallable'?
+   18 |     virtual MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) = 0;
+      |             ^~~~~~~~~~~~~~
+      |             MegaladonCallable
+src/ast/../lexer/lexer.h:22:17: error: 'STRING' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                 ^~~~~~
+C:/megaladon/src/types/value.h:31:5: note: previous declaration 'ValueType STRING'
+   31 |     STRING,
+      |     ^~~~~~
+src/ast/../lexer/lexer.h:22:25: error: 'NUMBER' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                         ^~~~~~
+C:/megaladon/src/types/value.h:29:5: note: previous declaration 'ValueType NUMBER'
+   29 |     NUMBER,
+      |     ^~~~~~
+src/ast/../lexer/lexer.h:22:33: error: 'BOOLEAN' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                                 ^~~~~~~
+C:/megaladon/src/types/value.h:30:5: note: previous declaration 'ValueType BOOLEAN'
+   30 |     BOOLEAN,
+      |     ^~~~~~~
+In file included from src/builtins/builtins.h:3:
+src/builtins/../types/value.h:18:13: error: 'MegaladonValue' does not name a type; did you mean 'MegaladonCallable'?
+   18 |     virtual MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) = 0;
+      |             ^~~~~~~~~~~~~~
+      |             MegaladonCallable
+src/builtins/builtins.h:27:20: error: 'MegaladonValue PrintBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+   27 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+      |                    ^~~~
+src/builtins/builtins.h:33:20: error: 'MegaladonValue InputBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+   33 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+      |                    ^~~~
+src/builtins/builtins.h:39:20: error: 'MegaladonValue LenBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+   39 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+      |                    ^~~~
+src/builtins/builtins.h:43:39: error: 'Environment' was not declared in this scope
+   43 | void registerBuiltins(std::shared_ptr<Environment>& env);
+      |                                       ^~~~~~~~~~~
+src/builtins/builtins.h:43:50: error: template argument 1 is invalid
+   43 | void registerBuiltins(std::shared_ptr<Environment>& env);
+      |                                                  ^
+In file included from src/builtins/builtins.h:3,
+                 from src/builtins/core_function.cpp:1:
+src/builtins/../types/value.h:18:13: error: 'MegaladonValue' does not name a type; did you mean 'MegaladonCallable'?
+   18 |     virtual MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) = 0;
+      |             ^~~~~~~~~~~~~~
+      |             MegaladonCallable
+src/builtins/builtins.h:27:20: error: 'MegaladonValue PrintBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+   27 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+      |                    ^~~~
+src/builtins/builtins.h:33:20: error: 'MegaladonValue InputBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+   33 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+      |                    ^~~~
+src/builtins/builtins.h:39:20: error: 'MegaladonValue LenBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+   39 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+      |                    ^~~~
+src/builtins/builtins.h:43:39: error: 'Environment' was not declared in this scope
+   43 | void registerBuiltins(std::shared_ptr<Environment>& env);
+      |                                       ^~~~~~~~~~~
+src/builtins/builtins.h:43:50: error: template argument 1 is invalid
+   43 | void registerBuiltins(std::shared_ptr<Environment>& env);
+      |                                                  ^
+In file included from C:/megaladon/src/ast/ast.h:7,
+                 from src/builtins/../interpreter/interpreter.h:3,
+                 from src/builtins/core_function.cpp:3:
+C:/megaladon/src/lexer/lexer.h:22:17: error: 'STRING' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                 ^~~~~~
+src/builtins/../types/value.h:31:5: note: previous declaration 'ValueType STRING'
+   31 |     STRING,
+      |     ^~~~~~
+C:/megaladon/src/lexer/lexer.h:22:25: error: 'NUMBER' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                         ^~~~~~
+src/builtins/../types/value.h:29:5: note: previous declaration 'ValueType NUMBER'
+   29 |     NUMBER,
+      |     ^~~~~~
+C:/megaladon/src/lexer/lexer.h:22:33: error: 'BOOLEAN' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                                 ^~~~~~~
+src/builtins/../types/value.h:30:5: note: previous declaration 'ValueType BOOLEAN'
+   30 |     BOOLEAN,
+      |     ^~~~~~~
+In file included from src/builtins/builtins.h:3,
+                 from src/builtins/list_methods.cpp:1:
+src/builtins/../types/value.h:18:13: error: 'MegaladonValue' does not name a type; did you mean 'MegaladonCallable'?
+   18 |     virtual MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) = 0;
+      |             ^~~~~~~~~~~~~~
+      |             MegaladonCallable
+src/builtins/builtins.h:27:20: error: 'MegaladonValue PrintBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+   27 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+      |                    ^~~~
+src/builtins/builtins.h:33:20: error: 'MegaladonValue InputBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+   33 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+      |                    ^~~~
+src/builtins/builtins.h:39:20: error: 'MegaladonValue LenBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
+   39 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
+      |                    ^~~~
+src/builtins/builtins.h:43:39: error: 'Environment' was not declared in this scope
+   43 | void registerBuiltins(std::shared_ptr<Environment>& env);
+      |                                       ^~~~~~~~~~~
+src/builtins/builtins.h:43:50: error: template argument 1 is invalid
+   43 | void registerBuiltins(std::shared_ptr<Environment>& env);
+      |                                                  ^
+src/builtins/list_methods.cpp: In function 'bool isInteger(const MegaladonValue&)':
+src/builtins/list_methods.cpp:8:36: error: 'fmod' is not a member of 'std'
+    8 |     return val.isNumber() && (std::fmod(val.asNumber(), 1.0) == 0.0);
+      |                                    ^~~~
+In file included from src/builtins/string_methods.cpp:2:
+src/builtins/../types/value.h:18:13: error: 'MegaladonValue' does not name a type; did you mean 'MegaladonCallable'?
+   18 |     virtual MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) = 0;
+      |             ^~~~~~~~~~~~~~
+      |             MegaladonCallable
+src/builtins/string_methods.cpp: In function 'MegaladonValue string_len(const std::vector<MegaladonValue>&)':
+src/builtins/string_methods.cpp:29:47: error: 'INVALID' is not a member of 'MegaladonValue'
+   29 |         return MegaladonValue(MegaladonValue::INVALID);
+      |                                               ^~~~~~~
+src/builtins/string_methods.cpp: In function 'MegaladonValue string_substring(const std::vector<MegaladonValue>&)':
+src/builtins/string_methods.cpp:38:47: error: 'INVALID' is not a member of 'MegaladonValue'
+   38 |         return MegaladonValue(MegaladonValue::INVALID);
+      |                                               ^~~~~~~
+src/builtins/string_methods.cpp:47:51: error: 'INVALID' is not a member of 'MegaladonValue'
+   47 |             return MegaladonValue(MegaladonValue::INVALID);
+      |                                                   ^~~~~~~
+src/builtins/string_methods.cpp: In function 'MegaladonValue string_to_lower(const std::vector<MegaladonValue>&)':
+src/builtins/string_methods.cpp:63:47: error: 'INVALID' is not a member of 'MegaladonValue'
+   63 |         return MegaladonValue(MegaladonValue::INVALID);
+      |                                               ^~~~~~~
+src/builtins/string_methods.cpp: In function 'MegaladonValue string_to_upper(const std::vector<MegaladonValue>&)':
+src/builtins/string_methods.cpp:74:47: error: 'INVALID' is not a member of 'MegaladonValue'
+   74 |         return MegaladonValue(MegaladonValue::INVALID);
+      |                                               ^~~~~~~
+src/builtins/string_methods.cpp: In function 'MegaladonValue string_trim(const std::vector<MegaladonValue>&)':
+src/builtins/string_methods.cpp:85:47: error: 'INVALID' is not a member of 'MegaladonValue'
+   85 |         return MegaladonValue(MegaladonValue::INVALID);
+      |                                               ^~~~~~~
+src/builtins/string_methods.cpp: In function 'MegaladonValue string_starts_with(const std::vector<MegaladonValue>&)':
+src/builtins/string_methods.cpp:103:47: error: 'INVALID' is not a member of 'MegaladonValue'
+  103 |         return MegaladonValue(MegaladonValue::INVALID);
+      |                                               ^~~~~~~
+src/builtins/string_methods.cpp: In function 'MegaladonValue string_ends_with(const std::vector<MegaladonValue>&)':
+src/builtins/string_methods.cpp:114:47: error: 'INVALID' is not a member of 'MegaladonValue'
+  114 |         return MegaladonValue(MegaladonValue::INVALID);
+      |                                               ^~~~~~~
+src/builtins/string_methods.cpp: In function 'MegaladonValue string_contains(const std::vector<MegaladonValue>&)':
+src/builtins/string_methods.cpp:126:47: error: 'INVALID' is not a member of 'MegaladonValue'
+  126 |         return MegaladonValue(MegaladonValue::INVALID);
+      |                                               ^~~~~~~
+src/builtins/string_methods.cpp: In function 'MegaladonValue string_replace(const std::vector<MegaladonValue>&)':
+src/builtins/string_methods.cpp:137:47: error: 'INVALID' is not a member of 'MegaladonValue'
+  137 |         return MegaladonValue(MegaladonValue::INVALID);
+      |                                               ^~~~~~~
+src/builtins/string_methods.cpp: In function 'MegaladonValue string_split(const std::vector<MegaladonValue>&)':
+src/builtins/string_methods.cpp:155:47: error: 'INVALID' is not a member of 'MegaladonValue'
+  155 |         return MegaladonValue(MegaladonValue::INVALID);
+      |                                               ^~~~~~~
+src/builtins/string_methods.cpp: In function 'MegaladonValue string_index_of(const std::vector<MegaladonValue>&)':
+src/builtins/string_methods.cpp:185:47: error: 'INVALID' is not a member of 'MegaladonValue'
+  185 |         return MegaladonValue(MegaladonValue::INVALID);
+      |                                               ^~~~~~~
+src/builtins/string_methods.cpp:193:51: error: 'INVALID' is not a member of 'MegaladonValue'
+  193 |             return MegaladonValue(MegaladonValue::INVALID);
+      |                                                   ^~~~~~~
+src/builtins/string_methods.cpp: In function 'MegaladonValue string_to_list(const std::vector<MegaladonValue>&)':
+src/builtins/string_methods.cpp:210:47: error: 'INVALID' is not a member of 'MegaladonValue'
+  210 |         return MegaladonValue(MegaladonValue::INVALID);
+      |                                               ^~~~~~~
+src/builtins/string_methods.cpp: In function 'MegaladonValue string_count_vowels(const std::vector<MegaladonValue>&)':
+src/builtins/string_methods.cpp:224:47: error: 'INVALID' is not a member of 'MegaladonValue'
+  224 |         return MegaladonValue(MegaladonValue::INVALID);
+      |                                               ^~~~~~~
+In file included from src/environment/environment.h:7,
+                 from src/environment/environment.cpp:2:
+C:/megaladon/src/types/value.h:18:13: error: 'MegaladonValue' does not name a type; did you mean 'MegaladonCallable'?
+   18 |     virtual MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) = 0;
+      |             ^~~~~~~~~~~~~~
+      |             MegaladonCallable
+In file included from C:/megaladon/src/lexer/lexer.h:7,
+                 from C:/megaladon/src/ast/ast.h:7,
+                 from src/interpreter/interpreter.h:3,
+                 from src/interpreter/interpreter.cpp:2:
+C:/megaladon/src/types/value.h:18:13: error: 'MegaladonValue' does not name a type; did you mean 'MegaladonCallable'?
+   18 |     virtual MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) = 0;
+      |             ^~~~~~~~~~~~~~
+      |             MegaladonCallable
+C:/megaladon/src/lexer/lexer.h:22:17: error: 'STRING' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                 ^~~~~~
+C:/megaladon/src/types/value.h:31:5: note: previous declaration 'ValueType STRING'
+   31 |     STRING,
+      |     ^~~~~~
+C:/megaladon/src/lexer/lexer.h:22:25: error: 'NUMBER' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                         ^~~~~~
+C:/megaladon/src/types/value.h:29:5: note: previous declaration 'ValueType NUMBER'
+   29 |     NUMBER,
+      |     ^~~~~~
+C:/megaladon/src/lexer/lexer.h:22:33: error: 'BOOLEAN' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                                 ^~~~~~~
+C:/megaladon/src/types/value.h:30:5: note: previous declaration 'ValueType BOOLEAN'
+   30 |     BOOLEAN,
+      |     ^~~~~~~
+src/interpreter/interpreter.cpp:9:16: error: 'MegaladonFunction' has not been declared
+    9 | MegaladonValue MegaladonFunction::call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) {
+      |                ^~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.cpp: In function 'MegaladonValue call(Interpreter&, const std::vector<MegaladonValue>&)':
+src/interpreter/interpreter.cpp:12:86: error: 'closure' was not declared in this scope
+   12 |     std::shared_ptr<Environment> functionEnvironment = std::make_shared<Environment>(closur);
+      |                                                                                      ^~~~~~
+src/interpreter/interpreter.cpp:14:28: error: 'declaration' was not declared in this scope
+   14 |     for (size_t i = 0; i < declaration.params.size(); ++i) {
+      |                            ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:19:34: error: 'declaration' was not declared in this scope
+   19 |         interpreter.executeBlock(declaration.body->statements, functionEnvironment);
+      |                                  ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:20:44: error: expected unqualified-id before '&' token
+   20 |     } catch (const Interpreter::ReturnValue& return_value) {
+      |                                            ^
+src/interpreter/interpreter.cpp:20:44: error: expected ')' before '&' token
+   20 |     } catch (const Interpreter::ReturnValue& return_value) {
+      |             ~                              ^
+      |                                            )
+src/interpreter/interpreter.cpp:20:44: error: expected '{' before '&' token
+src/interpreter/interpreter.cpp:20:46: error: 'return_value' was not declared in this scope; did you mean 'ReturnValue'?
+   20 |     } catch (const Interpreter::ReturnValue& return_value) {
+      |                                              ^~~~~~~~~~~~
+      |                                              ReturnValue
+src/interpreter/interpreter.cpp: In constructor 'Interpreter::Interpreter()':
+src/interpreter/interpreter.cpp:29:5: error: 'globalEnvironment' was not declared in this scope; did you mean 'Environment'?
+   29 |     globalEnvironment = std::make_shared<Environment>();
+      |     ^~~~~~~~~~~~~~~~~
+      |     Environment
+src/interpreter/interpreter.cpp:30:5: error: 'currentEnvironment' was not declared in this scope
+   30 |     currentEnvironment = globalEnvironment;
+      |     ^~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.cpp:33:5: error: 'registerBuiltins' was not declared in this scope
+   33 |     registerBuiltins(globalEnvironment);
+      |     ^~~~~~~~~~~~~~~~
+src/interpreter/interpreter.cpp: At global scope:
+src/interpreter/interpreter.cpp:36:6: error: no declaration matches 'void Interpreter::interpret(const std::vector<std::unique_ptr<Stmt> >&)'
+   36 | void Interpreter::interpret(const std::vector<std::unique_ptr<Stmt>>& statements) {
+      |      ^~~~~~~~~~~
+src/interpreter/interpreter.h:48:10: note: candidate is: 'void Interpreter::interpret(const std::vector<std::shared_ptr<Stmt> >&)'
+   48 |     void interpret(const std::vector<std::shared_ptr<Stmt>>& statements);
+      |          ^~~~~~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:46:16: error: no declaration matches 'MegaladonValue Interpreter::evaluate(Expr&)'
+   46 | MegaladonValue Interpreter::evaluate(Expr& expr) {
+      |                ^~~~~~~~~~~
+src/interpreter/interpreter.h:56:20: note: candidate is: 'MegaladonValue Interpreter::evaluate(std::shared_ptr<Expr>)'
+   56 |     MegaladonValue evaluate(std::shared_ptr<Expr> expr);
+      |                    ^~~~~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:50:6: error: no declaration matches 'void Interpreter::execute(Stmt&)'
+   50 | void Interpreter::execute(Stmt& stmt) {
+      |      ^~~~~~~~~~~
+src/interpreter/interpreter.h:57:10: note: candidate is: 'void Interpreter::execute(std::shared_ptr<Stmt>)'
+   57 |     void execute(std::shared_ptr<Stmt> stmt);
+      |          ^~~~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp: In member function 'bool Interpreter::isTruthy(const MegaladonValue&)':
+src/interpreter/interpreter.cpp:55:18: error: 'const class MegaladonValue' has no member named 'isTruthy'
+   55 |     return value.isTruthy();
+      |                  ^~~~~~~~
+src/interpreter/interpreter.cpp: At global scope:
+src/interpreter/interpreter.cpp:73:16: error: no declaration matches 'MegaladonValue Interpreter::visit(BinaryExpr&)'
+   73 | MegaladonValue Interpreter::visit(BinaryExpr& expr) {
+      |                ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:96:16: error: no declaration matches 'MegaladonValue Interpreter::visit(GroupingExpr&)'
+   96 | MegaladonValue Interpreter::visit(GroupingExpr& expr) {
+      |                ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:100:16: error: no declaration matches 'MegaladonValue Interpreter::visit(LiteralExpr&)'
+  100 | MegaladonValue Interpreter::visit(LiteralExpr& expr) {
+      |                ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:104:16: error: no declaration matches 'MegaladonValue Interpreter::visit(UnaryExpr&)'
+  104 | MegaladonValue Interpreter::visit(UnaryExpr& expr) {
+      |                ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:119:16: error: no declaration matches 'MegaladonValue Interpreter::visit(VariableExpr&)'
+  119 | MegaladonValue Interpreter::visit(VariableExpr& expr) {
+      |                ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:123:16: error: no declaration matches 'MegaladonValue Interpreter::visit(AssignExpr&)'
+  123 | MegaladonValue Interpreter::visit(AssignExpr& expr) {
+      |                ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:129:16: error: no declaration matches 'MegaladonValue Interpreter::visit(LogicalExpr&)'
+  129 | MegaladonValue Interpreter::visit(LogicalExpr& expr) {
+      |                ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:141:16: error: no declaration matches 'MegaladonValue Interpreter::visit(CallExpr&)'
+  141 | MegaladonValue Interpreter::visit(CallExpr& expr) {
+      |                ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:162:16: error: no declaration matches 'MegaladonValue Interpreter::visit(GetExpr&)'
+  162 | MegaladonValue Interpreter::visit(GetExpr& expr) {
+      |                ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:177:16: error: no declaration matches 'MegaladonValue Interpreter::visit(SetExpr&)'
+  177 | MegaladonValue Interpreter::visit(SetExpr& expr) {
+      |                ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:193:16: error: no declaration matches 'MegaladonValue Interpreter::visit(ListExpr&)'
+  193 | MegaladonValue Interpreter::visit(ListExpr& expr) {
+      |                ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:201:16: error: no declaration matches 'MegaladonValue Interpreter::visit(IndexExpr&)'
+  201 | MegaladonValue Interpreter::visit(IndexExpr& expr) {
+      |                ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:227:16: error: no declaration matches 'MegaladonValue Interpreter::visit(IndexAssignExpr&)'
+  227 | MegaladonValue Interpreter::visit(IndexAssignExpr& expr) {
+      |                ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:254:6: error: no declaration matches 'void Interpreter::visit(ExpressionStmt&)'
+  254 | void Interpreter::visit(ExpressionStmt& stmt) {
+      |      ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:258:6: error: no declaration matches 'void Interpreter::visit(PrintStmt&)'
+  258 | void Interpreter::visit(PrintStmt& stmt) {
+      |      ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:263:6: error: no declaration matches 'void Interpreter::visit(VarDeclStmt&)'
+  263 | void Interpreter::visit(VarDeclStmt& stmt) {
+      |      ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:273:6: error: no declaration matches 'void Interpreter::visit(BlockStmt&)'
+  273 | void Interpreter::visit(BlockStmt& stmt) {
+      |      ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:278:6: error: no declaration matches 'void Interpreter::executeBloc(const std::vector<std::unique_ptr<Stmt> >&, std::shared_ptr<Environment>)'
+  278 | void Interpreter::executeBlock(const std::vector<std::unique_ptr<Stmt>>& statements, std::shared_ptr<Environment> environment) {
+      |      ^~~~~~~~~~~
+src/interpreter/interpreter.h:49:10: note: candidate is: 'void Interpreter::executeBlock(const std::vector<std::shared_ptr<Stmt> >&, std::shared_ptr<Environment>)'
+   49 |     void executeBlock(const std::vector<std::shared_ptr<Stmt>>& statements, std::shared_ptr<Environment> environment);
+      |          ^~~~~~~~~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:293:6: error: no declaration matches 'void Interpreter::visit(IfStmt&)'
+  293 | void Interpreter::visit(IfStmt& stmt) {
+      |      ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:301:6: error: no declaration matches 'void Interpreter::visit(WhileStmt&)'
+  301 | void Interpreter::visit(WhileStmt& stmt) {
+      |      ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:307:6: error: no declaration matches 'void Interpreter::visit(FunctionStmt&)'
+  307 | void Interpreter::visit(FunctionStmt& stmt) {
+      |      ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+src/interpreter/interpreter.cpp:314:6: error: no declaration matches 'void Interpreter::visit(ReturnStmt&)'
+  314 | void Interpreter::visit(ReturnStmt& stmt) {
+      |      ^~~~~~~~~~~
+src/interpreter/interpreter.h:81:10: note: candidates are: 'void Interpreter::visit(std::shared_ptr<ReturnStmt>)'
+   81 |     void visit(std::shared_ptr<ReturnStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:80:10: note:                 'void Interpreter::visit(std::shared_ptr<FunctionStmt>)'
+   80 |     void visit(std::shared_ptr<FunctionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:79:10: note:                 'void Interpreter::visit(std::shared_ptr<WhileStmt>)'
+   79 |     void visit(std::shared_ptr<WhileStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:78:10: note:                 'void Interpreter::visit(std::shared_ptr<IfStmt>)'
+   78 |     void visit(std::shared_ptr<IfStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:77:10: note:                 'void Interpreter::visit(std::shared_ptr<BlockStmt>)'
+   77 |     void visit(std::shared_ptr<BlockStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:76:10: note:                 'void Interpreter::visit(std::shared_ptr<VarStmt>)'
+   76 |     void visit(std::shared_ptr<VarStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:75:10: note:                 'void Interpreter::visit(std::shared_ptr<PrintStmt>)'
+   75 |     void visit(std::shared_ptr<PrintStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:74:10: note:                 'void Interpreter::visit(std::shared_ptr<ExpressionStmt>)'
+   74 |     void visit(std::shared_ptr<ExpressionStmt> stmt);
+      |          ^~~~~
+src/interpreter/interpreter.h:70:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<SetExpr>)'
+   70 |     MegaladonValue visit(std::shared_ptr<SetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:69:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GetExpr>)'
+   69 |     MegaladonValue visit(std::shared_ptr<GetExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:68:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<ListExpr>)'
+   68 |     MegaladonValue visit(std::shared_ptr<ListExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:67:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<VariableExpr>)'
+   67 |     MegaladonValue visit(std::shared_ptr<VariableExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:66:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<UnaryExpr>)'
+   66 |     MegaladonValue visit(std::shared_ptr<UnaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:65:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LogicalExpr>)'
+   65 |     MegaladonValue visit(std::shared_ptr<LogicalExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:64:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<LiteralExpr>)'
+   64 |     MegaladonValue visit(std::shared_ptr<LiteralExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:63:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<GroupingExpr>)'
+   63 |     MegaladonValue visit(std::shared_ptr<GroupingExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:62:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<CallExpr>)'
+   62 |     MegaladonValue visit(std::shared_ptr<CallExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:61:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<BinaryExpr>)'
+   61 |     MegaladonValue visit(std::shared_ptr<BinaryExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:60:20: note:                 'MegaladonValue Interpreter::visit(std::shared_ptr<AssignExpr>)'
+   60 |     MegaladonValue visit(std::shared_ptr<AssignExpr> expr);
+      |                    ^~~~~
+src/interpreter/interpreter.h:45:7: note: 'class Interpreter' defined here
+   45 | class Interpreter {
+      |       ^~~~~~~~~~~
+In file included from src/lexer/lexer.h:7,
+                 from src/lexer/lexer.cpp:2:
+src/lexer/../types/value.h:18:13: error: 'MegaladonValue' does not name a type; did you mean 'MegaladonCallable'?
+   18 |     virtual MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) = 0;
+      |             ^~~~~~~~~~~~~~
+      |             MegaladonCallable
+src/lexer/lexer.h:22:17: error: 'STRING' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                 ^~~~~~
+src/lexer/../types/value.h:31:5: note: previous declaration 'ValueType STRING'
+   31 |     STRING,
+      |     ^~~~~~
+src/lexer/lexer.h:22:25: error: 'NUMBER' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                         ^~~~~~
+src/lexer/../types/value.h:29:5: note: previous declaration 'ValueType NUMBER'
+   29 |     NUMBER,
+      |     ^~~~~~
+src/lexer/lexer.h:22:33: error: 'BOOLEAN' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                                 ^~~~~~~
+src/lexer/../types/value.h:30:5: note: previous declaration 'ValueType BOOLEAN'
+   30 |     BOOLEAN,
+      |     ^~~~~~~
+src/lexer/lexer.cpp: In member function 'std::string Token::toString() const':
+src/lexer/lexer.cpp:39:9: error: duplicate case value
+   39 |         case STRING:        s = "STRING"; break;
+      |         ^~~~
+src/lexer/lexer.cpp:16:9: note: previously used here
+   16 |         case RIGHT_BRACKET: s = "RIGHT_BRACKET"; break;
+      |         ^~~~
+src/lexer/lexer.cpp:40:9: error: duplicate case value
+   40 |         case NUMBER:        s = "NUMBER"; break;
+      |         ^~~~
+src/lexer/lexer.cpp:14:9: note: previously used here
+   14 |         case RIGHT_PAREN:   s = "RIGHT_PAREN"; break;
+      |         ^~~~
+src/lexer/lexer.cpp:41:9: error: duplicate case value
+   41 |         case BOOLEAN:       s = "BOOLEAN"; break;
+      |         ^~~~
+src/lexer/lexer.cpp:15:9: note: previously used here
+   15 |         case LEFT_BRACKET:  s = "LEFT_BRACKET"; break;
+      |         ^~~~
+src/lexer/lexer.cpp:11:12: warning: enumeration value 'STRING' not handled in switch [-Wswitch]
+   11 |     switch (type) {
+      |            ^
+src/lexer/lexer.cpp:11:12: warning: enumeration value 'NUMBER' not handled in switch [-Wswitch]
+src/lexer/lexer.cpp:11:12: warning: enumeration value 'BOOLEAN' not handled in switch [-Wswitch]
+src/lexer/lexer.cpp:66:14: warning: comparison between 'const enum TokenType' and 'enum ValueType' -Wenum-compare]
+   66 |     if (type == STRING) s += " (val: \"" + string_val + "\")";
+      |         ~~~~~^~~~~~~~~
+src/lexer/lexer.cpp:67:14: warning: comparison between 'const enum TokenType' and 'enum ValueType' -Wenum-compare]
+   67 |     if (type == NUMBER) s += " (val: " + std::to_string(number_val) + ")";
+      |         ~~~~~^~~~~~~~~
+src/lexer/lexer.cpp:68:14: warning: comparison between 'const enum TokenType' and 'enum ValueType' -Wenum-compare]
+   68 |     if (type == BOOLEAN) s += " (val: " + (boolean_val ? "true" : "false") + ")";
+      |         ~~~~~^~~~~~~~~~
+src/lexer/lexer.cpp:68:41: error: invalid operands of types 'const char [8]' and 'const char*' to binary 'operator+'
+   68 |     if (type == BOOLEAN) s += " (val: " + (boolean_val ? "true" : "false") + ")";
+      |                               ~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                               |                        |
+      |                               const char [8]           const char*
+src/lexer/lexer.cpp: In member function 'bool Lexer::isAtEnd()':
+src/lexer/lexer.cpp:108:20: warning: comparison of integer expressions of different signedness: 'in' and 'std::__cxx11::basic_string<char>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  108 |     return current >= source.length();
+      |            ~~~~~~~~^~~~~~~~~~~~~~~~~~
+src/lexer/lexer.cpp: In member function 'char Lexer::peekNext()':
+src/lexer/lexer.cpp:122:21: warning: comparison of integer expressions of different signedness: 'in' and 'std::__cxx11::basic_string<char>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  122 |     if (current + 1 >= source.length()) return '\0';
+      |         ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+src/lexer/lexer.cpp: In member function 'void Lexer::string()':
+src/lexer/lexer.cpp:174:13: error: no matching function for call to 'Lexer::addToken(ValueType, std::string&)'
+  174 |     addToken(STRING, value);
+      |     ~~~~~~~~^~~~~~~~~~~~~~~
+src/lexer/lexer.cpp:174:13: note: there are 4 candidates
+src/lexer/lexer.cpp:134:6: note: candidate 1: 'void Lexer::addToken(TokenType)'
+  134 | void Lexer::addToken(TokenType type) {
+      |      ^~~~~
+src/lexer/lexer.cpp:134:6: note: candidate expects 1 argument, 2 provided
+src/lexer/lexer.cpp:139:6: note: candidate 2: 'void Lexer::addToken(TokenType, const std::string&)'
+  139 | void Lexer::addToken(TokenType type, const std::string& string_val) {
+      |      ^~~~~
+src/lexer/lexer.cpp:139:32: note: no known conversion for argument 1 from 'ValueType' to 'TokenType'
+  139 | void Lexer::addToken(TokenType type, const std::string& string_val) {
+      |                      ~~~~~~~~~~^~~~
+src/lexer/lexer.cpp:144:6: note: candidate 3: 'void Lexer::addToken(TokenType, double)'
+  144 | void Lexer::addToken(TokenType type, double number_val) {
+      |      ^~~~~
+src/lexer/lexer.cpp:144:32: note: no known conversion for argument 1 from 'ValueType' to 'TokenType'
+  144 | void Lexer::addToken(TokenType type, double number_val) {
+      |                      ~~~~~~~~~~^~~~
+src/lexer/lexer.cpp:149:6: note: candidate 4: 'void Lexer::addToken(TokenType, bool)'
+  149 | void Lexer::addToken(TokenType type, bool boolean_val) {
+      |      ^~~~~
+src/lexer/lexer.cpp:149:32: note: no known conversion for argument 1 from 'ValueType' to 'TokenType'
+  149 | void Lexer::addToken(TokenType type, bool boolean_val) {
+      |                      ~~~~~~~~~~^~~~
+src/lexer/lexer.cpp: In member function 'void Lexer::number()':
+src/lexer/lexer.cpp:188:17: error: no matching function for call to 'Lexer::addToken(ValueType, double)'
+  188 |         addToken(NUMBER, std::stod(source.substr(start, current - start)));
+      |         ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/lexer/lexer.cpp:188:17: note: there are 4 candidates
+src/lexer/lexer.cpp:134:6: note: candidate 1: 'void Lexer::addToken(TokenType)'
+  134 | void Lexer::addToken(TokenType type) {
+      |      ^~~~~
+src/lexer/lexer.cpp:134:6: note: candidate expects 1 argument, 2 provided
+src/lexer/lexer.cpp:139:6: note: candidate 2: 'void Lexer::addToken(TokenType, const std::string&)'
+  139 | void Lexer::addToken(TokenType type, const std::string& string_val) {
+      |      ^~~~~
+src/lexer/lexer.cpp:139:32: note: no known conversion for argument 1 from 'ValueType' to 'TokenType'
+  139 | void Lexer::addToken(TokenType type, const std::string& string_val) {
+      |                      ~~~~~~~~~~^~~~
+src/lexer/lexer.cpp:144:6: note: candidate 3: 'void Lexer::addToken(TokenType, double)'
+  144 | void Lexer::addToken(TokenType type, double number_val) {
+      |      ^~~~~
+src/lexer/lexer.cpp:144:32: note: no known conversion for argument 1 from 'ValueType' to 'TokenType'
+  144 | void Lexer::addToken(TokenType type, double number_val) {
+      |                      ~~~~~~~~~~^~~~
+src/lexer/lexer.cpp:149:6: note: candidate 4: 'void Lexer::addToken(TokenType, bool)'
+  149 | void Lexer::addToken(TokenType type, bool boolean_val) {
+      |      ^~~~~
+src/lexer/lexer.cpp:149:32: note: no known conversion for argument 1 from 'ValueType' to 'TokenType'
+  149 | void Lexer::addToken(TokenType type, bool boolean_val) {
+      |                      ~~~~~~~~~~^~~~
+src/lexer/lexer.cpp: In member function 'void Lexer::identifier()':
+src/lexer/lexer.cpp:204:21: error: no matching function for call to 'Lexer::addToken(ValueType, bool)'
+  204 |             addToken(BOOLEAN, (it->second == TRUE));
+      |             ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/lexer/lexer.cpp:204:21: note: there are 4 candidates
+src/lexer/lexer.cpp:134:6: note: candidate 1: 'void Lexer::addToken(TokenType)'
+  134 | void Lexer::addToken(TokenType type) {
+      |      ^~~~~
+src/lexer/lexer.cpp:134:6: note: candidate expects 1 argument, 2 provided
+src/lexer/lexer.cpp:139:6: note: candidate 2: 'void Lexer::addToken(TokenType, const std::string&)'
+  139 | void Lexer::addToken(TokenType type, const std::string& string_val) {
+      |      ^~~~~
+src/lexer/lexer.cpp:139:32: note: no known conversion for argument 1 from 'ValueType' to 'TokenType'
+  139 | void Lexer::addToken(TokenType type, const std::string& string_val) {
+      |                      ~~~~~~~~~~^~~~
+src/lexer/lexer.cpp:144:6: note: candidate 3: 'void Lexer::addToken(TokenType, double)'
+  144 | void Lexer::addToken(TokenType type, double number_val) {
+      |      ^~~~~
+src/lexer/lexer.cpp:144:32: note: no known conversion for argument 1 from 'ValueType' to 'TokenType'
+  144 | void Lexer::addToken(TokenType type, double number_val) {
+      |                      ~~~~~~~~~~^~~~
+src/lexer/lexer.cpp:149:6: note: candidate 4: 'void Lexer::addToken(TokenType, bool)'
+  149 | void Lexer::addToken(TokenType type, bool boolean_val) {
+      |      ^~~~~
+src/lexer/lexer.cpp:149:32: note: no known conversion for argument 1 from 'ValueType' to 'TokenType'
+  149 | void Lexer::addToken(TokenType type, bool boolean_val) {
+      |                      ~~~~~~~~~~^~~~
+In file included from src/parser/../lexer/lexer.h:7,
+                 from src/parser/parser.h:7,
+                 from src/parser/parser.cpp:2:
+C:/megaladon/src/types/value.h:18:13: error: 'MegaladonValue' does not name a type; did you mean 'MegaladonCallable'?
+   18 |     virtual MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) = 0;
+      |             ^~~~~~~~~~~~~~
+      |             MegaladonCallable
+src/parser/../lexer/lexer.h:22:17: error: 'STRING' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                 ^~~~~~
+C:/megaladon/src/types/value.h:31:5: note: previous declaration 'ValueType STRING'
+   31 |     STRING,
+      |     ^~~~~~
+src/parser/../lexer/lexer.h:22:25: error: 'NUMBER' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                         ^~~~~~
+C:/megaladon/src/types/value.h:29:5: note: previous declaration 'ValueType NUMBER'
+   29 |     NUMBER,
+      |     ^~~~~~
+src/parser/../lexer/lexer.h:22:33: error: 'BOOLEAN' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                                 ^~~~~~~
+C:/megaladon/src/types/value.h:30:5: note: previous declaration 'ValueType BOOLEAN'
+   30 |     BOOLEAN,
+      |     ^~~~~~~
+src/parser/parser.cpp: In member function 'std::unique_ptr<Expr> Parser::primary()':
+src/parser/parser.cpp:308:97: error: 'VOID' is not a member of 'MegaladonValue'
+  308 |     if (match({NULL_TYPE})) return std::make_unique<LiteralExpr>(MegaladonValue(MegaladonValue::VOID));
+      |
+    ^~~~
+src/parser/parser.cpp:310:14: error: converting to 'const std::vector<TokenType>' from initializer list would use explicit constructor 'std::vector<_Tp, _Alloc>::vector(size_type, const allocator_type&) [with _Tp = TokenType; _Alloc = std::allocator<TokenType>; size_type = long long unsigned int; allocator_type = std::allocator<TokenType>]'
+  310 |     if (match({NUMBER})) return std::make_unique<LiteralExpr>(MegaladonValue(previous().number_val));
+      |         ~~~~~^~~~~~~~~~
+In file included from C:/msys64/mingw64/include/c++/15.1.0/vector:68,
+                 from src/parser/parser.h:4:
+C:/msys64/mingw64/include/c++/15.1.0/bits/stl_vector.h:586:7: note: 'std::vector<_Tp, _Alloc>::vector(size_type, const allocator_type&) [with _Tp = TokenType; _Alloc = std::allocator<TokenType>; size_type = long long unsigned int; allocator_type = std::allocator<TokenType>]' declared here
+  586 |       vector(size_type __n, const allocator_type& __a = allocator_type())
+      |       ^~~~~~
+src/parser/parser.cpp:311:14: error: converting to 'const std::vector<TokenType>' from initializer list would use explicit constructor 'std::vector<_Tp, _Alloc>::vector(size_type, const allocator_type&) [with _Tp = TokenType; _Alloc = std::allocator<TokenType>; size_type = long long unsigned int; allocator_type = std::allocator<TokenType>]'
+  311 |     if (match({STRING})) return std::make_unique<LiteralExpr>(MegaladonValue(previous().string_val));
+      |         ~~~~~^~~~~~~~~~
+C:/msys64/mingw64/include/c++/15.1.0/bits/stl_vector.h:586:7: note: 'std::vector<_Tp, _Alloc>::vector(size_type, const allocator_type&) [with _Tp = TokenType; _Alloc = std::allocator<TokenType>; size_type = long long unsigned int; allocator_type = std::allocator<TokenType>]' declared here
+  586 |       vector(size_type __n, const allocator_type& __a = allocator_type())
+      |       ^~~~~~
+In file included from src/types/value.cpp:2:
+src/types/value.h:18:13: error: 'MegaladonValue' does not name a type; did you mean 'MegaladonCallable'?
+   18 |     virtual MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) = 0;
+      |             ^~~~~~~~~~~~~~
+      |             MegaladonCallable
+In file included from C:/megaladon/src/ast/ast.h:7,
+                 from src/types/../interpreter/interpreter.h:3,
+                 from src/types/value.cpp:3:
+C:/megaladon/src/lexer/lexer.h:22:17: error: 'STRING' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                 ^~~~~~
+src/types/value.h:31:5: note: previous declaration 'ValueType STRING'
+   31 |     STRING,
+      |     ^~~~~~
+C:/megaladon/src/lexer/lexer.h:22:25: error: 'NUMBER' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                         ^~~~~~
+src/types/value.h:29:5: note: previous declaration 'ValueType NUMBER'
+   29 |     NUMBER,
+      |     ^~~~~~
+C:/megaladon/src/lexer/lexer.h:22:33: error: 'BOOLEAN' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                                 ^~~~~~~
+src/types/value.h:30:5: note: previous declaration 'ValueType BOOLEAN'
+   30 |     BOOLEAN,
+      |     ^~~~~~~
+src/types/value.cpp:48:8: error: redefinition of 'double MegaladonValue::asNumber() const'
+   48 | double MegaladonValue::asNumber() const {
+      |        ^~~~~~~~~~~~~~
+src/types/value.h:69:12: note: 'double MegaladonValue::asNumber() const' previously defined here
+   69 |     double asNumber() const {
+      |            ^~~~~~~~
+src/types/value.cpp:53:6: error: redefinition of 'bool MegaladonValue::asBoolean() const'
+   53 | bool MegaladonValue::asBoolean() const {
+      |      ^~~~~~~~~~~~~~
+src/types/value.h:75:10: note: 'bool MegaladonValue::asBoolean() const' previously defined here
+   75 |     bool asBoolean() const {
+      |          ^~~~~~~~~
+src/types/value.cpp:58:20: error: redefinition of 'const std::string& MegaladonValue::asString() const'
+   58 | const std::string& MegaladonValue::asString() const {
+      |                    ^~~~~~~~~~~~~~
+src/types/value.h:80:24: note: 'const std::string& MegaladonValue::asString() const' previously defined here
+   80 |     const std::string& asString() const {
+      |                        ^~~~~~~~
+src/types/value.cpp:63:14: error: no declaration matches 'std::string& MegaladonValue::asStringMutable()'
+   63 | std::string& MegaladonValue::asStringMutable() {
+      |              ^~~~~~~~~~~~~~
+src/types/value.cpp:63:14: note: no functions named 'std::string& MegaladonValue::asStringMutable()'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+src/types/value.cpp:68:36: error: redefinition of 'const std::vector<MegaladonValue>& MegaladonValue::asList() const'
+   68 | const std::vector<MegaladonValue>& MegaladonValue::asList() const {
+      |                                    ^~~~~~~~~~~~~~
+src/types/value.h:85:40: note: 'const std::vector<MegaladonValue>& MegaladonValue::asList() const' previously defined here
+   85 |     const std::vector<MegaladonValue>& asList() const {
+      |                                        ^~~~~~
+src/types/value.cpp:73:30: error: redefinition of 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
+   73 | std::vector<MegaladonValue>& MegaladonValue::asListMutable() {
+      |                              ^~~~~~~~~~~~~~
+src/types/value.h:92:34: note: 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()' previously defined here
+   92 |     std::vector<MegaladonValue>& asListMutable() {
+      |                                  ^~~~~~~~~~~~~
+src/types/value.cpp:78:20: error: no declaration matches 'MegaladonCallable* MegaladonValue::asFunction() const'
+   78 | MegaladonCallable* MegaladonValue::asFunction() const {
+      |                    ^~~~~~~~~~~~~~
+src/types/value.cpp:78:20: note: no functions named 'MegaladonCallable* MegaladonValue::asFunction() const'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+src/types/value.cpp:86:6: error: no declaration matches 'void MegaladonValue::checkNumericOperand(const MegaladonValue&) const'
+   86 | void MegaladonValue::checkNumericOperand(const MegaladonValue& operand) const {
+      |      ^~~~~~~~~~~~~~
+src/types/value.cpp:86:6: note: no functions named 'void MegaladonValue::checkNumericOperand(const MegaladonValue&) const'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+src/types/value.cpp:92:6: error: no declaration matches 'void MegaladonValue::checkNumericOperands(const MegaladonValue&) const'
+   92 | void MegaladonValue::checkNumericOperands(const MegaladonValue& other) const {
+      |      ^~~~~~~~~~~~~~
+src/types/value.cpp:92:6: note: no functions named 'void MegaladonValue::checkNumericOperands(const MegaladonValue&) const'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+src/types/value.cpp:98:16: error: no declaration matches 'MegaladonValue MegaladonValue::operator+(const MegaladonValue&) const'
+   98 | MegaladonValue MegaladonValue::operator+(const MegaladonValue& other) const {
+      |                ^~~~~~~~~~~~~~
+src/types/value.cpp:98:16: note: no functions named 'MegaladonValue MegaladonValue::operator+(const MegaladonValue&) const'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+src/types/value.cpp:111:16: error: no declaration matches 'MegaladonValue MegaladonValue::operator-(const MegaladonValue&) const'
+  111 | MegaladonValue MegaladonValue::operator-(const MegaladonValue& other) const {
+      |                ^~~~~~~~~~~~~~
+src/types/value.cpp:111:16: note: no functions named 'MegaladonValue MegaladonValue::operator-(const MegaladonValue&) const'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+src/types/value.cpp:116:16: error: no declaration matches 'MegaladonValue MegaladonValue::operator*(const MegaladonValue&) const'
+  116 | MegaladonValue MegaladonValue::operator*(const MegaladonValue& other) const {
+      |                ^~~~~~~~~~~~~~
+src/types/value.cpp:116:16: note: no functions named 'MegaladonValue MegaladonValue::operator*(const MegaladonValue&) const'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+src/types/value.cpp:121:16: error: no declaration matches 'MegaladonValue MegaladonValue::operator/(const MegaladonValue&) const'
+  121 | MegaladonValue MegaladonValue::operator/(const MegaladonValue& other) const {
+      |                ^~~~~~~~~~~~~~
+src/types/value.cpp:121:16: note: no functions named 'MegaladonValue MegaladonValue::operator/(const MegaladonValue&) const'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+src/types/value.cpp:129:16: error: no declaration matches 'MegaladonValue MegaladonValue::operator%(const MegaladonValue&) const'
+  129 | MegaladonValue MegaladonValue::operator%(const MegaladonValue& other) const {
+      |                ^~~~~~~~~~~~~~
+src/types/value.cpp:129:16: note: no functions named 'MegaladonValue MegaladonValue::operator%(const MegaladonValue&) const'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+src/types/value.cpp:144:6: error: no declaration matches 'bool MegaladonValue::operator==(const MegaladonValue&) const'
+  144 | bool MegaladonValue::operator==(const MegaladonValue& other) const {
+      |      ^~~~~~~~~~~~~~
+src/types/value.cpp:144:6: note: no functions named 'bool MegaladonValue::operator==(const MegaladonValue&) const'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+src/types/value.cpp:173:6: error: no declaration matches 'bool MegaladonValue::operator!=(const MegaladonValue&) const'
+  173 | bool MegaladonValue::operator!=(const MegaladonValue& other) const {
+      |      ^~~~~~~~~~~~~~
+src/types/value.cpp:173:6: note: no functions named 'bool MegaladonValue::operator!=(const MegaladonValue&) const'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+src/types/value.cpp:177:6: error: no declaration matches 'bool MegaladonValue::operator<(const MegaladonValue&) const'
+  177 | bool MegaladonValue::operator<(const MegaladonValue& other) const {
+      |      ^~~~~~~~~~~~~~
+src/types/value.cpp:177:6: note: no functions named 'bool MegaladonValue::operator<(const MegaladonValue&) const'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+src/types/value.cpp:186:6: error: no declaration matches 'bool MegaladonValue::operator<=(const MegaladonValue&) const'
+  186 | bool MegaladonValue::operator<=(const MegaladonValue& other) const {
+      |      ^~~~~~~~~~~~~~
+src/types/value.cpp:186:6: note: no functions named 'bool MegaladonValue::operator<=(const MegaladonValue&) const'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+src/types/value.cpp:195:6: error: no declaration matches 'bool MegaladonValue::operator>(const MegaladonValue&) const'
+  195 | bool MegaladonValue::operator>(const MegaladonValue& other) const {
+      |      ^~~~~~~~~~~~~~
+src/types/value.cpp:195:6: note: no functions named 'bool MegaladonValue::operator>(const MegaladonValue&) const'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+src/types/value.cpp:204:6: error: no declaration matches 'bool MegaladonValue::operator>=(const MegaladonValue&) const'
+  204 | bool MegaladonValue::operator>=(const MegaladonValue& other) const {
+      |      ^~~~~~~~~~~~~~
+src/types/value.cpp:204:6: note: no functions named 'bool MegaladonValue::operator>=(const MegaladonValue&) const'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+src/types/value.cpp:215:6: error: no declaration matches 'bool MegaladonValue::isTruthy() const'
+  215 | bool MegaladonValue::isTruthy() const {
+      |      ^~~~~~~~~~~~~~
+src/types/value.cpp:215:6: note: no functions named 'bool MegaladonValue::isTruthy() const'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+src/types/value.cpp: In member function 'std::string MegaladonValue::toString() const':
+src/types/value.cpp:255:31: error: 'asFunction' was not declared in this scope; did you mean 'isFunction'?
+  255 |         case FUNCTION: return asFunction()->toString();
+      |                               ^~~~~~~~~~
+      |                               isFunction
+src/types/value.cpp: At global scope:
+src/types/value.cpp:262:16: error: no declaration matches 'MegaladonValue MegaladonValue::callMetho(Interpreter&, const std::string&, const std::vector<MegaladonValue>&)'
+  262 | MegaladonValue MegaladonValue::callMethod(Interpreter& interpreter, const std::string& methodName, const std::vector<MegaladonValue>& args_from_call_expr) {
+      |                ^~~~~~~~~~~~~~
+src/types/value.cpp:262:16: note: no functions named 'MegaladonValue MegaladonValue::callMethod(Interpreter&, const std::string&, const std::vector<MegaladonValue>&)'
+src/types/value.h:37:7: note: 'class MegaladonValue' defined here
+   37 | class MegaladonValue {
+      |       ^~~~~~~~~~~~~~
+In file included from src/lexer/lexer.h:7,
+                 from src/main.cpp:8:
+src/lexer/../types/value.h:18:13: error: 'MegaladonValue' does not name a type; did you mean 'MegaladonCallable'?
+   18 |     virtual MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) = 0;
+      |             ^~~~~~~~~~~~~~
+      |             MegaladonCallable
+src/lexer/lexer.h:22:17: error: 'STRING' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                 ^~~~~~
+src/lexer/../types/value.h:31:5: note: previous declaration 'ValueType STRING'
+   31 |     STRING,
+      |     ^~~~~~
+src/lexer/lexer.h:22:25: error: 'NUMBER' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                         ^~~~~~
+src/lexer/../types/value.h:29:5: note: previous declaration 'ValueType NUMBER'
+   29 |     NUMBER,
+      |     ^~~~~~
+src/lexer/lexer.h:22:33: error: 'BOOLEAN' conflicts with a previous declaration
+   22 |     IDENTIFIER, STRING, NUMBER, BOOLEAN,
+      |                                 ^~~~~~~
+src/lexer/../types/value.h:30:5: note: previous declaration 'ValueType BOOLEAN'
+   30 |     BOOLEAN,
+      |     ^~~~~~~
+src/main.cpp: In function 'void run(const std::string&)':
+src/main.cpp:28:27: error: cannot convert 'std::vector<std::unique_ptr<Stmt> >' to 'const std::vector<std::shared_ptr<Stmt> >&'
+   28 |     interpreter.interpret(statements);
+      |                           ^~~~~~~~~~
+      |                           |
+      |                           std::vector<std::unique_ptr<Stmt> >
+In file included from src/main.cpp:10:
+src/interpreter/interpreter.h:48:62: note: initializing argument 1 of 'void Interpreter::interpret(const std::vector<std::shared_ptr<Stmt> >&)'
+   48 |     void interpret(const std::vector<std::shared_ptr<Stmt>>& statements);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+src/main.cpp: In function 'void runPrompt()':
+src/main.cpp:80:66: error: cannot convert 'Expr' to 'std::shared_ptr<Expr>'
+   80 |                     MegaladonValue result = interpreter.evaluate(*expr_stmt->expression);
+      |                                                                  ^~~~~~~~~~~~~~~~~~~~~~
+      |                                                                  |
+      |                                                                  Expr
+src/interpreter/interpreter.h:56:51: note: initializing argument 1 of 'MegaladonValue Interpreter::evaluate(std::shared_ptr<Expr>)'
+   56 |     MegaladonValue evaluate(std::shared_ptr<Expr> expr);
+      |                             ~~~~~~~~~~~~~~~~~~~~~~^~~~
+src/main.cpp:86:41: error: cannot convert 'Stmt' to 'std::shared_ptr<Stmt>'
+   86 |                     interpreter.execute(*stmt);
+      |                                         ^~~~~
+      |                                         |
+      |                                         Stmt
+src/interpreter/interpreter.h:57:40: note: initializing argument 1 of 'void Interpreter::execute(std::shared_ptr<Stmt>)'
+   57 |     void execute(std::shared_ptr<Stmt> stmt);
+      |                  ~~~~~~~~~~~~~~~~~~~~~~^~~~
+src/main.cpp:89:32: error: 'class Parser::ParseError' is private within this context
+   89 |         } catch (const Parser::ParseError& e) {
+      |                                ^~~~~~~~~~
+In file included from src/main.cpp:9:
+src/parser/parser.h:55:11: note: declared private here
+   55 |     class ParseError : public std::runtime_error {
+      |           ^~~~~~~~~~
 
 bandi@BS12 MINGW64 /c/megaladon
-
-$ g++ -std=c++17 -Wall -Wextra -Isrc/ast -Isrc/builtins -Isrc/environment -Isrc/interpreter -Isrc/lexer -Isrc/parser -Isrc/types -Isrc/util src/ast/ast.cpp src/builtins/builtins.h src/builtins/core_function.cpp src/builtins/list_methods.cpp src/builtins/string_methods.cpp src/environment/environment.cpp src/interpreter/interpreter.cpp src/lexer/lexer.cpp src/parser/parser.cpp src/types/value.cpp src/util/error.cpp src/main.cpp -o megaladon.exe
-
-In file included from src/ast/../interpreter/interpreter.h:10,
-
-                 from src/ast/ast.cpp:3:
-
-C:/megaladon/src/builtins/builtins.h:16:33: error: invalid use of incomplete type 'class MegaladonCallable'
-
-   16 | class MegaladonBuiltin : public MegaladonCallable {
-
-      |                                 ^~~~~~~~~~~~~~~~~
-
-In file included from src/ast/../lexer/lexer.h:7,
-
-                 from src/ast/ast.h:7,
-
-                 from src/ast/ast.cpp:2:
-
-C:/megaladon/src/types/value.h:10:7: note: forward declaration of 'class MegaladonCallable'
-
-   10 | class MegaladonCallable;
-
-      |       ^~~~~~~~~~~~~~~~~
-
-C:/megaladon/src/builtins/builtins.h:22:9: error: 'int MegaladonBuiltin::arity() const' marked 'override', but does not override
-
-   22 |     int arity() const override { return _arity; }
-
-      |         ^~~~~
-
-C:/megaladon/src/builtins/builtins.h:23:17: error: 'std::string MegaladonBuiltin::toString() const' marked 'override', but does not override
-
-   23 |     std::string toString() const override { return "[Built-in Function " + name + "]"; }
-
-      |                 ^~~~~~~~
-
-C:/megaladon/src/builtins/builtins.h:30:20: error: 'MegaladonValue PrintBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
-
-   30 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
-
-      |                    ^~~~
-
-C:/megaladon/src/builtins/builtins.h:36:20: error: 'MegaladonValue InputBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
-
-   36 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
-
-      |                    ^~~~
-
-C:/megaladon/src/builtins/builtins.h:42:20: error: 'MegaladonValue LenBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
-
-   42 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
-
-      |                    ^~~~
-
-src/ast/../interpreter/interpreter.h:86:52: error: expected class-name before '{' token
-
-   86 |     struct ReturnValue : public std::runtime_error {
-
-      |                                                    ^
-
-src/ast/../interpreter/interpreter.h: In constructor 'Interpreter::ReturnValue::ReturnValue(MegaladonValue)':
-
-src/ast/../interpreter/interpreter.h:88:61: error: expected class-name before '(' token
-
-   88 |         ReturnValue(MegaladonValue val) : std::runtime_error(""), value(std::move(val)) {}
-
-      |                                                             ^
-
-src/ast/../interpreter/interpreter.h:88:61: error: expected '{' before '(' token
-
-src/ast/../interpreter/interpreter.h:88:36: warning: unused parameter 'val' [-Wunused-parameter]
-
-   88 |         ReturnValue(MegaladonValue val) : std::runtime_error(""), value(std::move(val)) {}
-
-      |                     ~~~~~~~~~~~~~~~^~~
-
-src/builtins/builtins.h:16:33: error: invalid use of incomplete type 'class MegaladonCallable'
-
-   16 | class MegaladonBuiltin : public MegaladonCallable {
-
-      |                                 ^~~~~~~~~~~~~~~~~
-
-In file included from src/builtins/builtins.h:4:
-
-src/builtins/../types/value.h:10:7: note: forward declaration of 'class MegaladonCallable'
-
-   10 | class MegaladonCallable;
-
-      |       ^~~~~~~~~~~~~~~~~
-
-src/builtins/builtins.h:22:9: error: 'int MegaladonBuiltin::arity() const' marked 'override', but does not override
-
-   22 |     int arity() const override { return _arity; }
-
-      |         ^~~~~
-
-src/builtins/builtins.h:23:17: error: 'std::string MegaladonBuiltin::toString() const' marked 'override', but does not override
-
-   23 |     std::string toString() const override { return "[Built-in Function " + name + "]"; }
-
-      |                 ^~~~~~~~
-
-src/builtins/builtins.h:30:20: error: 'MegaladonValue PrintBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
-
-   30 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
-
-      |                    ^~~~
-
-src/builtins/builtins.h:36:20: error: 'MegaladonValue InputBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
-
-   36 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
-
-      |                    ^~~~
-
-src/builtins/builtins.h:42:20: error: 'MegaladonValue LenBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
-
-   42 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
-
-      |                    ^~~~
-
-In file included from src/builtins/core_function.cpp:2:
-
-src/builtins/builtins.h:16:33: error: invalid use of incomplete type 'class MegaladonCallable'
-
-   16 | class MegaladonBuiltin : public MegaladonCallable {
-
-      |                                 ^~~~~~~~~~~~~~~~~
-
-In file included from src/builtins/builtins.h:4:
-
-src/builtins/../types/value.h:10:7: note: forward declaration of 'class MegaladonCallable'
-
-   10 | class MegaladonCallable;
-
-      |       ^~~~~~~~~~~~~~~~~
-
-src/builtins/builtins.h:22:9: error: 'int MegaladonBuiltin::arity() const' marked 'override', but does not override
-
-   22 |     int arity() const override { return _arity; }
-
-      |         ^~~~~
-
-src/builtins/builtins.h:23:17: error: 'std::string MegaladonBuiltin::toString() const' marked 'override', but does not override
-
-   23 |     std::string toString() const override { return "[Built-in Function " + name + "]"; }
-
-      |                 ^~~~~~~~
-
-src/builtins/builtins.h:30:20: error: 'MegaladonValue PrintBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
-
-   30 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
-
-      |                    ^~~~
-
-src/builtins/builtins.h:36:20: error: 'MegaladonValue InputBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
-
-   36 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
-
-      |                    ^~~~
-
-src/builtins/builtins.h:42:20: error: 'MegaladonValue LenBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
-
-   42 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
-
-      |                    ^~~~
-
-In file included from src/builtins/core_function.cpp:3:
-
-src/builtins/../interpreter/interpreter.h:86:52: error: expected class-name before '{' token
-
-   86 |     struct ReturnValue : public std::runtime_error {
-
-      |                                                    ^
-
-src/builtins/../interpreter/interpreter.h: In constructor 'Interpreter::ReturnValue::ReturnValue(MegaladonValue)':
-
-src/builtins/../interpreter/interpreter.h:88:61: error: expected class-name before '(' token
-
-   88 |         ReturnValue(MegaladonValue val) : std::runtime_error(""), value(std::move(val)) {}
-
-      |                                                             ^
-
-src/builtins/../interpreter/interpreter.h:88:61: error: expected '{' before '(' token
-
-src/builtins/../interpreter/interpreter.h:88:36: warning: unused parameter 'val' [-Wunused-paramete]
-
-   88 |         ReturnValue(MegaladonValue val) : std::runtime_error(""), value(std::move(val)) {}
-
-      |                     ~~~~~~~~~~~~~~~^~~
-
-src/builtins/core_function.cpp: In member function 'MegaladonValue PrintBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)':
-
-src/builtins/core_function.cpp:13:48: warning: unused parameter 'interpreter' [-Wunused-parameter]
-
-   13 | MegaladonValue PrintBuiltin::call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) {
-
-      |                                   ~~~~~~~~~~~~~^~~~~~~~~~~
-
-src/builtins/core_function.cpp: In member function 'MegaladonValue InputBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)':
-
-src/builtins/core_function.cpp:18:48: warning: unused parameter 'interpreter' [-Wunused-parameter]
-
-   18 | MegaladonValue InputBuiltin::call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) {
-
-      |                                   ~~~~~~~~~~~~~^~~~~~~~~~~
-
-src/builtins/core_function.cpp:18:96: warning: unused parameter 'arguments' [-Wunused-parameter]
-
-   18 | MegaladonValue InputBuiltin::call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) {
-
-      |                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~
-
-src/builtins/core_function.cpp: In member function 'MegaladonValue LenBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)':
-
-src/builtins/core_function.cpp:24:46: warning: unused parameter 'interpreter' [-Wunused-parameter]
-
-   24 | MegaladonValue LenBuiltin::call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) {
-
-      |                                 ~~~~~~~~~~~~~^~~~~~~~~~~
-
-src/builtins/core_function.cpp: In function 'void registerBuiltins(std::shared_ptr<Environment>&)':
-
-src/builtins/core_function.cpp:44:73: error: no matching function for call to 'MegaladonValue::MegaladonValue(std::shared_ptr<PrintBuiltin>)'
-
-   44 |     env->define("print", MegaladonValue(std::make_shared<PrintBuiltin>()));
-
-      |                                                                         ^
-
-src/builtins/core_function.cpp:44:73: note: there are 9 candidates
-
-src/builtins/../types/value.h:41:5: note: candidate 1: 'MegaladonValue::MegaladonValue(ValueType)'
-
-   41 |     MegaladonValue(ValueType type) : type(type) { // For specific VOID or INVALID initialization
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:41:30: note: no known conversion for argument 1 from 'std::shared_ptr<PrintBuiltin>' to 'MegaladonValue::ValueType'
-
-   41 |     MegaladonValue(ValueType type) : type(type) { // For specific VOID or INVALID initialization
-
-      |                    ~~~~~~~~~~^~~~
-
-src/builtins/../types/value.h:40:5: note: candidate 2: 'MegaladonValue::MegaladonValue(std::shared_ptr<MegaladonCallable>)'
-
-   40 |     MegaladonValue(std::shared_ptr<MegaladonCallable> val) : data(std::move(val)), type(FUNCTION) {}
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:40:55: note: no known conversion for argument 1 from 'shared_ptr<PrintBuiltin>' to 'shared_ptr<MegaladonCallable>'
-
-   40 |     MegaladonValue(std::shared_ptr<MegaladonCallable> val) : data(std::move(val)), type(FUNCTION) {}
-
-      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
-
-src/builtins/../types/value.h:39:5: note: candidate 3: 'MegaladonValue::MegaladonValue(std::vector<MegaladonValue>)'
-
-   39 |     MegaladonValue(std::vector<MegaladonValue> val) : data(std::move(val)), type(LIST) {}
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:39:48: note: no known conversion for argument 1 from 'std::shared_ptr<PrintBuiltin>' to 'std::vector<MegaladonValue>'
-
-   39 |     MegaladonValue(std::vector<MegaladonValue> val) : data(std::move(val)), type(LIST) {}
-
-      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
-
-src/builtins/../types/value.h:38:5: note: candidate 4: 'MegaladonValue::MegaladonValue(std::string)'
-
-   38 |     MegaladonValue(std::string val) : data(std::move(val)), type(STRING) {}
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:38:32: note: no known conversion for argument 1 from 'std::shared_ptr<PrintBuiltin>' to 'std::string' {aka 'std::__cxx11::basic_string<char>'}
-
-   38 |     MegaladonValue(std::string val) : data(std::move(val)), type(STRING) {}
-
-      |                    ~~~~~~~~~~~~^~~
-
-src/builtins/../types/value.h:37:5: note: candidate 5: 'MegaladonValue::MegaladonValue(bool)'
-
-   37 |     MegaladonValue(bool val) : data(val), type(BOOLEAN) {}
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:37:25: note: no known conversion for argument 1 from 'std::shared_ptr<PrintBuiltin>' to 'bool'
-
-   37 |     MegaladonValue(bool val) : data(val), type(BOOLEAN) {}
-
-      |                    ~~~~~^~~
-
-src/builtins/../types/value.h:36:5: note: candidate 6: 'MegaladonValue::MegaladonValue(double)'
-
-   36 |     MegaladonValue(double val) : data(val), type(NUMBER) {}
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:36:27: note: no known conversion for argument 1 from 'std::shared_ptr<PrintBuiltin>' to 'double'
-
-   36 |     MegaladonValue(double val) : data(val), type(NUMBER) {}
-
-      |                    ~~~~~~~^~~
-
-src/builtins/../types/value.h:35:5: note: candidate 7: 'MegaladonValue::MegaladonValue()'
-
-   35 |     MegaladonValue() : data(std::monostate{}), type(VOID) {} // Default constructor for VOID
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:35:5: note: candidate expects 0 arguments, 1 provided
-
-src/builtins/../types/value.h:14:7: note: candidate 8: 'MegaladonValue::MegaladonValue(const MegaladonValue&)'
-
-   14 | class MegaladonValue {
-
-      |       ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:14:7: note: no known conversion for argument 1 from 'std::shared_ptr<PrintBuiltin>' to 'const MegaladonValue&'
-
-src/builtins/../types/value.h:14:7: note: candidate 9: 'MegaladonValue::MegaladonValue(MegaladonValue&&)'
-
-src/builtins/../types/value.h:14:7: note: no known conversion for argument 1 from 'std::shared_ptr<PrintBuiltin>' to 'MegaladonValue&&'
-
-src/builtins/core_function.cpp:45:73: error: no matching function for call to 'MegaladonValue::MegaladonValue(std::shared_ptr<InputBuiltin>)'
-
-   45 |     env->define("input", MegaladonValue(std::make_shared<InputBuiltin>()));
-
-      |                                                                         ^
-
-src/builtins/core_function.cpp:45:73: note: there are 9 candidates
-
-src/builtins/../types/value.h:41:5: note: candidate 1: 'MegaladonValue::MegaladonValue(ValueType)'
-
-   41 |     MegaladonValue(ValueType type) : type(type) { // For specific VOID or INVALID initialization
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:41:30: note: no known conversion for argument 1 from 'std::shared_ptr<InputBuiltin>' to 'MegaladonValue::ValueType'
-
-   41 |     MegaladonValue(ValueType type) : type(type) { // For specific VOID or INVALID initialization
-
-      |                    ~~~~~~~~~~^~~~
-
-src/builtins/../types/value.h:40:5: note: candidate 2: 'MegaladonValue::MegaladonValue(std::shared_ptr<MegaladonCallable>)'
-
-   40 |     MegaladonValue(std::shared_ptr<MegaladonCallable> val) : data(std::move(val)), type(FUNCTION) {}
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:40:55: note: no known conversion for argument 1 from 'shared_ptr<InputBuiltin>' to 'shared_ptr<MegaladonCallable>'
-
-   40 |     MegaladonValue(std::shared_ptr<MegaladonCallable> val) : data(std::move(val)), type(FUNCTION) {}
-
-      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
-
-src/builtins/../types/value.h:39:5: note: candidate 3: 'MegaladonValue::MegaladonValue(std::vector<MegaladonValue>)'
-
-   39 |     MegaladonValue(std::vector<MegaladonValue> val) : data(std::move(val)), type(LIST) {}
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:39:48: note: no known conversion for argument 1 from 'std::shared_ptr<InputBuiltin>' to 'std::vector<MegaladonValue>'
-
-   39 |     MegaladonValue(std::vector<MegaladonValue> val) : data(std::move(val)), type(LIST) {}
-
-      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
-
-src/builtins/../types/value.h:38:5: note: candidate 4: 'MegaladonValue::MegaladonValue(std::string)'
-
-   38 |     MegaladonValue(std::string val) : data(std::move(val)), type(STRING) {}
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:38:32: note: no known conversion for argument 1 from 'std::shared_ptr<InputBuiltin>' to 'std::string' {aka 'std::__cxx11::basic_string<char>'}
-
-   38 |     MegaladonValue(std::string val) : data(std::move(val)), type(STRING) {}
-
-      |                    ~~~~~~~~~~~~^~~
-
-src/builtins/../types/value.h:37:5: note: candidate 5: 'MegaladonValue::MegaladonValue(bool)'
-
-   37 |     MegaladonValue(bool val) : data(val), type(BOOLEAN) {}
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:37:25: note: no known conversion for argument 1 from 'std::shared_ptr<InputBuiltin>' to 'bool'
-
-   37 |     MegaladonValue(bool val) : data(val), type(BOOLEAN) {}
-
-      |                    ~~~~~^~~
-
-src/builtins/../types/value.h:36:5: note: candidate 6: 'MegaladonValue::MegaladonValue(double)'
-
-   36 |     MegaladonValue(double val) : data(val), type(NUMBER) {}
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:36:27: note: no known conversion for argument 1 from 'std::shared_ptr<InputBuiltin>' to 'double'
-
-   36 |     MegaladonValue(double val) : data(val), type(NUMBER) {}
-
-      |                    ~~~~~~~^~~
-
-src/builtins/../types/value.h:35:5: note: candidate 7: 'MegaladonValue::MegaladonValue()'
-
-   35 |     MegaladonValue() : data(std::monostate{}), type(VOID) {} // Default constructor for VOID
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:35:5: note: candidate expects 0 arguments, 1 provided
-
-src/builtins/../types/value.h:14:7: note: candidate 8: 'MegaladonValue::MegaladonValue(const MegaladonValue&)'
-
-   14 | class MegaladonValue {
-
-      |       ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:14:7: note: no known conversion for argument 1 from 'std::shared_ptr<InputBuiltin>' to 'const MegaladonValue&'
-
-src/builtins/../types/value.h:14:7: note: candidate 9: 'MegaladonValue::MegaladonValue(MegaladonValue&&)'
-
-src/builtins/../types/value.h:14:7: note: no known conversion for argument 1 from 'std::shared_ptr<InputBuiltin>' to 'MegaladonValue&&'
-
-src/builtins/core_function.cpp:46:69: error: no matching function for call to 'MegaladonValue::MegaladonValue(std::shared_ptr<LenBuiltin>)'
-
-   46 |     env->define("len", MegaladonValue(std::make_shared<LenBuiltin>()));
-
-      |                                                                     ^
-
-src/builtins/core_function.cpp:46:69: note: there are 9 candidates
-
-src/builtins/../types/value.h:41:5: note: candidate 1: 'MegaladonValue::MegaladonValue(ValueType)'
-
-   41 |     MegaladonValue(ValueType type) : type(type) { // For specific VOID or INVALID initialization
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:41:30: note: no known conversion for argument 1 from 'std::shared_ptr<LenBuiltin>' to 'MegaladonValue::ValueType'
-
-   41 |     MegaladonValue(ValueType type) : type(type) { // For specific VOID or INVALID initialization
-
-      |                    ~~~~~~~~~~^~~~
-
-src/builtins/../types/value.h:40:5: note: candidate 2: 'MegaladonValue::MegaladonValue(std::shared_ptr<MegaladonCallable>)'
-
-   40 |     MegaladonValue(std::shared_ptr<MegaladonCallable> val) : data(std::move(val)), type(FUNCTION) {}
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:40:55: note: no known conversion for argument 1 from 'shared_ptr<LenBuiltin>' to 'shared_ptr<MegaladonCallable>'
-
-   40 |     MegaladonValue(std::shared_ptr<MegaladonCallable> val) : data(std::move(val)), type(FUNCTION) {}
-
-      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
-
-src/builtins/../types/value.h:39:5: note: candidate 3: 'MegaladonValue::MegaladonValue(std::vector<MegaladonValue>)'
-
-   39 |     MegaladonValue(std::vector<MegaladonValue> val) : data(std::move(val)), type(LIST) {}
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:39:48: note: no known conversion for argument 1 from 'std::shared_ptr<LenBuiltin>' to 'std::vector<MegaladonValue>'
-
-   39 |     MegaladonValue(std::vector<MegaladonValue> val) : data(std::move(val)), type(LIST) {}
-
-      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
-
-src/builtins/../types/value.h:38:5: note: candidate 4: 'MegaladonValue::MegaladonValue(std::string)'
-
-   38 |     MegaladonValue(std::string val) : data(std::move(val)), type(STRING) {}
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:38:32: note: no known conversion for argument 1 from 'std::shared_ptr<LenBuiltin>' to 'std::string' {aka 'std::__cxx11::basic_string<char>'}
-
-   38 |     MegaladonValue(std::string val) : data(std::move(val)), type(STRING) {}
-
-      |                    ~~~~~~~~~~~~^~~
-
-src/builtins/../types/value.h:37:5: note: candidate 5: 'MegaladonValue::MegaladonValue(bool)'
-
-   37 |     MegaladonValue(bool val) : data(val), type(BOOLEAN) {}
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:37:25: note: no known conversion for argument 1 from 'std::shared_ptr<LenBuiltin>' to 'bool'
-
-   37 |     MegaladonValue(bool val) : data(val), type(BOOLEAN) {}
-
-      |                    ~~~~~^~~
-
-src/builtins/../types/value.h:36:5: note: candidate 6: 'MegaladonValue::MegaladonValue(double)'
-
-   36 |     MegaladonValue(double val) : data(val), type(NUMBER) {}
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:36:27: note: no known conversion for argument 1 from 'std::shared_ptr<LenBuiltin>' to 'double'
-
-   36 |     MegaladonValue(double val) : data(val), type(NUMBER) {}
-
-      |                    ~~~~~~~^~~
-
-src/builtins/../types/value.h:35:5: note: candidate 7: 'MegaladonValue::MegaladonValue()'
-
-   35 |     MegaladonValue() : data(std::monostate{}), type(VOID) {} // Default constructor for VOID
-
-      |     ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:35:5: note: candidate expects 0 arguments, 1 provided
-
-src/builtins/../types/value.h:14:7: note: candidate 8: 'MegaladonValue::MegaladonValue(const MegaladonValue&)'
-
-   14 | class MegaladonValue {
-
-      |       ^~~~~~~~~~~~~~
-
-src/builtins/../types/value.h:14:7: note: no known conversion for argument 1 from 'std::shared_ptr<LenBuiltin>' to 'const MegaladonValue&'
-
-src/builtins/../types/value.h:14:7: note: candidate 9: 'MegaladonValue::MegaladonValue(MegaladonValue&&)'
-
-src/builtins/../types/value.h:14:7: note: no known conversion for argument 1 from 'std::shared_ptr<LenBuiltin>' to 'MegaladonValue&&'
-
-In file included from src/builtins/../interpreter/interpreter.h:10,
-
-                 from src/builtins/list_methods.cpp:4:
-
-C:/megaladon/src/builtins/builtins.h:16:33: error: invalid use of incomplete type 'class MegaladonCallable'
-
-   16 | class MegaladonBuiltin : public MegaladonCallable {
-
-      |                                 ^~~~~~~~~~~~~~~~~
-
-In file included from src/builtins/list_methods.cpp:2:
-
-src/builtins/../types/value.h:10:7: note: forward declaration of 'class MegaladonCallable'
-
-   10 | class MegaladonCallable;
-
-      |       ^~~~~~~~~~~~~~~~~
-
-C:/megaladon/src/builtins/builtins.h:22:9: error: 'int MegaladonBuiltin::arity() const' marked 'override', but does not override
-
-   22 |     int arity() const override { return _arity; }
-
-      |         ^~~~~
-
-C:/megaladon/src/builtins/builtins.h:23:17: error: 'std::string MegaladonBuiltin::toString() const' marked 'override', but does not override
-
-   23 |     std::string toString() const override { return "[Built-in Function " + name + "]"; }
-
-      |                 ^~~~~~~~
-
-C:/megaladon/src/builtins/builtins.h:30:20: error: 'MegaladonValue PrintBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
-
-   30 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
-
-      |                    ^~~~
-
-C:/megaladon/src/builtins/builtins.h:36:20: error: 'MegaladonValue InputBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
-
-   36 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
-
-      |                    ^~~~
-
-C:/megaladon/src/builtins/builtins.h:42:20: error: 'MegaladonValue LenBuiltin::call(Interpreter&, const std::vector<MegaladonValue>&)' marked 'override', but does not override
-
-   42 |     MegaladonValue call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) override;
-
-      |                    ^~~~
-
-src/builtins/list_methods.cpp: In function 'MegaladonValue list_add(const std::vector<MegaladonValue>&)':
-
-src/builtins/list_methods.cpp:40:26: error: passing 'const __gnu_cxx::__alloc_traits<std::allocator<MegaladonValue>, MegaladonValue>::value_type' {aka 'const MegaladonValue'} as 'this' argument discards qualifiers [-fpermissive]
-
-   40 |     args[0].asListMutable().push_back(args[1]);
-
-      |     ~~~~~~~~~~~~~~~~~~~~~^~
-
-src/builtins/../types/value.h:63:34: note:   in call to 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
-
-   63 |     std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
-
-      |                                  ^~~~~~~~~~~~~
-
-src/builtins/list_methods.cpp: In function 'MegaladonValue list_remove_at(const std::vector<MegaladonValue>&)':
-
-src/builtins/list_methods.cpp:50:39: error: passing 'const __gnu_cxx::__alloc_traits<std::allocator<MegaladonValue>, MegaladonValue>::value_type' {aka 'const MegaladonValue'} as 'this' argument discards qualifiers [-fpermissive]
-
-   50 |     auto& list = args[0].asListMutable();
-
-      |                  ~~~~~~~~~~~~~~~~~~~~~^~
-
-src/builtins/../types/value.h:63:34: note:   in call to 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
-
-   63 |     std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
-
-      |                                  ^~~~~~~~~~~~~
-
-src/builtins/list_methods.cpp:52:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<MegaladonValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-
-   52 |     if (index < 0 || index >= list.size()) {
-
-      |                      ~~~~~~^~~~~~~~~~~~~~
-
-src/builtins/list_methods.cpp: In function 'MegaladonValue list_get(const std::vector<MegaladonValue>&)':
-
-src/builtins/list_methods.cpp:69:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<MegaladonValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-
-   69 |     if (index < 0 || index >= list.size()) {
-
-      |                      ~~~~~~^~~~~~~~~~~~~~
-
-src/builtins/list_methods.cpp: In function 'MegaladonValue list_set(const std::vector<MegaladonValue>&)':
-
-src/builtins/list_methods.cpp:82:39: error: passing 'const __gnu_cxx::__alloc_traits<std::allocator<MegaladonValue>, MegaladonValue>::value_type' {aka 'const MegaladonValue'} as 'this' argument discards qualifiers [-fpermissive]
-
-   82 |     auto& list = args[0].asListMutable();
-
-      |                  ~~~~~~~~~~~~~~~~~~~~~^~
-
-src/builtins/../types/value.h:63:34: note:   in call to 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
-
-   63 |     std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
-
-      |                                  ^~~~~~~~~~~~~
-
-src/builtins/list_methods.cpp:84:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<MegaladonValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-
-   84 |     if (index < 0 || index >= list.size()) {
-
-      |                      ~~~~~~^~~~~~~~~~~~~~
-
-src/builtins/list_methods.cpp: In function 'MegaladonValue list_insert_at(const std::vector<MegaladonValue>&)':
-
-src/builtins/list_methods.cpp:112:39: error: passing 'const __gnu_cxx::__alloc_traits<std::allocator<MegaladonValue>, MegaladonValue>::value_type' {aka 'const MegaladonValue'} as 'this' argument discards qualifiers [-fpermissive]
-
-  112 |     auto& list = args[0].asListMutable();
-
-      |                  ~~~~~~~~~~~~~~~~~~~~~^~
-
-src/builtins/../types/value.h:63:34: note:   in call to 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
-
-   63 |     std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
-
-      |                                  ^~~~~~~~~~~~~
-
-src/builtins/list_methods.cpp:114:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<MegaladonValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-
-  114 |     if (index < 0 || index > list.size()) { // Allow inserting at list.size() for append
-
-      |                      ~~~~~~^~~~~~~~~~~~~
-
-src/builtins/list_methods.cpp: In function 'MegaladonValue list_pop(const std::vector<MegaladonValue>&)':
-
-src/builtins/list_methods.cpp:128:39: error: passing 'const __gnu_cxx::__alloc_traits<std::allocator<MegaladonValue>, MegaladonValue>::value_type' {aka 'const MegaladonValue'} as 'this' argument discards qualifiers [-fpermissive]
-
-  128 |     auto& list = args[0].asListMutable();
-
-      |                  ~~~~~~~~~~~~~~~~~~~~~^~
-
-src/builtins/../types/value.h:63:34: note:   in call to 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
-
-   63 |     std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
-
-      |                                  ^~~~~~~~~~~~~
-
-src/builtins/list_methods.cpp:145:42: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<MegaladonValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-
-  145 |     if (index_to_pop < 0 || index_to_pop >= list.size()) {
-
-      |                             ~~~~~~~~~~~~~^~~~~~~~~~~~~~
-
-src/builtins/list_methods.cpp: In function 'MegaladonValue list_clear(const std::vector<MegaladonValue>&)':
-
-src/builtins/list_methods.cpp:161:26: error: passing 'const __gnu_cxx::__alloc_traits<std::allocator<MegaladonValue>, MegaladonValue>::value_type' {aka 'const MegaladonValue'} as 'this' argument discards qualifiers [-fpermissive]
-
-  161 |     args[0].asListMutable().clear();
-
-      |     ~~~~~~~~~~~~~~~~~~~~~^~
-
-src/builtins/../types/value.h:63:34: note:   in call to 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
-
-   63 |     std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
-
-      |                                  ^~~~~~~~~~~~~
-
-src/builtins/list_methods.cpp: In function 'MegaladonValue list_remove(const std::vector<MegaladonValue>&)':
-
-src/builtins/list_methods.cpp:230:39: error: passing 'const __gnu_cxx::__alloc_traits<std::allocator<MegaladonValue>, MegaladonValue>::value_type' {aka 'const MegaladonValue'} as 'this' argument discards qualifiers [-fpermissive]
-
-  230 |     auto& list = args[0].asListMutable();
-
-      |                  ~~~~~~~~~~~~~~~~~~~~~^~
-
-src/builtins/../types/value.h:63:34: note:   in call to 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
-
-   63 |     std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
-
-      |                                  ^~~~~~~~~~~~~
-
-src/builtins/list_methods.cpp: In function 'MegaladonValue list_sort(const std::vector<MegaladonValue>&)':
-
-src/builtins/list_methods.cpp:260:39: error: passing 'const __gnu_cxx::__alloc_traits<std::allocator<MegaladonValue>, MegaladonValue>::value_type' {aka 'const MegaladonValue'} as 'this' argument discards qualifiers [-fpermissive]
-
-  260 |     auto& list = args[0].asListMutable(); // Modify in place
-
-      |                  ~~~~~~~~~~~~~~~~~~~~~^~
-
-src/builtins/../types/value.h:63:34: note:   in call to 'std::vector<MegaladonValue>& MegaladonValue::asListMutable()'
-
-   63 |     std::vector<MegaladonValue>& asListMutable(); // For modifying list in place for methods
-
-      |                                  ^~~~~~~~~~~~~
-
-In file included from src/interpreter/interpreter.h:10,
-
-               
+$

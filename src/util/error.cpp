@@ -1,20 +1,26 @@
-// src/util/error.cpp
 #include "error.h"
+#include <iostream>
 
-bool hadError = false;
-bool hadRuntimeError = false;
+bool MegaladonError::hadError = false;
+bool MegaladonError::hadRuntimeError = false;
 
-void ReportError(int line, int column, const std::string& where, const std::string& message) {
-    std::cerr << "[Line " << line << ", Col " << column << "] Error" << where << ": " << message << std::endl;
+std::string MegaladonError::formatMessage(const Token& token, const std::string& message) {
+    std::string error_msg = "[line " + std::to_string(token.line) + "] Error";
+    if (token.type == TokenType::EOF_TOKEN) {
+        error_msg += " at end";
+    } else if (!token.lexeme.empty()) {
+        error_msg += " at '" + token.lexeme + "'";
+    }
+    error_msg += ": " + message;
+    return error_msg;
+}
+
+void MegaladonError::report(int line, const std::string& where, const std::string& message) {
+    std::cerr << "[line " << line << "] Error" << where << ": " << message << std::endl;
     hadError = true;
 }
 
-void ReportRuntimeError(const std::string& message) {
-    std::cerr << "Runtime Error: " << message << std::endl;
-    hadRuntimeError = true;
-}
-
-void ResetErrors() {
-    hadError = false;
-    hadRuntimeError = false;
+void MegaladonError::report(const Token& token, const std::string& message) {
+    std::cerr << MegaladonError::formatMessage(token, message) << std::endl;
+    hadError = true;
 }

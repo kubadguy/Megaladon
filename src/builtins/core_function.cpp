@@ -3,6 +3,7 @@
 #include "../interpreter/interpreter.h" // For Interpreter access in call methods
 #include <iostream>
 #include <string>
+#include <cmath> // For std::fmod
 
 // --- PrintBuiltin ---
 MegaladonValue PrintBuiltin::call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) {
@@ -10,7 +11,7 @@ MegaladonValue PrintBuiltin::call(Interpreter& interpreter, const std::vector<Me
     (void)interpreter;
 
     if (arguments.empty()) {
-        std::cout << "VOID\n";
+        std::cout << "void\n"; // Changed from VOID to 'void' string
     } else {
         std::cout << arguments[0].toString() << "\n";
     }
@@ -21,7 +22,10 @@ MegaladonValue PrintBuiltin::call(Interpreter& interpreter, const std::vector<Me
 MegaladonValue InputBuiltin::call(Interpreter& interpreter, const std::vector<MegaladonValue>& arguments) {
     // Suppress unused parameter warnings
     (void)interpreter;
-    (void)arguments;
+    // You might want to use arguments[0] as a prompt if provided
+    if (arguments.size() > 0 && arguments[0].isString()) {
+        std::cout << arguments[0].asString();
+    }
 
     std::string line;
     std::getline(std::cin, line);

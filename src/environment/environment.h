@@ -1,28 +1,25 @@
-// src/environment/environment.h
 #pragma once
 
 #include <string>
 #include <map>
-#include <memory> // For std::shared_ptr
-#include "../types/value.h"
+#include <memory> // For std::shared_ptr, std::enable_shared_from_this
+#include "../types/value.h" // For MegaladonValue
+#include "../lexer/token.h" // For Token
 
-// Represents a scope for variables
-class Environment {
+class Environment : public std::enable_shared_from_this<Environment> {
 public:
-    // Constructor for global environment (no enclosing)
-    Environment() : enclosing(nullptr) {}
+    Environment();
+    Environment(std::shared_ptr<Environment> enclosing);
 
-    // Constructor for local environments (with enclosing scope)
-    Environment(std::shared_ptr<Environment> enclosing) : enclosing(std::move(enclosing)) {}
-
-    // Define a new variable in the current scope
     void define(const std::string& name, const MegaladonValue& value);
+    MegaladonValue get(const Token& name);
+    void assign(const Token& name, const MegaladonValue& value);
 
-    // Get the value of a variable, searching enclosing scopes
-    MegaladonValue get(const std::string& name);
+    // For local variable resolution
+    MegaladonValue getAt(int distance, const std::string& name);
+    void assignAt(int distance, const Token& name, const MegaladonValue& value);
 
-    // Assign a new value to an existing variable, searching enclosing scopes
-    void assign(const std::string& name, const MegaladonValue& value);
+    std::shared_ptr<Environment> ancestor(int distance);
 
 private:
     std::map<std::string, MegaladonValue> values;
