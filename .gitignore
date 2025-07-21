@@ -28,3 +28,7 @@
 #megaladon packables
 #.mgpackableconfig\
 #*.mgpackable
+
+#added errorlogs
+errorlog.txt
+#*.errorlog
